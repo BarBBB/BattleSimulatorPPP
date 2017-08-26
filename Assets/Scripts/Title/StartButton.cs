@@ -152,6 +152,8 @@ public class StartButton : MonoBehaviour {
         pc.Mobility = Int32.Parse(pcWin.Mobility.inputField.text);
         pc.Fumble = Int32.Parse(pcWin.Fumble.inputField.text);
 
+        pc.Icon = pcWin.icon;
+
         PcParamList.Instance.pcs.Add(pc);
         
         return true;

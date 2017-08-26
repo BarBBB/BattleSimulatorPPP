@@ -17,6 +17,9 @@ public static class GetWeb {
 
     const string TAIL_TITLE = "』</span><br>\\s*?(.*?)<br>";
 
+    const string PC_ICON = "https://p3p000603.herokuapp.com/rev1.reversion.jp/assets/images/default/icon.png";
+
+
     public static IEnumerator GetText(PcInputWindow window, string pcId)
     {
         string url = BASE_URL + pcId;
@@ -40,6 +43,28 @@ public static class GetWeb {
                 Debug.Log(text);
                 setPcParameter(text, window);
             }
+        }
+    }
+
+    public static IEnumerator GetIcon(PcInputWindow window, string pcId)
+    {
+        string url = PC_ICON;
+        Debug.Log(url);
+        UnityWebRequest request = UnityWebRequest.GetTexture(url);
+
+        // リクエスト送信
+        yield return request.Send();
+
+        // 通信エラーチェック
+        if (request.isError)
+        {
+            Debug.Log(request.error);
+        }
+        else
+        {
+            // DownloadHandlerを継承したDownloadHandlerTexture経由で取得できる
+
+            window.setPcIcon(((DownloadHandlerTexture)request.downloadHandler).texture);
         }
     }
 

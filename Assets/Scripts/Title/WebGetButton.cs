@@ -23,5 +23,6 @@ public class WebGetButton : MonoBehaviour
         Debug.Log(this);
         PcInputWindow window = transform.parent.parent.parent.GetComponent<PcInputWindow>();
         StartCoroutine(GetWeb.GetText(window, PcId.inputField.text));
+        StartCoroutine(GetWeb.GetIcon(window, PcId.inputField.text));
     }
 }

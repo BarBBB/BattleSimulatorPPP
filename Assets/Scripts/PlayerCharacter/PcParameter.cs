@@ -1,4 +1,6 @@
-﻿public class PcParameter
+﻿using UnityEngine.UI;
+
+public class PcParameter
 {
     private string title;
 
@@ -31,6 +33,8 @@
     private int exf = 0;
 
     private int exa = 0;
+
+    private RawImage icon;
 
 
     public int MaxHP
@@ -238,6 +242,19 @@
         set
         {
             pcName = value;
+        }
+    }
+
+    public RawImage Icon
+    {
+        get
+        {
+            return icon;
+        }
+
+        set
+        {
+            icon = value;
         }
     }
 }

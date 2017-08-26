@@ -38,10 +38,12 @@ public class TitleMgr : MonoBehaviour {
         {
             pcWin1.setPcParameter(PcParamList.Instance.pcs[0]);
             StartCoroutine(GetWeb.GetText(pcWin2,MASTER_DECOY));
+            StartCoroutine(GetWeb.GetIcon(pcWin2, MASTER_DECOY));
         }
         else
         {
             StartCoroutine(GetWeb.GetText(pcWin2, MASTER_DECOY));
+            StartCoroutine(GetWeb.GetIcon(pcWin2, MASTER_DECOY));
         }
     }
 }

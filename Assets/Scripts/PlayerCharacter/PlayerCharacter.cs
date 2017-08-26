@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerCharacter : Token
 {
@@ -9,7 +10,7 @@ public class PlayerCharacter : Token
 
     public PcParameter paramCorrect = new PcParameter();
 
-    public Texture2D icon;
+    public RawImage icon;
 
     public TitleText Title;
 
@@ -68,6 +69,8 @@ public class PlayerCharacter : Token
         baseParam.Reaction = pc.Reaction;
         baseParam.Mobility = pc.Mobility;
         baseParam.Fumble = pc.Fumble;
+
+        icon.texture = pc.Icon.texture;
 
         Title.Title = pc.Title;
         PcName.Name = pc.PcName;

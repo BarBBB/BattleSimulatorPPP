@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class PcInputWindow : MonoBehaviour {
 
@@ -34,6 +35,8 @@ public class PcInputWindow : MonoBehaviour {
 
     public InputManager Exa;
 
+    public RawImage icon;
+
 
     void Start()
     {
@@ -57,5 +60,10 @@ public class PcInputWindow : MonoBehaviour {
         Reaction.setInputField(pcParam.Reaction.ToString());
         Mobility.setInputField(pcParam.Mobility.ToString());
         Fumble.setInputField(pcParam.Fumble.ToString());
+    }
+
+    public void setPcIcon(Texture pcIcon)
+    {
+        icon.texture = pcIcon;
     }
 }
