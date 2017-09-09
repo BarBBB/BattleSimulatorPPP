@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class BattleEngine : MonoBehaviour
 {
@@ -16,9 +17,13 @@ public class BattleEngine : MonoBehaviour
 
     public GameObject waitPanel;
 
+    public GameObject winnerPanel;
+
     public PlayerCharacter pcWin1;
 
     public PlayerCharacter pcWin2;
+
+    public WinnerText winner;
 
     private bool flg;
 
@@ -55,6 +60,7 @@ public class BattleEngine : MonoBehaviour
         majorActionPanel.SetActive(false);
         minorActionPanel.SetActive(false);
         waitPanel.SetActive(false);
+        winnerPanel.SetActive(false);
 
         flg = true;
         StartCoroutine(battleSequence());
@@ -70,40 +76,9 @@ public class BattleEngine : MonoBehaviour
         // 生存PCリストが1人きりになった
         if (livePcList.Count == 1)
         {
-            // フォントサイズ設定
-            Util.SetFontSize(24);
-            // 中央揃え
-            Util.SetFontAlignment(TextAnchor.MiddleCenter);
-            //フォントカラー：白
-            Util.SetFontColor(new Color(1, 1, 1));
-
-            // フォントの位置
-            float w = 128; // 幅
-            float h = 32; // 高さ
-            float px = Screen.width / 2 - w / 2;
-            float py = Screen.height / 2 + h / 2;
-
-            // フォント描画
-            Util.GUILabel(px, py, w, h, "WINNER：" + livePcList[0].PcName.Name);
-
-            // ボタンは少し下にずらす
-            py += 60;
-            if (GUI.Button(new Rect(px, py, w, h), "ReStart"))
-            {
-                //ログメッセージをクリア
-                ManageScroll.Logs = "";
-                //Titleシーン遷移
-                SceneManager.LoadScene("Battle");
-            }
-            // ボタンは少し下にずらす
-            py += 30;
-            if (GUI.Button(new Rect(px, py, w, h), "ToTitle"))
-            {
-                //ログメッセージをクリア
-                ManageScroll.Logs = "";
-                //Titleシーン遷移
-                SceneManager.LoadScene("Title");
-            }
+            winner.Winner = livePcList[0].PcName.Name;
+            winnerPanel.SetActive(true);
+            livePcList.Remove(livePcList[0]);
         }
     }
 
@@ -134,8 +109,12 @@ public class BattleEngine : MonoBehaviour
             //全員行動するまでループ
             while (initiativeList.Count > 0)
             {
-                //イニチアチブプロセス
-                yield return initiativeProcess(initiativeList);
+                // 生存PCリストが2人以上
+                if (livePcList.Count >= 2)
+                {
+                    //イニチアチブプロセス
+                    yield return initiativeProcess(initiativeList);
+                }
             }
 
             CleanUpProcess();
@@ -260,10 +239,13 @@ public class BattleEngine : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         for (int i = 0; i < mainActionCount; i++)
         {
-            ManageScroll.Log(pc.PcName.Name + ">【主行動】：" + (i + 1) + "回目");
-            yield return majorAction(pc);
-            yield return new WaitForSeconds(0.5f);
-            while (!Input.anyKeyDown) { yield return 0; }　//キー入力待ち
+            // 生存PCリストが2人以上
+            if (livePcList.Count >= 2) {
+                ManageScroll.Log(pc.PcName.Name + ">【主行動】：" + (i + 1) + "回目");
+                yield return majorAction(pc);
+                yield return new WaitForSeconds(0.5f);
+                while (!Input.anyKeyDown) { yield return 0; }　//キー入力待ち
+            }
         }
     }
 
