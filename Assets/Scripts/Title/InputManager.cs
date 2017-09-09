@@ -8,7 +8,7 @@ public class InputManager : MonoBehaviour
 
     void Start()
     {
-        Debug.Log(this);
+        //Debug.Log(this);
         inputField = GetComponent<InputField>();
     }
 

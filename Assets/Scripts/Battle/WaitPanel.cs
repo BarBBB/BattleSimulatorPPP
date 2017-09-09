@@ -6,6 +6,10 @@ public class WaitPanel : MonoBehaviour {
 
     public PlayerCharacter WaitPc = null;
 
+    public ActionButton WaitButton;
+
+    public ActionButton NoWaitButton;
+
     // Use this for initialization
     void Start () {
 		

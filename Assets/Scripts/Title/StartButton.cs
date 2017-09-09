@@ -8,6 +8,9 @@ public class StartButton : MonoBehaviour {
 
     private GameObject requirePanel;
 
+    public PcInputWindow pcWin1;
+    public PcInputWindow pcWin2;
+
     // Use this for initialization
     void Start () {
         Debug.Log(this);
@@ -23,9 +26,6 @@ public class StartButton : MonoBehaviour {
 
     public void OnClick()
     {
-        PcInputWindow pcWin1 = GameObject.Find("PcInputWindow1").GetComponent<PcInputWindow>();
-        PcInputWindow pcWin2 = GameObject.Find("PcInputWindow2").GetComponent<PcInputWindow>();
-
         Debug.Log("[START] botton Clicked");
         if (addPlayerCharacter(pcWin1) & addPlayerCharacter(pcWin2))
         {

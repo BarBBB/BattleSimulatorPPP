@@ -8,6 +8,8 @@ public class WebGetButton : MonoBehaviour
 {
     public InputManager PcId;
 
+    public PcInputWindow window;
+
     // Use this for initialization
     void Start()
     {
@@ -16,13 +18,15 @@ public class WebGetButton : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (window.IconURL != null) {
+            StartCoroutine(GetWeb.GetIcon(window, window.IconURL));
+            window.IconURL = null;
+        }
     }
 
     public void OnClick()
     {
         Debug.Log(this);
-        PcInputWindow window = transform.parent.parent.parent.GetComponent<PcInputWindow>();
         StartCoroutine(GetWeb.GetText(window, PcId.inputField.text));
-        StartCoroutine(GetWeb.GetIcon(window, PcId.inputField.text));
     }
 }

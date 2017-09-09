@@ -16,11 +16,11 @@ public class ActionButton : MonoBehaviour
 
     public void OnClick()
     {
-        battleEngine.battleCoroutine(getText());
+        battleEngine.buttonClickAction(getText());
     }
 
 
-    /// テキストを変更する
+    /// テキストを取得する
     private string getText()
     {
 

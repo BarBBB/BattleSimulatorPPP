@@ -17,7 +17,15 @@ public static class GetWeb {
 
     const string TAIL_TITLE = "』</span><br>\\s*?(.*?)<br>";
 
-    const string PC_ICON = "https://p3p000603.herokuapp.com/rev1.reversion.jp/assets/images/default/icon.png";
+    const string DEFAULT_ICON = "https://rev1.reversion.jp/assets/images/default/icon.png";
+
+    const string PC_ICON_HEAD = "(https://img.rev1.reversion.jp/illust/";
+
+    const string PC_ICON_MIDDLE = "/icon/.+?jpg)";
+
+    const string PROXY_HEADER = "https://p3p000603.herokuapp.com/";
+
+    const string HTTPS_HEADER = "https://";
 
 
     public static IEnumerator GetText(PcInputWindow window, string pcId)
@@ -41,14 +49,14 @@ public static class GetWeb {
                 // UTF8文字列として取得する
                 string text = request.downloadHandler.text;
                 Debug.Log(text);
-                setPcParameter(text, window);
+                setPcParameter(text, window, pcId);
             }
         }
     }
 
-    public static IEnumerator GetIcon(PcInputWindow window, string pcId)
+    public static IEnumerator GetIcon(PcInputWindow window, string url)
     {
-        string url = PC_ICON;
+        url = url.Replace(HTTPS_HEADER, PROXY_HEADER);
         Debug.Log(url);
         UnityWebRequest request = UnityWebRequest.GetTexture(url);
 
@@ -63,12 +71,11 @@ public static class GetWeb {
         else
         {
             // DownloadHandlerを継承したDownloadHandlerTexture経由で取得できる
-
             window.setPcIcon(((DownloadHandlerTexture)request.downloadHandler).texture);
         }
     }
 
-    private static void setPcParameter(string text, PcInputWindow window)
+    private static void setPcParameter(string text, PcInputWindow window, string pcId)
     {
         text = text.Replace("\n", "");
         Debug.Log(text);
@@ -95,8 +102,12 @@ public static class GetWeb {
         pcParam.Mobility = Int32.Parse(getTargetParameter(text, "機動力"));
         pcParam.Fumble = Int32.Parse(getTargetParameter(text, "ファンブル"));
 
-        
         window.setPcParameter(pcParam);
+
+        string url = getIconUrl(text, pcId);
+        Debug.Log("url：" + url);
+        window.IconURL = url;
+
     }
 
     private static string getTargetParameter(string text, string targetStr)
@@ -145,6 +156,23 @@ public static class GetWeb {
         else
         {
             return "";
+        }
+    }
+
+    private static string getIconUrl(string text, string pcId)
+    {
+        string regStr = PC_ICON_HEAD + pcId + PC_ICON_MIDDLE;
+        Debug.Log("regStr：" + regStr);
+        var reg = new Regex(regStr);
+        Match m = reg.Match(text);
+
+        if (m.Success)
+        {
+            return m.Groups[1].Value;
+        }
+        else
+        {
+            return DEFAULT_ICON;
         }
     }
 }

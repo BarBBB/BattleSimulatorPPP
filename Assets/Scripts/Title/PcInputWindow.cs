@@ -37,6 +37,8 @@ public class PcInputWindow : MonoBehaviour {
 
     public RawImage icon;
 
+    public string IconURL = null;
+
 
     void Start()
     {

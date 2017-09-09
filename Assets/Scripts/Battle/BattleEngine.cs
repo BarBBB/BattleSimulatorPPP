@@ -10,11 +10,15 @@ public class BattleEngine : MonoBehaviour
 
     private List<PlayerCharacter> livePcList;
 
-    private GameObject majorActionPanel;
+    public GameObject majorActionPanel;
 
-    private GameObject minorActionPanel;
+    public GameObject minorActionPanel;
 
-    private GameObject waitPanel;
+    public GameObject waitPanel;
+
+    public PlayerCharacter pcWin1;
+
+    public PlayerCharacter pcWin2;
 
     private bool flg;
 
@@ -25,15 +29,12 @@ public class BattleEngine : MonoBehaviour
         return flg;
     }
 
-    private PlayerCharacter pcWin1;
-    private PlayerCharacter pcWin2;
+
     private bool waitFlg = false;
 
     // Use this for initialization
     void Start()
     {
-        pcWin1 = GameObject.Find("PCWindow1").GetComponent<PlayerCharacter>();
-        pcWin2 = GameObject.Find("PCWindow2").GetComponent<PlayerCharacter>();
 
         if (PcParamList.Instance.pcs.Count >= 2)
         {
@@ -51,11 +52,8 @@ public class BattleEngine : MonoBehaviour
 
         livePcList = PcList;
 
-        majorActionPanel = GameObject.Find("MajerActionPanel");
         majorActionPanel.SetActive(false);
-        minorActionPanel = GameObject.Find("MinorActionPanel");
         minorActionPanel.SetActive(false);
-        waitPanel = GameObject.Find("WaitPanel");
         waitPanel.SetActive(false);
 
         flg = true;
@@ -109,7 +107,7 @@ public class BattleEngine : MonoBehaviour
         }
     }
 
-    public void battleCoroutine(string button)
+    public void buttonClickAction(string button)
     {
         buttonCommand = button;
         Debug.Log("ButtonCommand : " + buttonCommand);
