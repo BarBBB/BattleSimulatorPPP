@@ -51,11 +51,11 @@ public class StartButton : MonoBehaviour {
 
     private bool addPlayerCharacter(PcInputWindow pcWin)
     {
-        if (pcWin.Title.inputField.text == "")
-        {
-            pcWin.Title.inputField.ActivateInputField();
-            return false;
-        }
+        //if (pcWin.Title.inputField.text == "")
+        //{
+        //    pcWin.Title.inputField.ActivateInputField();
+        //    return false;
+        //}
         if (pcWin.PcName.inputField.text == "")
         {
             pcWin.PcName.inputField.ActivateInputField();
@@ -154,8 +154,26 @@ public class StartButton : MonoBehaviour {
 
         pc.Icon = pcWin.icon;
 
+        if (!pcWin.activeSkillPanel1.SkillName.text.Equals("")) {
+            pc.Skill1 = getActiveSkill(pcWin.activeSkillPanel1);
+        }
+
         PcParamList.Instance.pcs.Add(pc);
         
         return true;
+    }
+
+    private Skill getActiveSkill(ActiveSkillPanel asp)
+    {
+        Skill skill = new Skill();
+
+        skill.Name = asp.SkillName.text;
+        skill.UseAp = Int32.Parse(asp.UseAP.text);
+        skill.Power = Int32.Parse(asp.Power.text);
+        skill.Hits = Int32.Parse(asp.Hits.text);
+        skill.Ct = Int32.Parse(asp.Ct.text);
+        skill.Fb = Int32.Parse(asp.Fb.text);
+
+        return skill;
     }
 }

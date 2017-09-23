@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SkillPanel : MonoBehaviour {
 
@@ -24,25 +22,26 @@ public class SkillPanel : MonoBehaviour {
 		
 	}
 
-    public void ReadyWiindow(PlayerCharacter pc, int ap)
+    public void ReadyWiindow(PlayerCharacter pc)
     {
-         pcParam = pc.baseParam;
-
+        Debug.Log(this);
+        pcParam = pc.baseParam;
+        Debug.Log(pcParam.Skill1);
         if (pcParam.Skill1 != null)
         {
-            SkillButton1.ReadyButton(pcParam.Skill1, ap);
+            SkillButton1.ReadyButton(pcParam.Skill1, pc.Ap.CurrentAp);
         }
         if (pcParam.Skill2 != null)
         {
-            SkillButton1.ReadyButton(pcParam.Skill2, ap);
+            SkillButton1.ReadyButton(pcParam.Skill2, pc.Ap.CurrentAp);
         }
         if (pcParam.Skill3 != null)
         {
-            SkillButton1.ReadyButton(pcParam.Skill3, ap);
+            SkillButton1.ReadyButton(pcParam.Skill3, pc.Ap.CurrentAp);
         }
         if (pcParam.Skill4 != null)
         {
-            SkillButton1.ReadyButton(pcParam.Skill4, ap);
+            SkillButton1.ReadyButton(pcParam.Skill4, pc.Ap.CurrentAp);
         }
     }
 }

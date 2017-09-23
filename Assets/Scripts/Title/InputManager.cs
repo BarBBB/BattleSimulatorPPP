@@ -30,4 +30,9 @@ public class InputManager : MonoBehaviour
     {
         inputField.text = value;
     }
+
+    public string getInputField()
+    {
+        return inputField.text;
+    }
 }

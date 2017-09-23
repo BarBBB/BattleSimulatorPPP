@@ -39,6 +39,14 @@ public class PcInputWindow : MonoBehaviour {
 
     public string IconURL = null;
 
+    public ActiveSkillPanel activeSkillPanel1;
+
+    public ActiveSkillPanel activeSkillPanel2;
+
+    public ActiveSkillPanel activeSkillPanel3;
+
+    public ActiveSkillPanel activeSkillPanel4;
+
 
     void Start()
     {
@@ -67,5 +75,15 @@ public class PcInputWindow : MonoBehaviour {
     public void setPcIcon(Texture pcIcon)
     {
         icon.texture = pcIcon;
+    }
+
+    public void setSukill()
+    {
+        activeSkillPanel1.SkillName.text = "TestSkill";
+        activeSkillPanel1.UseAP.text = "10";
+        activeSkillPanel1.Power.text = "255";
+        activeSkillPanel1.Hits.text = "15";
+        activeSkillPanel1.Ct.text = "5";
+        activeSkillPanel1.Fb.text = "15";
     }
 }

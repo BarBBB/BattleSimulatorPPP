@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine.UI;
 
 public class PlayerCharacter : Token
 {
@@ -26,6 +22,17 @@ public class PlayerCharacter : Token
 
     public EnchantText enchantText;
 
+
+    //private List<Declaration> DeclaratList;
+
+    private Skill skill1;
+
+    private Skill skill2;
+
+    private Skill skill3;
+
+    private Skill skill4;
+
     private int initiative;
 
     public int Initiative
@@ -41,7 +48,58 @@ public class PlayerCharacter : Token
         }
     }
 
-    //private List<Declaration> DeclaratList;
+    public Skill Skill1
+    {
+        get
+        {
+            return skill1;
+        }
+
+        set
+        {
+            skill1 = value;
+        }
+    }
+
+    public Skill Skill2
+    {
+        get
+        {
+            return skill2;
+        }
+
+        set
+        {
+            skill2 = value;
+        }
+    }
+
+    public Skill Skill3
+    {
+        get
+        {
+            return skill3;
+        }
+
+        set
+        {
+            skill3 = value;
+        }
+    }
+
+    public Skill Skill4
+    {
+        get
+        {
+            return skill4;
+        }
+
+        set
+        {
+            skill4 = value;
+        }
+    }
+
 
     // Use this for initialization
     void Start()
@@ -79,6 +137,11 @@ public class PlayerCharacter : Token
         Hp.MaxHp = baseParam.MaxHP;
         Ap.CurrentAp = baseParam.MaxAP;
         Ap.MaxAp = baseParam.MaxAP;
+
+        Skill1 = pc.Skill1;
+        Skill2 = pc.Skill2;
+        Skill3 = pc.Skill3;
+        Skill4 = pc.Skill4;
     }
 
 

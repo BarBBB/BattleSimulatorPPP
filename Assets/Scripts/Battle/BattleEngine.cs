@@ -2,8 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class BattleEngine : MonoBehaviour
 {
@@ -18,6 +16,8 @@ public class BattleEngine : MonoBehaviour
     public GameObject waitPanel;
 
     public GameObject winnerPanel;
+
+    public GameObject skillPanel;
 
     public PlayerCharacter pcWin1;
 
@@ -61,6 +61,7 @@ public class BattleEngine : MonoBehaviour
         minorActionPanel.SetActive(false);
         waitPanel.SetActive(false);
         winnerPanel.SetActive(false);
+        skillPanel.SetActive(false);
 
         flg = true;
         StartCoroutine(battleSequence());
@@ -89,6 +90,7 @@ public class BattleEngine : MonoBehaviour
         minorActionPanel.SetActive(false);
         majorActionPanel.SetActive(false);
         waitPanel.SetActive(false);
+        skillPanel.SetActive(false);
         flg = true;
     }
 
