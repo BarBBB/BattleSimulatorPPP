@@ -8,9 +8,9 @@ public class MajerActionPanel : MonoBehaviour {
 
     public ActionButton NomalAttackButton;
 
-    public ActionButton SkillAttackButton;
+    public SkillAttackButton SkillAttackButton;
 
-    public ActionButton FullAttackButton;
+    public FullAttackButton FullAttackButton;
 
     public ActionButton FullDefenseButton;
 
@@ -30,4 +30,10 @@ public class MajerActionPanel : MonoBehaviour {
 	void Update ()
     {
 	}
+
+    public void init(PlayerCharacter pc)
+    {
+        MajerActionPc = pc;
+        FullAttackButton.init();
+    }
 }

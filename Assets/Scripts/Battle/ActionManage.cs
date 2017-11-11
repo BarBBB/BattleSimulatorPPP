@@ -33,19 +33,18 @@
 
     public static void AddFullAttack(PlayerCharacter pc)
     {
-        if (!pc.Action.ActionList.Contains(FULL_ATTACK)) {
+        //if (!pc.Action.ActionList.Contains(FULL_ATTACK)) {
             pc.Action.ActionList.Add(FULL_ATTACK);
             pc.paramCorrect.Hits += 5;
             pc.paramCorrect.Critical += 5;
             pc.paramCorrect.Avoid += -10;
             pc.paramCorrect.Fumble += 10;
-        }
+        //}
     }
 
     public static void DelFullAttack(PlayerCharacter pc)
     {
-        if (pc.Action.ActionList.Contains(FULL_ATTACK))
-        {
+        if (pc.Action.ActionList.Contains(FULL_ATTACK)){
             pc.Action.ActionList.Remove(FULL_ATTACK);
             pc.paramCorrect.Hits -= 5;
             pc.paramCorrect.Critical -= 5;
@@ -56,12 +55,11 @@
 
     public static void AddFulDefense(PlayerCharacter pc)
     {
-        if (!pc.Action.ActionList.Contains(FULL_DEFENSE))
-        {
+        //if (!pc.Action.ActionList.Contains(FULL_DEFENSE)){
             pc.Action.ActionList.Add(FULL_DEFENSE);
             pc.paramCorrect.Defense += 20;
             pc.paramCorrect.Avoid += 10;
-        }
+        //}
     }
 
     public static void DelFullDefense(PlayerCharacter pc)
@@ -118,9 +116,7 @@
 
     public static void DelAllAction(PlayerCharacter pc)
     {
-        DelFullAttack(pc);
-        DelFullDefense(pc);
-        DelAttackConcent(pc);
-        DelDefenseConcent(pc);
+        pc.Action.ActionList = new System.Collections.Generic.List<string>();
+        pc.paramCorrect = new PcParameter();
     }
 }

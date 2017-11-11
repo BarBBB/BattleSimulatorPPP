@@ -38,6 +38,8 @@ public class BattleEngine : MonoBehaviour
 
     private bool waitFlg = false;
 
+    private bool fullAttackFlg = false;
+
     // Use this for initialization
     void Start()
     {
@@ -100,6 +102,18 @@ public class BattleEngine : MonoBehaviour
         skillPanel.SetActive(false);
         flg = true;
         majorSkil = skill;
+    }
+
+    public void flipFullAttackFlg()
+    {
+        if (fullAttackFlg)
+        {
+            fullAttackFlg = false;
+        }
+        else
+        {
+            fullAttackFlg = true;
+        }
     }
 
     private IEnumerator battleSequence()
@@ -312,6 +326,8 @@ public class BattleEngine : MonoBehaviour
     //主行動
     private IEnumerator majorAction(PlayerCharacter attacker)
     {
+        fullAttackFlg = false;
+
         // IEnumeratorを取得する
         yield return activeMajorActionPanel(attacker);
 
@@ -321,10 +337,6 @@ public class BattleEngine : MonoBehaviour
                 attackPhase(attacker);
                 break;
             case ActionManage.SKILL_ATTACK:
-                attackPhase(attacker);
-                break;
-            case ActionManage.FULL_ATTACK:
-                ActionManage.AddFullAttack(attacker);
                 attackPhase(attacker);
                 break;
             case ActionManage.FULL_DEFENSE:
@@ -349,6 +361,10 @@ public class BattleEngine : MonoBehaviour
 
         if (defender != null)
         {
+            if (fullAttackFlg)
+            {
+                ActionManage.AddFullAttack(attacker);
+            }
             ManageScroll.Log(attacker.PcName.Name + ">【攻撃対象】：" + defender.PcName.Name);
             attackRoll(attacker, defender);
         }
@@ -558,7 +574,7 @@ public class BattleEngine : MonoBehaviour
     {
         majorActionPanel.SetActive(true);
         MajerActionPanel majorActionPanelScript = majorActionPanel.GetComponent<MajerActionPanel>();
-        majorActionPanelScript.MajerActionPc = pc;
+        majorActionPanelScript.init(pc);
 
         flg = false;
         Func<bool> delegateMethod = isRun;
