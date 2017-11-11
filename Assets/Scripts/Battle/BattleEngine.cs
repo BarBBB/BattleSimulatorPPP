@@ -34,6 +34,7 @@ public class BattleEngine : MonoBehaviour
         return flg;
     }
 
+    private Skill majorSkil;
 
     private bool waitFlg = false;
 
@@ -77,6 +78,7 @@ public class BattleEngine : MonoBehaviour
         // 生存PCリストが1人きりになった
         if (livePcList.Count == 1)
         {
+            Debug.Log("livePcList[0].PcName.Name : " + livePcList[0].PcName.Name);
             winner.Winner = livePcList[0].PcName.Name;
             winnerPanel.SetActive(true);
             livePcList.Remove(livePcList[0]);
@@ -85,6 +87,11 @@ public class BattleEngine : MonoBehaviour
 
     public void buttonClickAction(string button)
     {
+        buttonClickAction(button, null);
+    }
+
+    public void buttonClickAction(string button, Skill skill)
+    {
         buttonCommand = button;
         Debug.Log("ButtonCommand : " + buttonCommand);
         minorActionPanel.SetActive(false);
@@ -92,6 +99,7 @@ public class BattleEngine : MonoBehaviour
         waitPanel.SetActive(false);
         skillPanel.SetActive(false);
         flg = true;
+        majorSkil = skill;
     }
 
     private IEnumerator battleSequence()
@@ -116,12 +124,15 @@ public class BattleEngine : MonoBehaviour
                 {
                     //イニチアチブプロセス
                     yield return initiativeProcess(initiativeList);
+                }else
+                {
+                    break;
                 }
             }
 
             CleanUpProcess();
         }
-
+        yield return null;
     }
 
     //セットアッププロセス
@@ -135,7 +146,7 @@ public class BattleEngine : MonoBehaviour
         foreach (PlayerCharacter pc in PcList)
         {
             //反応判定
-            pc.Initiative = Judge.initiativeRoll(pc);
+            pc.Initiative = Judge.initiativeRoll(pc.PcName.Name, pc.getRaction());
             //未行動PCリストに追加
             initiativeList.Add(pc);
         }
@@ -227,7 +238,7 @@ public class BattleEngine : MonoBehaviour
         //EXA判定
         ManageScroll.Log(pc.PcName.Name + ">【EXA判定】");
         int mainActionCount = 1;
-        while (Judge.exaJudge(pc))
+        while (Judge.exaJudge(pc.PcName.Name, pc.getExa()))
         {
             mainActionCount++;
         }
@@ -307,14 +318,14 @@ public class BattleEngine : MonoBehaviour
         switch (buttonCommand)
         {
             case ActionManage.NOMAL_ATTACK:
-                nomalAttack(attacker);
+                attackPhase(attacker);
                 break;
             case ActionManage.SKILL_ATTACK:
-                skillAttack(attacker);
+                attackPhase(attacker);
                 break;
             case ActionManage.FULL_ATTACK:
                 ActionManage.AddFullAttack(attacker);
-                nomalAttack(attacker);
+                attackPhase(attacker);
                 break;
             case ActionManage.FULL_DEFENSE:
                 ActionManage.AddFulDefense(attacker);
@@ -331,7 +342,7 @@ public class BattleEngine : MonoBehaviour
         }
     }
 
-    private void nomalAttack(PlayerCharacter attacker)
+    private void attackPhase(PlayerCharacter attacker)
     {
         //攻撃対象＝自分ではないPC取得
         PlayerCharacter defender = targetDecide(attacker);
@@ -339,18 +350,8 @@ public class BattleEngine : MonoBehaviour
         if (defender != null)
         {
             ManageScroll.Log(attacker.PcName.Name + ">【攻撃対象】：" + defender.PcName.Name);
-
-            if (defender != null)
-            {
-                //攻防判定
-                ManageScroll.Log(attacker.PcName.Name + "が" + defender.PcName.Name + "に通常攻撃。");
-                attackRoll(attacker, defender);
-            }
+            attackRoll(attacker, defender);
         }
-    }
-
-    private void skillAttack(PlayerCharacter attacker)
-    {
     }
 
     private void fullMove(PlayerCharacter attacker)
@@ -373,6 +374,7 @@ public class BattleEngine : MonoBehaviour
         {
             if (!attacker.Equals(target))
             {
+                Debug.Log("targetDecide");
                 defender = target;
                 break;
             }
@@ -383,8 +385,51 @@ public class BattleEngine : MonoBehaviour
     //攻防判定
     private void attackRoll(PlayerCharacter attacker, PlayerCharacter defender)
     {
+        //判定値スキル反映
+        string attackName = "";
+        int atHit;
+        int atCT;
+        int atFB;
+        int attack;
+        //通常攻撃
+        if (majorSkil == null)
+        {
+            attackName = "通常攻撃";
+            atHit = attacker.getHits();
+            atCT = attacker.getCritical();
+            atFB = attacker.getFumble();
+
+            //物理攻撃力と神秘攻撃力の高い方を設定
+            attack = attacker.getPAttack();
+            if (attack < attacker.getMAttack())
+            {
+                attack = attacker.getMAttack();
+            }
+        }
+        //スキル攻撃
+        else
+        {
+            attackName = majorSkil.Name;
+            atHit = attacker.getHits() + majorSkil.Hits;
+            atCT = attacker.getCritical() + majorSkil.Ct;
+            atFB = attacker.getFumble() + majorSkil.Fb;
+            attacker.Ap.CurrentAp = attacker.Ap.CurrentAp - majorSkil.UseAp;
+
+            if (majorSkil.isPhysical)
+            {
+                attack = attacker.getPAttack() + majorSkil.Power;
+            }
+            else
+            {
+                attack = attacker.getMAttack() + majorSkil.Power;
+            }
+        }
+
+        //攻防判定
+        ManageScroll.Log(attacker.PcName.Name + "が" + defender.PcName.Name + "に[" + attackName + "]で攻撃した。");
+
         //命中判定
-        int hit = Judge.hitsRoll(attacker);
+        int hit = Judge.hitsRoll(attacker.PcName.Name, atHit, atCT, atFB);
         //FBの場合、攻撃終了
         if (hit < -Judge.CF_BOUND)
         {
@@ -393,7 +438,7 @@ public class BattleEngine : MonoBehaviour
         }
 
         //回避判定
-        int avoid = Judge.avoidRoll(defender);
+        int avoid = Judge.avoidRoll(defender.PcName.Name, defender.getAvoid(), defender.getCritical(), defender.getFumble());
         //CTの場合、攻撃終了
         if (avoid > Judge.CF_BOUND)
         {
@@ -431,13 +476,6 @@ public class BattleEngine : MonoBehaviour
         //クリーンヒット以上の場合、BS付与判定
         addBadStatusJudge(defender);
 
-        //物理攻撃力と神秘攻撃力の高い方を設定
-        int attack = attacker.getPAttack();
-        if (attack < attacker.getMAttack())
-        {
-            attack = attacker.getMAttack();
-        }
-
         //ダメージ算出
         int damege = attack * hitRate / 100;
         //ManageScroll.Log("hoge:" + damege);
@@ -447,7 +485,7 @@ public class BattleEngine : MonoBehaviour
         {
             ManageScroll.Log(defender.PcName.Name + "は防御を試みた。");
             //防御技術判定で防御レート算出
-            int defeseRate = Judge.defenseRateRoll(defender);
+            int defeseRate = Judge.defenseRateRoll(defender.PcName.Name, defender.getDefense());
             //防御レートだけダメージを軽減
             //ManageScroll.Log("foo:" + damege);
             damege -=  damege * defeseRate / 100;
@@ -479,7 +517,7 @@ public class BattleEngine : MonoBehaviour
         if (pc.Hp.CurrentHp <= 0)
         {
             //EXF判定に成功するとHPが1に
-            if (Judge.exfJudge(pc))
+            if (Judge.exfJudge(pc.PcName.Name, pc.getExf()))
             {
                 pc.Hp.CurrentHp = 1;
                 ManageScroll.Log(pc.PcName.Name + "は歯を食いしばって立ち上がった。");

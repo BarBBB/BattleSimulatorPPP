@@ -154,8 +154,25 @@ public class StartButton : MonoBehaviour {
 
         pc.Icon = pcWin.icon;
 
+        Debug.Log("pcWin.activeSkillPanel1.SkillName.text:" + pcWin.activeSkillPanel1.SkillName.text);
         if (!pcWin.activeSkillPanel1.SkillName.text.Equals("")) {
+            Debug.Log("getActiveSkill1");
             pc.Skill1 = getActiveSkill(pcWin.activeSkillPanel1);
+        }
+        if (!pcWin.activeSkillPanel2.SkillName.text.Equals(""))
+        {
+            Debug.Log("getActiveSkill2");
+            pc.Skill2 = getActiveSkill(pcWin.activeSkillPanel2);
+        }
+        if (!pcWin.activeSkillPanel3.SkillName.text.Equals(""))
+        {
+            Debug.Log("getActiveSkill3");
+            pc.Skill3 = getActiveSkill(pcWin.activeSkillPanel3);
+        }
+        if (!pcWin.activeSkillPanel4.SkillName.text.Equals(""))
+        {
+            Debug.Log("getActiveSkill4");
+            pc.Skill4 = getActiveSkill(pcWin.activeSkillPanel4);
         }
 
         PcParamList.Instance.pcs.Add(pc);

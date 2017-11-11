@@ -1,4 +1,5 @@
-﻿using UnityEngine.UI;
+﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerCharacter : Token
 {
@@ -139,6 +140,9 @@ public class PlayerCharacter : Token
         Ap.MaxAp = baseParam.MaxAP;
 
         Skill1 = pc.Skill1;
+        if (Skill1 != null) {
+            Debug.Log("Skill1.Name:" + Skill1.Name);
+        }
         Skill2 = pc.Skill2;
         Skill3 = pc.Skill3;
         Skill4 = pc.Skill4;

@@ -25,23 +25,37 @@ public class SkillPanel : MonoBehaviour {
     public void ReadyWiindow(PlayerCharacter pc)
     {
         Debug.Log(this);
-        pcParam = pc.baseParam;
-        Debug.Log(pcParam.Skill1);
-        if (pcParam.Skill1 != null)
+        Debug.Log(pc.Skill1);
+        if (pc.Skill1 != null)
         {
-            SkillButton1.ReadyButton(pcParam.Skill1, pc.Ap.CurrentAp);
+            SkillButton1.ReadyButton(pc.Skill1, pc.Ap.CurrentAp);
+        } else
+        {
+            SkillButton1.ResetButton();
         }
-        if (pcParam.Skill2 != null)
+        if (pc.Skill2 != null)
         {
-            SkillButton1.ReadyButton(pcParam.Skill2, pc.Ap.CurrentAp);
+            SkillButton2.ReadyButton(pc.Skill2, pc.Ap.CurrentAp);
         }
-        if (pcParam.Skill3 != null)
+        else
         {
-            SkillButton1.ReadyButton(pcParam.Skill3, pc.Ap.CurrentAp);
+            SkillButton2.ResetButton();
         }
-        if (pcParam.Skill4 != null)
+        if (pc.Skill3 != null)
         {
-            SkillButton1.ReadyButton(pcParam.Skill4, pc.Ap.CurrentAp);
+            SkillButton3.ReadyButton(pc.Skill3, pc.Ap.CurrentAp);
+        }
+        else
+        {
+           SkillButton3.ResetButton();
+        }
+        if (pc.Skill4 != null)
+        {
+            SkillButton4.ReadyButton(pc.Skill4, pc.Ap.CurrentAp);
+        }
+        else
+        {
+            SkillButton4.ResetButton();
         }
     }
 }

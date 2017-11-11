@@ -59,18 +59,18 @@ public static class Judge
     }
 
 
-    public static int initiativeRoll(PlayerCharacter pc)
+    public static int initiativeRoll(string name, int reaction)
     {
-        ManageScroll.Log(pc.PcName.Name+ ">【反応判定】："　+ pc.getRaction());
-        int value = pc.getRaction() + roll();
+        ManageScroll.Log(name  + ">【反応判定】："　+ reaction);
+        int value = reaction + roll();
         ManageScroll.Log("反応値：" + value);
         return value;
     }
 
-    public static bool bsResistJudge(PlayerCharacter pc)
+    public static bool bsResistJudge(string name, int resist)
     {
-        ManageScroll.Log(pc.PcName.Name + ">【特殊抵抗判定】：" + pc.getResist());
-        bool result = nonCtJudge(100 - pc.getResist());
+        ManageScroll.Log(name + ">【特殊抵抗判定】：" + resist);
+        bool result = nonCtJudge(100 - resist);
         if (result)
         {
             ManageScroll.Log("成功");
@@ -82,10 +82,10 @@ public static class Judge
         return result;
     }
 
-    public static bool exaJudge(PlayerCharacter pc)
+    public static bool exaJudge(string name, int exa)
     {
-        ManageScroll.Log(pc.PcName.Name + ">【EXA判定】：" + pc.getExa());
-        bool result = nonCtJudge(100 - pc.getExa());
+        ManageScroll.Log(name + ">【EXA判定】：" + exa);
+        bool result = nonCtJudge(100 - exa);
         if (result)
         {
             ManageScroll.Log("成功");
@@ -97,10 +97,10 @@ public static class Judge
         return result;
     }
 
-    public static bool exfJudge(PlayerCharacter pc)
+    public static bool exfJudge(string name, int exf)
     {
-        ManageScroll.Log(pc.PcName.Name + ">【EXF判定】：" + pc.getExf());
-        bool result = nonCtJudge(100 - pc.getExf());
+        ManageScroll.Log(name + ">【EXF判定】：" + exf);
+        bool result = nonCtJudge(100 - exf);
         if (result)
         {
             ManageScroll.Log("成功");
@@ -112,10 +112,10 @@ public static class Judge
         return result;
     }
 
-    public static int hitsRoll(PlayerCharacter pc)
+    public static int hitsRoll(string name, int hits, int ct, int fb)
     {
-        ManageScroll.Log(pc.PcName.Name + ">【命中判定】：" + pc.getHits());
-        int value = ctRoll(pc.getHits(), pc.getCritical(), pc.getFumble());
+        ManageScroll.Log(name + ">【命中判定】：" + hits);
+        int value = ctRoll(hits, ct, fb);
         if (value > CF_BOUND)
         {
             ManageScroll.Log("命中値：" + (value - CT_VALUE));
@@ -129,10 +129,10 @@ public static class Judge
         return value;
     }
 
-    public static int avoidRoll(PlayerCharacter pc)
+    public static int avoidRoll(string name, int avoid, int ct, int fb)
     {
-        ManageScroll.Log(pc.PcName.Name + ">【回避判定】：" + pc.getAvoid());
-        int value = ctRoll(pc.getAvoid(), pc.getCritical(), pc.getFumble());
+        ManageScroll.Log(name + ">【回避判定】：" + avoid);
+        int value = ctRoll(avoid, ct, fb);
         if (value > CF_BOUND)
         {
             ManageScroll.Log("回避値：" + (value - CT_VALUE));
@@ -180,16 +180,16 @@ public static class Judge
         }
     }
 
-    public static int defenseRateRoll(PlayerCharacter pc)
+    public static int defenseRateRoll(string name, int defense)
     {
-        ManageScroll.Log(pc.PcName.Name + ">【防御技術判定】：" + pc.getDefense());
+        ManageScroll.Log(name + ">【防御技術判定】：" + defense);
         int defenseRate = 0;
         int dice = roll();
 
-        if (dice >= 100 - pc.getDefense())
+        if (dice >= 100 - defense)
         {
 
-            double hoge = pc.getDefense() / 10;
+            double hoge = defense / 10;
             defenseRate = (int)Math.Floor(hoge) * 10;
 
             if (defenseRate >= MAX_DEFENSE_RATE)

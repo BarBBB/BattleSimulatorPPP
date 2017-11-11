@@ -1,9 +1,12 @@
 ﻿
+using System;
 using System.Collections.Generic;
 
 public class Skill {
 
     public string Name;
+
+    public Boolean isPhysical = true;
 
     public int UseAp;
 

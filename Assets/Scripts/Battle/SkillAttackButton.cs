@@ -27,6 +27,7 @@ public class SkillAttackButton : MonoBehaviour {
             SkillPanel.SetActive(true);
             Debug.Log(this);
             PlayerCharacter pc = MajorActionPanel.MajerActionPc;
+
             SkillPanel sp = SkillPanel.GetComponent<SkillPanel>();
             sp.ReadyWiindow(pc);
         }

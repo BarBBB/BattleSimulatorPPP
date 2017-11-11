@@ -38,7 +38,7 @@ public static class GetWeb {
         yield return request.Send();
 
         // 通信エラーチェック
-        if (request.isError)
+        if (request.isNetworkError)
         {
             Debug.Log(request.error);
         }
@@ -58,13 +58,13 @@ public static class GetWeb {
     {
         url = url.Replace(HTTPS_HEADER, PROXY_HEADER);
         Debug.Log(url);
-        UnityWebRequest request = UnityWebRequest.GetTexture(url);
+        UnityWebRequest request = UnityWebRequestTexture.GetTexture(url);
 
         // リクエスト送信
         yield return request.Send();
 
         // 通信エラーチェック
-        if (request.isError)
+        if (request.isNetworkError)
         {
             Debug.Log(request.error);
         }
