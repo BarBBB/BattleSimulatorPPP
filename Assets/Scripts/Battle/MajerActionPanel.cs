@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MajerActionPanel : MonoBehaviour {
 
@@ -20,6 +21,8 @@ public class MajerActionPanel : MonoBehaviour {
 
     public ActionButton CoverUpButton;
 
+    public RawImage icon;
+
     // Use this for initialization
     void Start ()
     {
@@ -34,6 +37,7 @@ public class MajerActionPanel : MonoBehaviour {
     public void init(PlayerCharacter pc)
     {
         MajerActionPc = pc;
+        icon.texture = pc.icon.texture;
         FullAttackButton.init();
     }
 }

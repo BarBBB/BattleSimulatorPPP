@@ -552,7 +552,7 @@ public class BattleEngine : MonoBehaviour
     {
         waitPanel.SetActive(true);
         WaitPanel waitPanelScript = waitPanel.GetComponent<WaitPanel>();
-        waitPanelScript.WaitPc = pc;
+        waitPanelScript.init(pc);
 
         flg = false;
         Func<bool> delegateMethod = isRun;
@@ -563,7 +563,7 @@ public class BattleEngine : MonoBehaviour
     {
         minorActionPanel.SetActive(true);
         MinorActionPanel minorActionPanelScript = minorActionPanel.GetComponent<MinorActionPanel>();
-        minorActionPanelScript.MinorActionPc = pc;
+        minorActionPanelScript.init(pc);
 
         flg = false;
         Func<bool> delegateMethod = isRun;

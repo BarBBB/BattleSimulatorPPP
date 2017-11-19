@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MinorActionPanel : MonoBehaviour {
 
@@ -18,6 +19,8 @@ public class MinorActionPanel : MonoBehaviour {
 
     public ActionButton BaseActionButton;
 
+    public RawImage icon;
+
     // Use this for initialization
     void Start()
     {
@@ -27,5 +30,11 @@ public class MinorActionPanel : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+    }
+
+    public void init(PlayerCharacter pc)
+    {
+        MinorActionPc = pc;
+        icon.texture = pc.icon.texture;
     }
 }

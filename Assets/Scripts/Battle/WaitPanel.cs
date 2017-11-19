@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WaitPanel : MonoBehaviour {
 
@@ -9,6 +10,8 @@ public class WaitPanel : MonoBehaviour {
     public ActionButton WaitButton;
 
     public ActionButton NoWaitButton;
+
+    public RawImage icon;
 
     // Use this for initialization
     void Start () {
@@ -19,4 +22,10 @@ public class WaitPanel : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    public void init(PlayerCharacter pc)
+    {
+        WaitPc = pc;
+        icon.texture = pc.icon.texture;
+    }
 }
