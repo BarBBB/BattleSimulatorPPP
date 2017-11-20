@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class InputManager : MonoBehaviour
 {
 
-    public InputField inputField;
+    private InputField inputField;
 
     void Start()
     {
@@ -34,5 +34,10 @@ public class InputManager : MonoBehaviour
     public string getInputField()
     {
         return inputField.text;
+    }
+
+    public void setActivateInputField()
+    {
+        inputField.ActivateInputField();
     }
 }

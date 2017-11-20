@@ -51,106 +51,106 @@ public class StartButton : MonoBehaviour {
 
     private bool addPlayerCharacter(PcInputWindow pcWin)
     {
-        //if (pcWin.Title.inputField.text == "")
+        //if (pcWin.Title.getInputField() == "")
         //{
-        //    pcWin.Title.inputField.ActivateInputField();
+        //    pcWin.Title.setActivateInputField();
         //    return false;
         //}
-        if (pcWin.PcName.inputField.text == "")
+        if (pcWin.PcName.getInputField() == "")
         {
-            pcWin.PcName.inputField.ActivateInputField();
+            pcWin.PcName.setActivateInputField();
             return false;
         }
-        if (pcWin.MaxHP.inputField.text == "")
+        if (pcWin.MaxHP.getInputField() == "")
         {
-            pcWin.MaxHP.inputField.ActivateInputField();
+            pcWin.MaxHP.setActivateInputField();
             return false;
         }
-        if (pcWin.MaxAP.inputField.text == "")
+        if (pcWin.MaxAP.getInputField() == "")
         {
-            pcWin.MaxAP.inputField.ActivateInputField();
+            pcWin.MaxAP.setActivateInputField();
             return false;
         }
-        if (pcWin.PAttack.inputField.text == "")
+        if (pcWin.PAttack.getInputField() == "")
         {
-            pcWin.PAttack.inputField.ActivateInputField();
+            pcWin.PAttack.setActivateInputField();
             return false;
         }
-        if (pcWin.MAttack.inputField.text == "")
+        if (pcWin.MAttack.getInputField() == "")
         {
-            pcWin.MAttack.inputField.ActivateInputField();
+            pcWin.MAttack.setActivateInputField();
             return false;
         }
-        if (pcWin.Defense.inputField.text == "")
+        if (pcWin.Defense.getInputField() == "")
         {
-            pcWin.Defense.inputField.ActivateInputField();
+            pcWin.Defense.setActivateInputField();
             return false;
         }
-        if (pcWin.Resist.inputField.text == "")
+        if (pcWin.Resist.getInputField() == "")
         {
-            pcWin.Resist.inputField.ActivateInputField();
+            pcWin.Resist.setActivateInputField();
             return false;
         }
-        if (pcWin.Hits.inputField.text == "")
+        if (pcWin.Hits.getInputField() == "")
         {
-            pcWin.Hits.inputField.ActivateInputField();
+            pcWin.Hits.setActivateInputField();
             return false;
         }
-        if (pcWin.Avoid.inputField.text == "")
+        if (pcWin.Avoid.getInputField() == "")
         {
-            pcWin.Avoid.inputField.ActivateInputField();
+            pcWin.Avoid.setActivateInputField();
             return false;
         }
-        if (pcWin.Critical.inputField.text == "")
+        if (pcWin.Critical.getInputField() == "")
         {
-            pcWin.Critical.inputField.ActivateInputField();
+            pcWin.Critical.setActivateInputField();
             return false;
         }
-        if (pcWin.Reaction.inputField.text == "")
+        if (pcWin.Reaction.getInputField() == "")
         {
-            pcWin.Reaction.inputField.ActivateInputField();
+            pcWin.Reaction.setActivateInputField();
             return false;
         }
-        if (pcWin.Mobility.inputField.text == "")
+        if (pcWin.Mobility.getInputField() == "")
         {
-            pcWin.Mobility.inputField.ActivateInputField();
+            pcWin.Mobility.setActivateInputField();
             return false;
         }
-        if (pcWin.Fumble.inputField.text == "")
+        if (pcWin.Fumble.getInputField() == "")
         {
-            pcWin.Fumble.inputField.ActivateInputField();
+            pcWin.Fumble.setActivateInputField();
             return false;
         }
-        if (pcWin.Exf.inputField.text == "")
+        if (pcWin.Exf.getInputField() == "")
         {
-            pcWin.Exf.inputField.ActivateInputField();
+            pcWin.Exf.setActivateInputField();
             return false;
         }
-        if (pcWin.Exa.inputField.text == "")
+        if (pcWin.Exa.getInputField() == "")
         {
-            pcWin.Exa.inputField.ActivateInputField();
+            pcWin.Exa.setActivateInputField();
             return false;
         }
 
         PcParameter pc = new PcParameter();
 
-        pc.Title = pcWin.Title.inputField.text;
-        pc.PcName = pcWin.PcName.inputField.text;
+        pc.Title = pcWin.Title.getInputField();
+        pc.PcName = pcWin.PcName.getInputField();
         
-        pc.MaxHP = Int32.Parse(pcWin.MaxHP.inputField.text);
-        pc.MaxAP = Int32.Parse(pcWin.MaxAP.inputField.text);
-        pc.PAttack = Int32.Parse(pcWin.PAttack.inputField.text);
-        pc.MAttack = Int32.Parse(pcWin.MAttack.inputField.text);
-        pc.Exf = Int32.Parse(pcWin.Exf.inputField.text);
-        pc.Defense = Int32.Parse(pcWin.Defense.inputField.text);
-        pc.Resist = Int32.Parse(pcWin.Resist.inputField.text);
-        pc.Exa = Int32.Parse(pcWin.Exa.inputField.text);
-        pc.Hits = Int32.Parse(pcWin.Hits.inputField.text);
-        pc.Avoid = Int32.Parse(pcWin.Avoid.inputField.text);
-        pc.Critical = Int32.Parse(pcWin.Critical.inputField.text);
-        pc.Reaction = Int32.Parse(pcWin.Reaction.inputField.text);
-        pc.Mobility = Int32.Parse(pcWin.Mobility.inputField.text);
-        pc.Fumble = Int32.Parse(pcWin.Fumble.inputField.text);
+        pc.MaxHP = Int32.Parse(pcWin.MaxHP.getInputField());
+        pc.MaxAP = Int32.Parse(pcWin.MaxAP.getInputField());
+        pc.PAttack = Int32.Parse(pcWin.PAttack.getInputField());
+        pc.MAttack = Int32.Parse(pcWin.MAttack.getInputField());
+        pc.Exf = Int32.Parse(pcWin.Exf.getInputField());
+        pc.Defense = Int32.Parse(pcWin.Defense.getInputField());
+        pc.Resist = Int32.Parse(pcWin.Resist.getInputField());
+        pc.Exa = Int32.Parse(pcWin.Exa.getInputField());
+        pc.Hits = Int32.Parse(pcWin.Hits.getInputField());
+        pc.Avoid = Int32.Parse(pcWin.Avoid.getInputField());
+        pc.Critical = Int32.Parse(pcWin.Critical.getInputField());
+        pc.Reaction = Int32.Parse(pcWin.Reaction.getInputField());
+        pc.Mobility = Int32.Parse(pcWin.Mobility.getInputField());
+        pc.Fumble = Int32.Parse(pcWin.Fumble.getInputField());
 
         pc.Icon = pcWin.icon;
 
