@@ -14,21 +14,6 @@ public class ClearButton : MonoBehaviour {
 
     public void OnClick()
     {
-        window.Title.InitInputField();
-        window.PcName.InitInputField();
-        window.MaxHP.InitInputField();
-        window.MaxAP.InitInputField();
-        window.PAttack.InitInputField();
-        window.MAttack.InitInputField();
-        window.Defense.InitInputField();
-        window.Resist.InitInputField();
-        window.Hits.InitInputField();
-        window.Avoid.InitInputField();
-        window.Critical.InitInputField();
-        window.Reaction.InitInputField();
-        window.Mobility.InitInputField();
-        window.Fumble.InitInputField();
-        window.Exf.InitInputField();
-        window.Exa.InitInputField();
+        window.init();
     }
 }

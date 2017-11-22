@@ -8,13 +8,15 @@ public class StartButton : MonoBehaviour {
 
     private GameObject requirePanel;
 
-    public PcInputWindow pcWin1;
-    public PcInputWindow pcWin2;
+    private PcInputWindow pcWin1;
+    private PcInputWindow pcWin2;
 
     // Use this for initialization
     void Start () {
         Debug.Log(this);
-        
+        pcWin1 = GameObject.Find("PcInputWindow1").GetComponent<PcInputWindow>();
+        pcWin2 = GameObject.Find("PcInputWindow2").GetComponent<PcInputWindow>();
+
         requirePanel = GameObject.Find("RequirePanel");
         requirePanel.SetActive(false);
     }
@@ -56,123 +58,123 @@ public class StartButton : MonoBehaviour {
         //    pcWin.Title.setActivateInputField();
         //    return false;
         //}
-        if (pcWin.PcName.getInputField() == "")
+        if (pcWin.getPcName() == "")
         {
-            pcWin.PcName.setActivateInputField();
+            pcWin.getPcName();
             return false;
         }
-        if (pcWin.MaxHP.getInputField() == "")
+        if (pcWin.getMaxHP() == "")
         {
-            pcWin.MaxHP.setActivateInputField();
+            pcWin.getMaxHP();
             return false;
         }
-        if (pcWin.MaxAP.getInputField() == "")
+        if (pcWin.getMaxAP() == "")
         {
-            pcWin.MaxAP.setActivateInputField();
+            pcWin.getMaxAP();
             return false;
         }
-        if (pcWin.PAttack.getInputField() == "")
+        if (pcWin.getPAttack() == "")
         {
-            pcWin.PAttack.setActivateInputField();
+            pcWin.getPAttack();
             return false;
         }
-        if (pcWin.MAttack.getInputField() == "")
+        if (pcWin.getMAttack() == "")
         {
-            pcWin.MAttack.setActivateInputField();
+            pcWin.getMAttack();
             return false;
         }
-        if (pcWin.Defense.getInputField() == "")
+        if (pcWin.getDefense() == "")
         {
-            pcWin.Defense.setActivateInputField();
+            pcWin.getDefense();
             return false;
         }
-        if (pcWin.Resist.getInputField() == "")
+        if (pcWin.getResist() == "")
         {
-            pcWin.Resist.setActivateInputField();
+            pcWin.getResist();
             return false;
         }
-        if (pcWin.Hits.getInputField() == "")
+        if (pcWin.getHits() == "")
         {
-            pcWin.Hits.setActivateInputField();
+            pcWin.getHits();
             return false;
         }
-        if (pcWin.Avoid.getInputField() == "")
+        if (pcWin.getAvoid() == "")
         {
-            pcWin.Avoid.setActivateInputField();
+            pcWin.getAvoid();
             return false;
         }
-        if (pcWin.Critical.getInputField() == "")
+        if (pcWin.getCritical() == "")
         {
-            pcWin.Critical.setActivateInputField();
+            pcWin.getCritical();
             return false;
         }
-        if (pcWin.Reaction.getInputField() == "")
+        if (pcWin.getReaction() == "")
         {
-            pcWin.Reaction.setActivateInputField();
+            pcWin.getReaction();
             return false;
         }
-        if (pcWin.Mobility.getInputField() == "")
+        if (pcWin.getMobility() == "")
         {
-            pcWin.Mobility.setActivateInputField();
+            pcWin.getMobility();
             return false;
         }
-        if (pcWin.Fumble.getInputField() == "")
+        if (pcWin.getFumble() == "")
         {
-            pcWin.Fumble.setActivateInputField();
+            pcWin.getFumble();
             return false;
         }
-        if (pcWin.Exf.getInputField() == "")
+        if (pcWin.getExf() == "")
         {
-            pcWin.Exf.setActivateInputField();
+            pcWin.getExf();
             return false;
         }
-        if (pcWin.Exa.getInputField() == "")
+        if (pcWin.getExa() == "")
         {
-            pcWin.Exa.setActivateInputField();
+            pcWin.getExa();
             return false;
         }
 
         PcParameter pc = new PcParameter();
 
-        pc.Title = pcWin.Title.getInputField();
-        pc.PcName = pcWin.PcName.getInputField();
+        pc.Title = pcWin.getTitle();
+        pc.PcName = pcWin.getPcName();
         
-        pc.MaxHP = Int32.Parse(pcWin.MaxHP.getInputField());
-        pc.MaxAP = Int32.Parse(pcWin.MaxAP.getInputField());
-        pc.PAttack = Int32.Parse(pcWin.PAttack.getInputField());
-        pc.MAttack = Int32.Parse(pcWin.MAttack.getInputField());
-        pc.Exf = Int32.Parse(pcWin.Exf.getInputField());
-        pc.Defense = Int32.Parse(pcWin.Defense.getInputField());
-        pc.Resist = Int32.Parse(pcWin.Resist.getInputField());
-        pc.Exa = Int32.Parse(pcWin.Exa.getInputField());
-        pc.Hits = Int32.Parse(pcWin.Hits.getInputField());
-        pc.Avoid = Int32.Parse(pcWin.Avoid.getInputField());
-        pc.Critical = Int32.Parse(pcWin.Critical.getInputField());
-        pc.Reaction = Int32.Parse(pcWin.Reaction.getInputField());
-        pc.Mobility = Int32.Parse(pcWin.Mobility.getInputField());
-        pc.Fumble = Int32.Parse(pcWin.Fumble.getInputField());
+        pc.MaxHP = Int32.Parse(pcWin.getMaxHP());
+        pc.MaxAP = Int32.Parse(pcWin.getMaxAP());
+        pc.PAttack = Int32.Parse(pcWin.getPAttack());
+        pc.MAttack = Int32.Parse(pcWin.getMAttack());
+        pc.Exf = Int32.Parse(pcWin.getExf());
+        pc.Defense = Int32.Parse(pcWin.getDefense());
+        pc.Resist = Int32.Parse(pcWin.getResist());
+        pc.Exa = Int32.Parse(pcWin.getExa());
+        pc.Hits = Int32.Parse(pcWin.getHits());
+        pc.Avoid = Int32.Parse(pcWin.getAvoid());
+        pc.Critical = Int32.Parse(pcWin.getCritical());
+        pc.Reaction = Int32.Parse(pcWin.getReaction());
+        pc.Mobility = Int32.Parse(pcWin.getMobility());
+        pc.Fumble = Int32.Parse(pcWin.getFumble());
 
-        pc.Icon = pcWin.icon;
+        pc.Icon = pcWin.getIcon();
 
-        Debug.Log("pcWin.activeSkillPanel1.SkillName.text:" + pcWin.activeSkillPanel1.SkillName.text);
-        if (!pcWin.activeSkillPanel1.SkillName.text.Equals("")) {
+        Debug.Log("pcWin.activeSkillPanel1.SkillName.text:" + pcWin.getActiveSkillPanel1().getSkillName());
+        if (!pcWin.getActiveSkillPanel1().getSkillName().Equals("")) {
             Debug.Log("getActiveSkill1");
-            pc.Skill1 = getActiveSkill(pcWin.activeSkillPanel1);
+            pc.Skill1 = getActiveSkill(pcWin.getActiveSkillPanel1());
         }
-        if (!pcWin.activeSkillPanel2.SkillName.text.Equals(""))
+        if (!pcWin.getActiveSkillPanel2().getSkillName().Equals(""))
         {
             Debug.Log("getActiveSkill2");
-            pc.Skill2 = getActiveSkill(pcWin.activeSkillPanel2);
+            pc.Skill2 = getActiveSkill(pcWin.getActiveSkillPanel2());
         }
-        if (!pcWin.activeSkillPanel3.SkillName.text.Equals(""))
+        if (!pcWin.getActiveSkillPanel3().getSkillName().Equals(""))
         {
             Debug.Log("getActiveSkill3");
-            pc.Skill3 = getActiveSkill(pcWin.activeSkillPanel3);
+            pc.Skill3 = getActiveSkill(pcWin.getActiveSkillPanel3());
         }
-        if (!pcWin.activeSkillPanel4.SkillName.text.Equals(""))
+        if (!pcWin.getActiveSkillPanel4().getSkillName().Equals(""))
         {
             Debug.Log("getActiveSkill4");
-            pc.Skill4 = getActiveSkill(pcWin.activeSkillPanel4);
+            pc.Skill4 = getActiveSkill(pcWin.getActiveSkillPanel4());
         }
 
         PcParamList.Instance.pcs.Add(pc);
@@ -184,12 +186,12 @@ public class StartButton : MonoBehaviour {
     {
         Skill skill = new Skill();
 
-        skill.Name = asp.SkillName.text;
-        skill.UseAp = Int32.Parse(asp.UseAP.text);
-        skill.Power = Int32.Parse(asp.Power.text);
-        skill.Hits = Int32.Parse(asp.Hits.text);
-        skill.Ct = Int32.Parse(asp.Ct.text);
-        skill.Fb = Int32.Parse(asp.Fb.text);
+        skill.Name = asp.getSkillName();
+        skill.UseAp = Int32.Parse(asp.getUseAP());
+        skill.Power = Int32.Parse(asp.getPower());
+        skill.Hits = Int32.Parse(asp.getHits());
+        skill.Ct = Int32.Parse(asp.getCt());
+        skill.Fb = Int32.Parse(asp.getFb());
 
         return skill;
     }

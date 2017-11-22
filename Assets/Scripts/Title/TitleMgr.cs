@@ -8,12 +8,14 @@ public class TitleMgr : MonoBehaviour {
 
     const string MASTER_DECOY = "p3p000603";
 
-    public PcInputWindow pcWin1;
-    public PcInputWindow pcWin2;
+    private PcInputWindow pcWin1;
+    private PcInputWindow pcWin2;
 
     // Use this for initialization
     void Start () {
         Debug.Log(this);
+        pcWin1 = GameObject.Find("PcInputWindow1").GetComponent<PcInputWindow>();
+        pcWin2 = GameObject.Find("PcInputWindow2").GetComponent<PcInputWindow>();
 
         StartCoroutine(setParameter());
     }

@@ -106,7 +106,7 @@ public static class GetWeb {
 
         string url = getIconUrl(text, pcId);
         Debug.Log("url：" + url);
-        window.IconURL = url;
+        window.setIconURL(url);
 
     }
 

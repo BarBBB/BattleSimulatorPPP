@@ -6,21 +6,23 @@ using System;
 
 public class WebGetButton : MonoBehaviour
 {
-    public InputManager PcId;
+    private InputManager PcId;
 
-    public PcInputWindow window;
+    private PcInputWindow window;
 
     // Use this for initialization
     void Start()
     {
+        PcId = transform.parent.Find("WebGetInputField").GetComponent<InputManager>();
+        window = transform.parent.parent.parent.GetComponent<PcInputWindow>(); ;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (window.IconURL != null) {
-            StartCoroutine(GetWeb.GetIcon(window, window.IconURL));
-            window.IconURL = null;
+        if (window.getIconURL() != null) {
+            StartCoroutine(GetWeb.GetIcon(window, window.getIconURL()));
+            window.setIconURL(null);
         }
     }
 
