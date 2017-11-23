@@ -29,3 +29,23 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+*.exe
+WebGL/Build/UnityLoader.js
+WebGL/Build/WebGL.asm.code.unityweb
+WebGL/Build/WebGL.asm.framework.unityweb
+WebGL/Build/WebGL.asm.library.unityweb
+WebGL/Build/WebGL.asm.memory.unityweb
+WebGL/Build/WebGL.data.unityweb
+WebGL/Build/WebGL.json
+WebGL/index.html
+WebGL/TemplateData/favicon.ico
+WebGL/TemplateData/fullscreen.png
+WebGL/TemplateData/progressEmpty.Dark.png
+WebGL/TemplateData/progressEmpty.Light.png
+WebGL/TemplateData/progressFull.Dark.png
+WebGL/TemplateData/progressFull.Light.png
+WebGL/TemplateData/progressLogo.Dark.png
+WebGL/TemplateData/progressLogo.Light.png
+WebGL/TemplateData/style.css
+WebGL/TemplateData/UnityProgress.js
+WebGL/TemplateData/webgl-logo.png
