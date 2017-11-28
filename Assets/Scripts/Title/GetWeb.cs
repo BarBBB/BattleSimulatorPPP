@@ -13,9 +13,9 @@ public static class GetWeb {
 
     const string TITLE_REGEX = "<span class=\"title\">『(.*?)』</span><br>";
 
-    const string HEAD_TITLE = "<span class=\"title\">『";
+    const string HEAD_NAME = "<span class=\"title\">『";
 
-    const string TAIL_TITLE = "』</span><br>\\s*?(.*?)<br>";
+    const string TAIL_NAME = "』</span><br>\\s*?(.*?)<br>";
 
     const string DEFAULT_ICON = "https://rev1.reversion.jp/assets/images/default/icon.png";
 
@@ -26,6 +26,10 @@ public static class GetWeb {
     const string PROXY_HEADER = "https://p3p000603.herokuapp.com/";
 
     const string HTTPS_HEADER = "https://";
+
+    const string CLASS_REGEX = "<a href= #class_flavor class=\"fancybox\">(.*?)</a>";
+
+    const string ESPRIT_REGEX = "<a href= #esprit_flavor class=\"fancybox\">(.*?)</a>";
 
 
     public static IEnumerator GetText(PcInputWindow window, string pcId)
@@ -87,6 +91,11 @@ public static class GetWeb {
         pcParam.PcName = getPcName(text, pcParam.Title);
         Debug.Log(getPcName(text, pcParam.Title));
 
+        pcParam.PcClass = getPcClass(text);
+        Debug.Log(getTitle(text));
+        pcParam.Esprit = getEsprit(text);
+        Debug.Log(getPcName(text, pcParam.Title));
+
         pcParam.MaxHP = Int32.Parse(getTargetParameter(text, "HP"));
         pcParam.MaxAP = Int32.Parse(getTargetParameter(text, "AP"));
         pcParam.PAttack = Int32.Parse(getTargetParameter(text, "物理攻撃力"));
@@ -142,9 +151,39 @@ public static class GetWeb {
         }
     }
 
+    private static string getPcClass(string text)
+    {
+        var reg = new Regex(CLASS_REGEX);
+        Match m = reg.Match(text);
+
+        if (m.Success)
+        {
+            return m.Groups[1].Value;
+        }
+        else
+        {
+            return "";
+        }
+    }
+
+    private static string getEsprit(string text)
+    {
+        var reg = new Regex(ESPRIT_REGEX);
+        Match m = reg.Match(text);
+
+        if (m.Success)
+        {
+            return m.Groups[1].Value;
+        }
+        else
+        {
+            return "";
+        }
+    }
+
     private static string getPcName(string text, string title)
     {
-        string regStr = HEAD_TITLE + title + TAIL_TITLE;
+        string regStr = HEAD_NAME + title + TAIL_NAME;
         //Debug.Log("regStr：" + regStr);
         var reg = new Regex(regStr);
         Match m = reg.Match(text);

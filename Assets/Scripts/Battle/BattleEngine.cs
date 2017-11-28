@@ -279,9 +279,9 @@ public class BattleEngine : MonoBehaviour
     //BS効果判定
     private void judgeBsEffect(PlayerCharacter pc)
     {
-        //foreach (BadStatus bs in pc.Bs.BsList)
-        //{
-        //}
+        foreach (BadStatus bs in pc.Bs.BsList)
+        {
+        }
     }
 
     //BS自然回復判定

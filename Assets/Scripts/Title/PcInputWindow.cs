@@ -7,6 +7,10 @@ public class PcInputWindow : MonoBehaviour {
 
     private InputManager PcName;
 
+    private InputManager PcClass;
+
+    private InputManager Esprit;
+
     private InputManager MaxHP;
 
     private InputManager MaxAP;
@@ -54,6 +58,10 @@ public class PcInputWindow : MonoBehaviour {
 
         Title = canvas.Find("TitlePanel").Find("TitleInputField").GetComponent<InputManager>();
         PcName = canvas.Find("NamePanel").Find("NameInputField").GetComponent<InputManager>();
+
+        PcClass = canvas.Find("ClassPanel").Find("ClassInputField").GetComponent<InputManager>();
+        Esprit = canvas.Find("EspritPanel").Find("EspritInputField").GetComponent<InputManager>();
+
         MaxHP = canvas.Find("MaxHpPanel").Find("MaxHpInputField").GetComponent<InputManager>();
         MaxAP = canvas.Find("MaxApPanel").Find("MaxApInputField").GetComponent<InputManager>();
         PAttack = canvas.Find("PAttackPanel").Find("PAttackInputField").GetComponent<InputManager>();
@@ -82,6 +90,9 @@ public class PcInputWindow : MonoBehaviour {
     {
         Title.setInputField(pcParam.Title);
         PcName.setInputField(pcParam.PcName);
+
+        PcClass.setInputField(pcParam.PcClass);
+        Esprit.setInputField(pcParam.Esprit);
 
         MaxHP.setInputField(pcParam.MaxHP.ToString());
         MaxAP.setInputField(pcParam.MaxAP.ToString());

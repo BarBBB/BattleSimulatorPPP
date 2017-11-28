@@ -6,6 +6,10 @@ public class PcParameter
 
     private string pcName;
 
+    private string pcClass;
+
+    private string esprit;
+
     private int maxHP = 0;
 
     private int maxAP = 0;
@@ -315,6 +319,32 @@ public class PcParameter
         set
         {
             skill4 = value;
+        }
+    }
+
+    public string PcClass
+    {
+        get
+        {
+            return pcClass;
+        }
+
+        set
+        {
+            pcClass = value;
+        }
+    }
+
+    public string Esprit
+    {
+        get
+        {
+            return esprit;
+        }
+
+        set
+        {
+            esprit = value;
         }
     }
 }

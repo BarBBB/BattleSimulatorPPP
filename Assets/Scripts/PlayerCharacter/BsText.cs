@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class BsText : MonoBehaviour {
 
-    public List<string> BsList = new List<string>();
+    public List<BadStatus> BsList = new List<BadStatus>();
 
     // Use this for initialization
     void Start () {
@@ -17,15 +17,15 @@ public class BsText : MonoBehaviour {
     {
         string bsText = "";
 
-        foreach (string bs in BsList)
+        foreach (BadStatus bs in BsList)
         {
             if (bsText == "")
             {
-                bsText = bs;
+                bsText = bs.getName();
             }
             else
             {
-                bsText += "," + bs;
+                bsText += "," + bs.getName();
             }
         }
 
