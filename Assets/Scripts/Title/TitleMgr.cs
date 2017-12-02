@@ -41,12 +41,10 @@ public class TitleMgr : MonoBehaviour {
             pcWin1.setPcParameter(PcParamList.Instance.pcs[0]);
             pcWin1.setPcIcon(PcParamList.Instance.pcs[0].Icon.texture);
             StartCoroutine(GetWeb.GetText(pcWin2,MASTER_DECOY));
-            pcWin2.setSukill();
         }
         else
         {
             StartCoroutine(GetWeb.GetText(pcWin2, MASTER_DECOY));
-            pcWin2.setSukill();
         }
     }
 }

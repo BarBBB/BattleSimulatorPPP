@@ -187,11 +187,11 @@ public class StartButton : MonoBehaviour {
         Skill skill = new Skill();
 
         skill.Name = asp.getSkillName();
-        skill.UseAp = Int32.Parse(asp.getUseAP());
-        skill.Power = Int32.Parse(asp.getPower());
-        skill.Hits = Int32.Parse(asp.getHits());
-        skill.Ct = Int32.Parse(asp.getCt());
-        skill.Fb = Int32.Parse(asp.getFb());
+        //skill.UseAp = Int32.Parse(asp.getUseAP());
+        //skill.Power = Int32.Parse(asp.getPower());
+        //skill.Hits = Int32.Parse(asp.getHits());
+        //skill.Ct = Int32.Parse(asp.getCt());
+        //skill.Fb = Int32.Parse(asp.getFb());
 
         return skill;
     }

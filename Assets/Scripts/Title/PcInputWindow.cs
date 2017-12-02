@@ -108,44 +108,32 @@ public class PcInputWindow : MonoBehaviour {
         Reaction.setInputField(pcParam.Reaction.ToString());
         Mobility.setInputField(pcParam.Mobility.ToString());
         Fumble.setInputField(pcParam.Fumble.ToString());
+
+        if (pcParam.Skill1 != null)
+        {
+            activeSkillPanel1.setSkillName(pcParam.Skill1.Name);
+            activeSkillPanel1.setEtc(pcParam.Skill1.Etc);
+        }
+        if (pcParam.Skill2 != null)
+        {
+            activeSkillPanel2.setSkillName(pcParam.Skill2.Name);
+            activeSkillPanel2.setEtc(pcParam.Skill2.Etc);
+        }
+        if (pcParam.Skill3 != null)
+        {
+            activeSkillPanel3.setSkillName(pcParam.Skill3.Name);
+            activeSkillPanel3.setEtc(pcParam.Skill3.Etc);
+        }
+        if (pcParam.Skill4 != null)
+        {
+            activeSkillPanel4.setSkillName(pcParam.Skill4.Name);
+            activeSkillPanel4.setEtc(pcParam.Skill4.Etc);
+        }
     }
 
     public void setPcIcon(Texture pcIcon)
     {
         icon.texture = pcIcon;
-    }
-
-    public void setSukill()
-    {
-        Debug.Log("setSukill");
-
-        activeSkillPanel1.setSkillName("TestSkill1");
-        activeSkillPanel1.setUseAP("10");
-        activeSkillPanel1.setPower("255");
-        activeSkillPanel1.setHits("15");
-        activeSkillPanel1.setCt("5");
-        activeSkillPanel1.setFb("15");
-
-        activeSkillPanel2.setSkillName("TestSkill2");
-        activeSkillPanel2.setUseAP("200");
-        activeSkillPanel2.setPower("355");
-        activeSkillPanel2.setHits("25");
-        activeSkillPanel2.setCt("5");
-        activeSkillPanel2.setFb("15");
-
-        activeSkillPanel3.setSkillName("TestSkill3");
-        activeSkillPanel3.setUseAP("30");
-        activeSkillPanel3.setPower("455");
-        activeSkillPanel3.setHits("35");
-        activeSkillPanel3.setCt("5");
-        activeSkillPanel3.setFb("15");
-
-        activeSkillPanel4.setSkillName("TestSkill4");
-        activeSkillPanel4.setUseAP("100");
-        activeSkillPanel4.setPower("555");
-        activeSkillPanel4.setHits("45");
-        activeSkillPanel4.setCt("5");
-        activeSkillPanel4.setFb("15");
     }
 
     public string getTitle()

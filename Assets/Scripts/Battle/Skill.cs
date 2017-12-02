@@ -6,6 +6,8 @@ public class Skill {
 
     public string Name;
 
+    public string Etc;
+
     public Boolean isPhysical = true;
 
     public int UseAp;
