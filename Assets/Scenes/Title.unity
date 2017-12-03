@@ -892,6 +892,26 @@ Prefab:
       propertyPath: m_Text
       value: PC1
       objectReference: {fileID: 0}
+    - target: {fileID: 114221154136324792, guid: 113bbb623988ae94c92b1cafac30eaef,
+        type: 2}
+      propertyPath: m_FontData.m_BestFit
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114163987675790992, guid: 113bbb623988ae94c92b1cafac30eaef,
+        type: 2}
+      propertyPath: m_FontData.m_HorizontalOverflow
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114163987675790992, guid: 113bbb623988ae94c92b1cafac30eaef,
+        type: 2}
+      propertyPath: m_FontData.m_RichText
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114163987675790992, guid: 113bbb623988ae94c92b1cafac30eaef,
+        type: 2}
+      propertyPath: m_FontData.m_VerticalOverflow
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 113bbb623988ae94c92b1cafac30eaef, type: 2}
   m_IsPrefabParent: 0

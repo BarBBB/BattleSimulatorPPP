@@ -166,7 +166,7 @@ public static class Judge
         }
         else if (SH_BOUND > hitCorrect & hitCorrect >= HL_BOUND)
         {
-            ManageScroll.Log("ヘビーヒット");
+            ManageScroll.Log("ハードヒット");
             return HEAVY_HIT_RATE;
         }
         else if (hitCorrect > SH_BOUND)

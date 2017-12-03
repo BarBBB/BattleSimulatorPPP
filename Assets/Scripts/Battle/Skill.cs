@@ -4,23 +4,84 @@ using System.Collections.Generic;
 
 public class Skill {
 
-    public string Name;
+    private string name;
 
-    public string Etc;
+    private string etc;
 
-    public Boolean isPhysical = true;
+    private string basic;
 
-    public int UseAp;
+    private int useAp;
 
-    public int Power;
+    private string tyep;
 
-    public int Hits;
+    public const string TYPE_ATTACK = "攻撃";
 
-    public int Ct;
+    public const string TYPE_HEAL = "回復";
 
-    public int Fb;
+    public const string TYPE_ENCHANT = "付与";
 
-    public List<Effect> EffectList;
+    public string Name
+    {
+        get
+        {
+            return name;
+        }
 
-    public List<BadStatus> BsList;
+        set
+        {
+            name = value;
+        }
+    }
+
+    public string Etc
+    {
+        get
+        {
+            return etc;
+        }
+
+        set
+        {
+            etc = value;
+        }
+    }
+
+    public int UseAp
+    {
+        get
+        {
+            return useAp;
+        }
+
+        set
+        {
+            useAp = value;
+        }
+    }
+
+    public string Basic
+    {
+        get
+        {
+            return basic;
+        }
+
+        set
+        {
+            basic = value;
+        }
+    }
+
+    public string Tyep
+    {
+        get
+        {
+            return tyep;
+        }
+
+        set
+        {
+            tyep = value;
+        }
+    }
 }

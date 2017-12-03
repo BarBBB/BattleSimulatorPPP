@@ -337,7 +337,43 @@ public class BattleEngine : MonoBehaviour
                 attackPhase(attacker);
                 break;
             case ActionManage.SKILL_ATTACK:
-                attackPhase(attacker);
+                attacker.Ap.CurrentAp -= majorSkil.UseAp;
+
+                if (majorSkil.Tyep.Equals(Skill.TYPE_HEAL))
+                {
+                    HealSkill hSkill = (HealSkill)majorSkil;
+                    ManageScroll.Log(attacker.PcName.Name + "は" + hSkill.Name + "を使用した。");
+
+                    if (hSkill.Hp > 0)
+                    {
+                        attacker.Hp.CurrentHp += hSkill.Hp;
+                        if (attacker.Hp.CurrentHp > attacker.Hp.MaxHp)
+                        {
+                            attacker.Hp.CurrentHp = attacker.Hp.MaxHp;
+                        }
+                        ManageScroll.Log(attacker.PcName.Name + "は" + hSkill.Hp + "点のHPが回復した。");
+                    }
+                    if (hSkill.Ap > 0)
+                    {
+                        attacker.Ap.CurrentAp += hSkill.Ap;
+                        if (attacker.Ap.CurrentAp > attacker.Ap.MaxAp)
+                        {
+                            attacker.Ap.CurrentAp = attacker.Ap.MaxAp;
+                        }
+                        ManageScroll.Log(attacker.PcName.Name + "は" + hSkill.Ap + "点のAPが回復した。");
+                    }
+                    if (hSkill.Bs > 0)
+                    {
+
+                    }
+                }
+                else if (majorSkil.Tyep.Equals(Skill.TYPE_ENCHANT))
+                {
+                }
+                else
+                {
+                    attackPhase(attacker);
+                }
                 break;
             case ActionManage.FULL_DEFENSE:
                 ActionManage.AddFulDefense(attacker);
@@ -403,10 +439,10 @@ public class BattleEngine : MonoBehaviour
     {
         //判定値スキル反映
         string attackName = "";
-        int atHit;
-        int atCT;
-        int atFB;
-        int attack;
+        int atHit　= 0;
+        int atCT = 0;
+        int atFB = 0;
+        int attack = 0;
         //通常攻撃
         if (majorSkil == null)
         {
@@ -425,19 +461,24 @@ public class BattleEngine : MonoBehaviour
         //スキル攻撃
         else
         {
-            attackName = majorSkil.Name;
-            atHit = attacker.getHits() + majorSkil.Hits;
-            atCT = attacker.getCritical() + majorSkil.Ct;
-            atFB = attacker.getFumble() + majorSkil.Fb;
-            attacker.Ap.CurrentAp = attacker.Ap.CurrentAp - majorSkil.UseAp;
+            if (majorSkil.Tyep.Equals(Skill.TYPE_ATTACK))
+            {
+                AttackSkill aSkill = (AttackSkill)majorSkil;
 
-            if (majorSkil.isPhysical)
-            {
-                attack = attacker.getPAttack() + majorSkil.Power;
-            }
-            else
-            {
-                attack = attacker.getMAttack() + majorSkil.Power;
+                attackName = majorSkil.Name;
+                atHit = attacker.getHits() + aSkill.Hits;
+                atCT = attacker.getCritical() + aSkill.Ct;
+                atFB = attacker.getFumble() + aSkill.Fb;
+                //attacker.Ap.CurrentAp -= majorSkil.UseAp;
+
+                if (majorSkil.Basic.Contains("物"))
+                {
+                    attack = attacker.getPAttack() + aSkill.Power;
+                }
+                else
+                {
+                    attack = attacker.getMAttack() + aSkill.Power;
+                }
             }
         }
 

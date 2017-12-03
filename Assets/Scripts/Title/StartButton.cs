@@ -184,15 +184,90 @@ public class StartButton : MonoBehaviour {
 
     private Skill getActiveSkill(ActiveSkillPanel asp)
     {
-        Skill skill = new Skill();
+        Skill skill = null;
 
-        skill.Name = asp.getSkillName();
-        //skill.UseAp = Int32.Parse(asp.getUseAP());
-        //skill.Power = Int32.Parse(asp.getPower());
-        //skill.Hits = Int32.Parse(asp.getHits());
-        //skill.Ct = Int32.Parse(asp.getCt());
-        //skill.Fb = Int32.Parse(asp.getFb());
+        if (asp.getEtc().Contains("【付与】")) {
+            EnchantSkill eSkill = new EnchantSkill();
+
+            skill = eSkill;
+        }
+        if (asp.getEtc().Contains("回復"))
+        {
+            HealSkill hSkill = new HealSkill();
+
+            string[] effectAr = setSkillBasicInfo(hSkill, asp).Split('、');
+
+            for (int i = 0; i < effectAr.Length; i++)
+            {
+                if (effectAr[i].Contains("HP回復"))
+                {
+                    hSkill.Hp = Int32.Parse(effectAr[i].Replace("HP回復", ""));
+                    Debug.Log(hSkill.Hp);
+                }
+                if (effectAr[i].Contains("AP回復"))
+                {
+                    hSkill.Ap = Int32.Parse(effectAr[i].Replace("AP回復", ""));
+                    Debug.Log(hSkill.Ap);
+                }
+                if (effectAr[i].Contains("BS回復"))
+                {
+                    hSkill.Bs = Int32.Parse(effectAr[i].Replace("BS回復", ""));
+                    Debug.Log(hSkill.Bs);
+                }
+            }
+            skill = hSkill;
+        }
+        else 
+        {
+            AttackSkill aSkill = new AttackSkill();
+
+            string[] effectAr = setSkillBasicInfo(aSkill,asp).Split('、');
+
+            for (int i = 0; i < effectAr.Length; i++)
+            {
+                if (effectAr[i].Contains("命中"))
+                {
+                    aSkill.Hits = Int32.Parse(effectAr[i].Replace("命中", ""));
+                    Debug.Log(aSkill.Hits);
+                }
+                if (effectAr[i].Contains("物攻"))
+                {
+                    aSkill.Power = Int32.Parse(effectAr[i].Replace("物攻", ""));
+                    Debug.Log(aSkill.Power);
+                }
+                if (effectAr[i].Contains("神攻"))
+                {
+                    aSkill.Power = Int32.Parse(effectAr[i].Replace("神攻", ""));
+                    Debug.Log(aSkill.Power);
+                }
+                if (effectAr[i].Contains("CT"))
+                {
+                    aSkill.Ct = Int32.Parse(effectAr[i].Replace("CT", ""));
+                    Debug.Log(aSkill.Ct);
+                }
+                if (effectAr[i].Contains("FB"))
+                {
+                    aSkill.Fb = Int32.Parse(effectAr[i].Replace("FB", ""));
+                    Debug.Log(aSkill.Fb);
+                }
+            }
+
+            skill = aSkill;
+        }
 
         return skill;
+    }
+
+    private string setSkillBasicInfo(Skill skill, ActiveSkillPanel asp)
+    {
+        skill.Name = asp.getSkillName();
+        skill.Etc = asp.getEtc();
+
+        string[] etcAr = asp.getEtc().Trim().Split('：');
+
+        skill.Basic = etcAr[0];
+        skill.UseAp = Int32.Parse(etcAr[1].Replace("AP", ""));
+
+        return etcAr[2];
     }
 }

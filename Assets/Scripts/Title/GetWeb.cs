@@ -17,6 +17,8 @@ public static class GetWeb {
 
     const string TAIL_NAME = "』</span><br>\\s*?(.*?)<br>";
 
+    const string NAME_REGEX = "<span class=\"title\">.*?</span>.*?<br>(.*?)<br>";
+
     const string DEFAULT_ICON = "https://rev1.reversion.jp/assets/images/default/icon.png";
 
     const string PC_ICON_HEAD = "(https://img.rev1.reversion.jp/illust/";
