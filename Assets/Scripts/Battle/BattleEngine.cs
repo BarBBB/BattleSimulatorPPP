@@ -437,12 +437,15 @@ public class BattleEngine : MonoBehaviour
     //攻防判定
     private void attackRoll(PlayerCharacter attacker, PlayerCharacter defender)
     {
-        //判定値スキル反映
+        //判定値スキル反映用変数
         string attackName = "";
         int atHit　= 0;
         int atCT = 0;
         int atFB = 0;
         int attack = 0;
+        List<Effect> effectList = new List<Effect>();
+        List<BadStatus> bsList = new List<BadStatus>();
+
         //通常攻撃
         if (majorSkil == null)
         {
@@ -469,7 +472,8 @@ public class BattleEngine : MonoBehaviour
                 atHit = attacker.getHits() + aSkill.Hits;
                 atCT = attacker.getCritical() + aSkill.Ct;
                 atFB = attacker.getFumble() + aSkill.Fb;
-                //attacker.Ap.CurrentAp -= majorSkil.UseAp;
+                effectList = aSkill.EffectList;
+                bsList = aSkill.BsList;
 
                 if (majorSkil.Basic.Contains("物"))
                 {
@@ -494,31 +498,51 @@ public class BattleEngine : MonoBehaviour
             return;
         }
 
+        //被攻撃回数カウント
+        int attackedCountPenalty = 0;
+        defender.AttackedCount += 1;
+        if (defender.AttackedCount > 2)
+        {
+            attackedCountPenalty = -5 * (defender.AttackedCount - 2);
+            if (attackedCountPenalty < -50)
+            {
+                attackedCountPenalty = -50;
+            }
+        }
+
         //回避判定
-        int avoid = Judge.avoidRoll(defender.PcName.Name, defender.getAvoid(), defender.getCritical(), defender.getFumble());
+        int avoid = Judge.avoidRoll(defender.PcName.Name, defender.getAvoid() + attackedCountPenalty, defender.getCritical(), defender.getFumble());
         //CTの場合、攻撃終了
         if (avoid > Judge.CF_BOUND)
         {
             ManageScroll.Log(defender.PcName.Name + "はクリティカルで攻撃を回避しました。");
             return;
         }
-
-        //命中 <= 回避の場合、攻撃終了
-        if (hit <= avoid)
+        else if (hit > Judge.CF_BOUND)
         {
-            ManageScroll.Log(attacker.PcName.Name + "の攻撃は回避されました。");
-            return;
+            ManageScroll.Log(attacker.PcName.Name + "の攻撃がクリティカルで命中しました。");
         }
-        ManageScroll.Log(attacker.PcName.Name + "の攻撃の攻撃が命中しました。");
+        else
+        {
+
+            //命中 <= 回避の場合、攻撃終了
+            if (hit <= avoid)
+            {
+                ManageScroll.Log(attacker.PcName.Name + "の攻撃は回避されました。");
+                return;
+            }
+            ManageScroll.Log(attacker.PcName.Name + "の攻撃が命中しました。");
+        }
 
         //命中CTの場合、CT値分命中値を下げる
+        bool avoidFBflg = false;
         if (hit > Judge.CF_BOUND)
         {
             hit -= Judge.CT_VALUE;
+            avoidFBflg = true;
         }
 
         //回避FBの場合、CT値分回避値を上げ回避ファンブルフラグを立てる
-        bool avoidFBflg = false;
         if (avoid < -Judge.CF_BOUND)
         {
             avoid += Judge.CT_VALUE;
@@ -530,14 +554,11 @@ public class BattleEngine : MonoBehaviour
         //ヒットレート算出
         int hitRate = Judge.hitRateRoll(hitCorrect);
 
-        //クリーンヒット以上の場合、BS付与判定
-        addBadStatusJudge(defender);
-
         //ダメージ算出
         int damege = attack * hitRate / 100;
         //ManageScroll.Log("hoge:" + damege);
 
-        //回避FBではない場合、防御技術判定
+        //命中CT回避FBではない場合、防御技術判定
         if (!avoidFBflg)
         {
             ManageScroll.Log(defender.PcName.Name + "は防御を試みた。");
@@ -557,11 +578,15 @@ public class BattleEngine : MonoBehaviour
         //ダメージ処理
         ManageScroll.Log(defender.PcName.Name + "に" + damege + "のダメージ。");
         damegeProcess(defender, damege);
-    }
 
-    //BS付与判定
-    private void addBadStatusJudge(PlayerCharacter pc)
-    {
+        //クリーンヒット以上の場合、BS付与判定
+        foreach (BadStatus bs in bsList)
+        {
+            if (Judge.bsResistJudge(defender.PcName.Name, defender.getResist()))
+            {
+                defender.Bs.BsList.Add(bs);
+            }
+        }
     }
 
     //ダメージ処理
@@ -630,6 +655,8 @@ public class BattleEngine : MonoBehaviour
         {
             //全アクション解除
             ActionManage.DelAllAction(pc);
+            //被攻撃回数初期化
+            pc.AttackedCount = 0;
         }
     }
 }

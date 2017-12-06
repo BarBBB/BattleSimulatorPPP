@@ -21,7 +21,7 @@ public class PlayerCharacter : Token
 
     public BsText Bs;
 
-    public EnchantText enchantText;
+    public EnchantText Enchantt;
 
 
     //private List<Declaration> DeclaratList;
@@ -35,6 +35,8 @@ public class PlayerCharacter : Token
     private Skill skill4;
 
     private int initiative;
+
+    private int attackedCount = 0;
 
     public int Initiative
     {
@@ -101,6 +103,18 @@ public class PlayerCharacter : Token
         }
     }
 
+    public int AttackedCount
+    {
+        get
+        {
+            return attackedCount;
+        }
+
+        set
+        {
+            attackedCount = value;
+        }
+    }
 
     // Use this for initialization
     void Start()
