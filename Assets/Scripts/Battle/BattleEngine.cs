@@ -281,21 +281,35 @@ public class BattleEngine : MonoBehaviour
     {
         foreach (BadStatus bs in pc.Bs.BsList)
         {
+            if (bs.bsHpDamage(pc) > 0)
+            {
+                ManageScroll.Log(pc.PcName.Name + "は" + bs.getName() + "で"　+ bs.bsHpDamage(pc)　+ "点のダメージを受けた。");
+                damegeProcess(pc, bs.bsHpDamage(pc));
+            }
+
+            if (bs.bsApDamage(pc) > 0)
+            {
+                ManageScroll.Log(pc.PcName.Name + "は" + bs.getName() + "で" + bs.bsApDamage(pc) + "点のAPが減少した。");
+                damegeProcess(pc, bs.bsHpDamage(pc));
+            }
         }
     }
 
     //BS自然回復判定
     private void judgeBsRecover(PlayerCharacter pc)
     {
-        //List<string> tempList = new List<string>();
-        //foreach (string bs in pc.Bs.BsList)
-        //{
-        //    if (bs.fade() > 0)
-        //    {
-        //        tempList.Add(bs);
-        //    }
-        //}
-        //pc.Bs.BsList = tempList;
+        List<BadStatus> removeBs = new List<BadStatus>();
+        foreach (BadStatus bs in pc.Bs.BsList)
+        {
+            if (bs.fade() == 0)
+            {
+                removeBs.Add(bs);
+            }
+        }
+        foreach (BadStatus bs in removeBs)
+        {
+            pc.Bs.BsList.Remove(bs);
+        }
     }
 
     //副行動
@@ -347,19 +361,11 @@ public class BattleEngine : MonoBehaviour
                     if (hSkill.Hp > 0)
                     {
                         attacker.Hp.CurrentHp += hSkill.Hp;
-                        if (attacker.Hp.CurrentHp > attacker.Hp.MaxHp)
-                        {
-                            attacker.Hp.CurrentHp = attacker.Hp.MaxHp;
-                        }
                         ManageScroll.Log(attacker.PcName.Name + "は" + hSkill.Hp + "点のHPが回復した。");
                     }
                     if (hSkill.Ap > 0)
                     {
                         attacker.Ap.CurrentAp += hSkill.Ap;
-                        if (attacker.Ap.CurrentAp > attacker.Ap.MaxAp)
-                        {
-                            attacker.Ap.CurrentAp = attacker.Ap.MaxAp;
-                        }
                         ManageScroll.Log(attacker.PcName.Name + "は" + hSkill.Ap + "点のAPが回復した。");
                     }
                     if (hSkill.Bs > 0)
@@ -582,9 +588,10 @@ public class BattleEngine : MonoBehaviour
         //クリーンヒット以上の場合、BS付与判定
         foreach (BadStatus bs in bsList)
         {
-            if (Judge.bsResistJudge(defender.PcName.Name, defender.getResist()))
+            if (!Judge.bsResistJudge(defender.PcName.Name, defender.getResist()))
             {
                 defender.Bs.BsList.Add(bs);
+                ManageScroll.Log(defender.PcName.Name + "は" + bs.getName() + "状態になった。");
             }
         }
     }

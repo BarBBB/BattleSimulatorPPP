@@ -9,7 +9,7 @@
 
     public int fade()
     {
-        return fading--;
+        return --fading;
     }
 
     virtual public int bsHpDamage(PlayerCharacter pc)

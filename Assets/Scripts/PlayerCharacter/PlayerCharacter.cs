@@ -148,10 +148,10 @@ public class PlayerCharacter : Token
         Title.Title = pc.Title;
         PcName.Name = pc.PcName;
 
-        Hp.CurrentHp = baseParam.MaxHP;
         Hp.MaxHp = baseParam.MaxHP;
-        Ap.CurrentAp = baseParam.MaxAP;
+        Hp.CurrentHp = baseParam.MaxHP;
         Ap.MaxAp = baseParam.MaxAP;
+        Ap.CurrentAp = baseParam.MaxAP;
 
         Skill1 = pc.Skill1;
         if (Skill1 != null) {

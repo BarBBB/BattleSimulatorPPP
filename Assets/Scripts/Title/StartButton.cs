@@ -217,7 +217,7 @@ public class StartButton : MonoBehaviour {
             }
             skill = hSkill;
         }
-        else 
+        else if (asp.getEtc().Contains("：AP"))
         {
             AttackSkill aSkill = new AttackSkill();
 
@@ -225,27 +225,26 @@ public class StartButton : MonoBehaviour {
 
             for (int i = 0; i < effectAr.Length; i++)
             {
-                if (effectAr[i].Contains("命中"))
+                if (effectAr[i].Contains("【"))
+                {
+                    setEffecOrtBs(aSkill,effectAr[i]);
+                }else if (effectAr[i].Contains("命中"))
                 {
                     aSkill.Hits = Int32.Parse(effectAr[i].Replace("命中", ""));
                     Debug.Log(aSkill.Hits);
-                }
-                if (effectAr[i].Contains("物攻"))
+                }else if (effectAr[i].Contains("物攻"))
                 {
                     aSkill.Power = Int32.Parse(effectAr[i].Replace("物攻", ""));
                     Debug.Log(aSkill.Power);
-                }
-                if (effectAr[i].Contains("神攻"))
+                }else if (effectAr[i].Contains("神攻"))
                 {
                     aSkill.Power = Int32.Parse(effectAr[i].Replace("神攻", ""));
                     Debug.Log(aSkill.Power);
-                }
-                if (effectAr[i].Contains("CT"))
+                }else if (effectAr[i].Contains("CT"))
                 {
                     aSkill.Ct = Int32.Parse(effectAr[i].Replace("CT", ""));
                     Debug.Log(aSkill.Ct);
-                }
-                if (effectAr[i].Contains("FB"))
+                }else if (effectAr[i].Contains("FB"))
                 {
                     aSkill.Fb = Int32.Parse(effectAr[i].Replace("FB", ""));
                     Debug.Log(aSkill.Fb);
@@ -258,10 +257,39 @@ public class StartButton : MonoBehaviour {
         return skill;
     }
 
+    private void setEffecOrtBs(AttackSkill aSkill, string text)
+    {
+        if (text.Contains("毒"))
+        {
+            aSkill.BsList.Add(new Poison1());
+        }
+        else if (text.Contains("猛毒"))
+        {
+            aSkill.BsList.Add(new Poison2());
+        }
+        else if (text.Contains("死毒"))
+        {
+            aSkill.BsList.Add(new Poison3());
+        }
+        else if (text.Contains("火炎"))
+        {
+            aSkill.BsList.Add(new Fire1());
+        }
+        else if (text.Contains("業炎"))
+        {
+            aSkill.BsList.Add(new Fire2());
+        }
+        else if (text.Contains("炎獄"))
+        {
+            aSkill.BsList.Add(new Fire3());
+        }
+    }
+
     private string setSkillBasicInfo(Skill skill, ActiveSkillPanel asp)
     {
         skill.Name = asp.getSkillName();
         skill.Etc = asp.getEtc();
+        Debug.Log("skill.Etc:" + skill.Etc);
 
         string[] etcAr = asp.getEtc().Trim().Split('：');
 

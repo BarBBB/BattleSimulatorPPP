@@ -12,9 +12,9 @@ public class AttackSkill : Skill{
 
     private int fb = 0;
 
-    private List<Effect> effectList;
+    private List<Effect> effectList = new List<Effect>();
 
-    private List<BadStatus> bsList;
+    private List<BadStatus> bsList = new List<BadStatus>();
 
     public AttackSkill()
     {
