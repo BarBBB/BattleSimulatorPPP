@@ -1,15 +1,27 @@
 ﻿public class BadStatus
 {
-    private int fading;
+    public const int START_COUNT = 3;
+
+    private int count;
 
     public BadStatus()
     {
-        fading = 3;
+        init();
+    }
+
+    public void init()
+    {
+        count = START_COUNT;
     }
 
     public int fade()
     {
-        return --fading;
+        return --count;
+    }
+
+    public int getCount()
+    {
+        return count;
     }
 
     virtual public int bsHpDamage(PlayerCharacter pc)

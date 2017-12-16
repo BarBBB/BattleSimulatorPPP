@@ -19,13 +19,15 @@ public class BsText : MonoBehaviour {
 
         foreach (BadStatus bs in BsList)
         {
+            int count = BadStatus.START_COUNT - bs.getCount();
+            string bsStr = bs.getName() + "(" + count + ")";
             if (bsText == "")
             {
-                bsText = bs.getName();
+                bsText = bsStr;
             }
             else
             {
-                bsText += "," + bs.getName();
+                bsText += "," + bsStr;
             }
         }
 

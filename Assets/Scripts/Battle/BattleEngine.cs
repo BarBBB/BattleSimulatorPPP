@@ -309,6 +309,7 @@ public class BattleEngine : MonoBehaviour
         foreach (BadStatus bs in removeBs)
         {
             pc.Bs.BsList.Remove(bs);
+            ManageScroll.Log(pc.PcName.Name + "の" + bs.getName() + "状態が回復した。");
         }
     }
 
@@ -569,7 +570,7 @@ public class BattleEngine : MonoBehaviour
         {
             ManageScroll.Log(defender.PcName.Name + "は防御を試みた。");
             //防御技術判定で防御レート算出
-            int defeseRate = Judge.defenseRateRoll(defender.PcName.Name, defender.getDefense());
+            int defeseRate = Judge.defenseRateRoll(defender.PcName.Name, defender.getDefense(), defender.getCritical(), defender.getFumble());
             //防御レートだけダメージを軽減
             //ManageScroll.Log("foo:" + damege);
             damege -=  damege * defeseRate / 100;
@@ -588,10 +589,17 @@ public class BattleEngine : MonoBehaviour
         //クリーンヒット以上の場合、BS付与判定
         foreach (BadStatus bs in bsList)
         {
-            if (!Judge.bsResistJudge(defender.PcName.Name, defender.getResist()))
+            if (!Judge.bsResistJudge(defender.PcName.Name, defender.getResist(), defender.getCritical(), defender.getFumble()))
             {
-                defender.Bs.BsList.Add(bs);
-                ManageScroll.Log(defender.PcName.Name + "は" + bs.getName() + "状態になった。");
+                BadStatus currentBs = defender.Bs.BsList.Find( x => x.getName().Equals(bs.getName()));
+                if (currentBs != null) {
+                    currentBs.init();
+                    ManageScroll.Log(defender.PcName.Name + "の" + bs.getName() + "状態の回復判定数がリセットされた。");
+                }
+                else {
+                    defender.Bs.BsList.Add(bs);
+                    ManageScroll.Log(defender.PcName.Name + "は" + bs.getName() + "状態になった。");
+                }
             }
         }
     }
