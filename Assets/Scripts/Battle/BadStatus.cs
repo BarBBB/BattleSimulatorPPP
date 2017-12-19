@@ -2,7 +2,11 @@
 {
     public const int START_COUNT = 3;
 
+    public Parameter Param = new Parameter();
+
     private int count;
+
+    protected string name = "BS";
 
     public BadStatus()
     {
@@ -34,8 +38,8 @@
         return 0;
     }
 
-    virtual public string getName()
+    public string getName()
     {
-        return "BS";
+        return name;
     }
 }

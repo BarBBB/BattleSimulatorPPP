@@ -5,8 +5,6 @@ public class PlayerCharacter : Token
 {
     public PcParameter baseParam = new PcParameter();
 
-    public PcParameter paramCorrect = new PcParameter();
-
     public RawImage icon;
 
     public TitleText Title;
@@ -22,9 +20,6 @@ public class PlayerCharacter : Token
     public BsText Bs;
 
     public EnchantText Enchantt;
-
-
-    //private List<Declaration> DeclaratList;
 
     private Skill skill1;
 
@@ -165,51 +160,51 @@ public class PlayerCharacter : Token
 
     public int getPAttack()
     {
-        return baseParam.PAttack + paramCorrect.PAttack;
+        return baseParam.PAttack + Action.getPAttack();
     }
     public int getMAttack()
     {
-        return baseParam.MAttack + paramCorrect.MAttack;
+        return baseParam.MAttack + Action.getMAttack();
     }
     public int getExf()
     {
-        return baseParam.Exf + paramCorrect.Exf;
+        return baseParam.Exf + Action.getExf();
     }
     public int getDefense()
     {
-        return baseParam.Defense + paramCorrect.Defense;
+        return baseParam.Defense + Action.getDefense();
     }
     public int getResist()
     {
-        return baseParam.Resist + paramCorrect.Resist;
+        return baseParam.Resist + Action.getResist();
     }
     public int getExa()
     {
-        return baseParam.Exa + paramCorrect.Exa;
+        return baseParam.Exa + Action.getExa();
     }
     public int getHits()
     {
-        return baseParam.Hits + paramCorrect.Hits;
+        return baseParam.Hits + Action.getHits();
     }
     public int getAvoid()
     {
-        return baseParam.Avoid + paramCorrect.Avoid;
+        return baseParam.Avoid + Action.getAvoid();
     }
     public int getCritical()
     {
-        return baseParam.Critical + paramCorrect.Critical;
+        return baseParam.Critical + Action.getCritical();
     }
-    public int getRaction()
+    public int getReaction()
     {
-        return baseParam.Reaction + paramCorrect.Reaction;
+        return baseParam.Reaction + Action.getReaction();
     }
     public int getMobility()
     {
-        return baseParam.Mobility + paramCorrect.Mobility;
+        return baseParam.Mobility + Action.getMobility();
     }
 
     public int getFumble()
     {
-        return baseParam.Fumble + paramCorrect.Fumble;
+        return baseParam.Fumble + Action.getFumble();
     }
 }

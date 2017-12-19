@@ -1,8 +1,8 @@
-﻿public class Poison1 : BadStatus
+﻿public class Bloody1 : BadStatus
 {
-    public Poison1()
+    public Bloody1()
     {
-        name = "毒";
+        name = "出血";
     }
 
     override public int bsHpDamage(PlayerCharacter pc)

@@ -160,7 +160,7 @@ public class BattleEngine : MonoBehaviour
         foreach (PlayerCharacter pc in PcList)
         {
             //反応判定
-            pc.Initiative = Judge.initiativeRoll(pc.PcName.Name, pc.getRaction());
+            pc.Initiative = Judge.initiativeRoll(pc.PcName.Name, pc.getReaction());
             //未行動PCリストに追加
             initiativeList.Add(pc);
         }
@@ -324,7 +324,7 @@ public class BattleEngine : MonoBehaviour
             case ActionManage.MOVE:
                 break;
             case ActionManage.ATTACK_CONCENT:
-                ActionManage.AddlAttackConcent(pc);
+                ActionManage.AddAttackConcent(pc);
                 break;
             case ActionManage.DEFENSE_CONCENT:
                 ActionManage.AddDefenseConcent(pc);
@@ -668,8 +668,8 @@ public class BattleEngine : MonoBehaviour
         //全てのPCに対して
         foreach (PlayerCharacter pc in PcList)
         {
-            //全アクション解除
-            ActionManage.DelAllAction(pc);
+            //ターン中アクション解除
+            ActionManage.DelTurnAction(pc);
             //被攻撃回数初期化
             pc.AttackedCount = 0;
         }
