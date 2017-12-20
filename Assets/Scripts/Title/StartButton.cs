@@ -227,7 +227,7 @@ public class StartButton : MonoBehaviour {
             {
                 if (effectAr[i].Contains("【"))
                 {
-                    setEffecOrtBs(aSkill,effectAr[i]);
+                    setBs(aSkill,effectAr[i]);
                 }else if (effectAr[i].Contains("命中"))
                 {
                     aSkill.Hits = Int32.Parse(effectAr[i].Replace("命中", ""));
@@ -257,7 +257,7 @@ public class StartButton : MonoBehaviour {
         return skill;
     }
 
-    private void setEffecOrtBs(AttackSkill aSkill, string text)
+    private void setBs(AttackSkill aSkill, string text)
     {
         if (text.Contains("毒"))
         {
@@ -282,6 +282,78 @@ public class StartButton : MonoBehaviour {
         else if (text.Contains("炎獄"))
         {
             aSkill.BsList.Add(new Fire3());
+        }
+        else if (text.Contains("凍結"))
+        {
+            aSkill.BsList.Add(new Ice1());
+        }
+        else if (text.Contains("氷結"))
+        {
+            aSkill.BsList.Add(new Ice2());
+        }
+        else if (text.Contains("氷漬"))
+        {
+            aSkill.BsList.Add(new Ice3());
+        }
+        else if (text.Contains("痺れ"))
+        {
+            aSkill.BsList.Add(new Shock1());
+        }
+        else if (text.Contains("ショック"))
+        {
+            aSkill.BsList.Add(new Shock2());
+        }
+        else if (text.Contains("感電"))
+        {
+            aSkill.BsList.Add(new Shock3());
+        }
+        else if (text.Contains("乱れ"))
+        {
+            aSkill.BsList.Add(new Disturbe1());
+        }
+        else if (text.Contains("崩れ"))
+        {
+            aSkill.BsList.Add(new Disturbe2());
+        }
+        else if (text.Contains("体勢不利"))
+        {
+            aSkill.BsList.Add(new Disturbe3());
+        }
+        else if (text.Contains("出血"))
+        {
+            aSkill.BsList.Add(new Bloody1());
+        }
+        else if (text.Contains("流血"))
+        {
+            aSkill.BsList.Add(new Bloody2());
+        }
+        else if (text.Contains("失血"))
+        {
+            aSkill.BsList.Add(new Bloody3());
+        }
+        else if (text.Contains("窒息"))
+        {
+            aSkill.BsList.Add(new Agony1());
+        }
+        else if (text.Contains("苦鳴"))
+        {
+            aSkill.BsList.Add(new Agony2());
+        }
+        else if (text.Contains("懊悩"))
+        {
+            aSkill.BsList.Add(new Agony3());
+        }
+        else if (text.Contains("足止"))
+        {
+            aSkill.BsList.Add(new Stasis1());
+        }
+        else if (text.Contains("泥沼"))
+        {
+            aSkill.BsList.Add(new Stasis2());
+        }
+        else if (text.Contains("停滞"))
+        {
+            aSkill.BsList.Add(new Stasis3());
         }
     }
 

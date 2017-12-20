@@ -194,8 +194,14 @@ public class BattleEngine : MonoBehaviour
             ManageScroll.Log(turnPC.PcName.Name + ">【メインプロセス：待機】反応値：" + (0 + turnPC.Initiative + Judge.STAND_BY));
         }
 
-        //待機宣言
-        yield return waitAction(turnPC);
+        //最後の一人なら待機宣言無し
+        if (initiativeList.Count == 1) {
+            waitFlg = false;
+        }
+        else {
+            //待機宣言
+            yield return waitAction(turnPC);
+        }
 
         //待機の場合
         if (waitFlg)

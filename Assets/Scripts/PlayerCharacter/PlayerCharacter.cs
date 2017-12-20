@@ -160,51 +160,51 @@ public class PlayerCharacter : Token
 
     public int getPAttack()
     {
-        return baseParam.PAttack + Action.getPAttack();
+        return baseParam.PAttack + Action.getPAttack() + Bs.getPAttack();
     }
     public int getMAttack()
     {
-        return baseParam.MAttack + Action.getMAttack();
+        return baseParam.MAttack + Action.getMAttack() + Bs.getMAttack();
     }
     public int getExf()
     {
-        return baseParam.Exf + Action.getExf();
+        return baseParam.Exf + Action.getExf() + Bs.getExf();
     }
     public int getDefense()
     {
-        return baseParam.Defense + Action.getDefense();
+        return baseParam.Defense + Action.getDefense() + Bs.getDefense();
     }
     public int getResist()
     {
-        return baseParam.Resist + Action.getResist();
+        return baseParam.Resist + Action.getResist() + Bs.getResist();
     }
     public int getExa()
     {
-        return baseParam.Exa + Action.getExa();
+        return baseParam.Exa + Action.getExa() + Bs.getExa();
     }
     public int getHits()
     {
-        return baseParam.Hits + Action.getHits();
+        return baseParam.Hits + Action.getHits() + Bs.getHits();
     }
     public int getAvoid()
     {
-        return baseParam.Avoid + Action.getAvoid();
+        return baseParam.Avoid + Action.getAvoid() + Bs.getAvoid();
     }
     public int getCritical()
     {
-        return baseParam.Critical + Action.getCritical();
+        return baseParam.Critical + Action.getCritical() + Bs.getCritical();
     }
     public int getReaction()
     {
-        return baseParam.Reaction + Action.getReaction();
+        return baseParam.Reaction + Action.getReaction() + Bs.getReaction();
     }
     public int getMobility()
     {
-        return baseParam.Mobility + Action.getMobility();
+        return baseParam.Mobility + Action.getMobility() + Bs.getMobility();
     }
 
     public int getFumble()
     {
-        return baseParam.Fumble + Action.getFumble();
+        return baseParam.Fumble + Action.getFumble() + Bs.getFumble();
     }
 }

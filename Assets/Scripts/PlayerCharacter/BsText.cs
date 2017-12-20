@@ -34,53 +34,125 @@ public class BsText : MonoBehaviour {
         this.GetComponent<Text>().text = "BS：" + bsText;
     }
 
-    //public int getPAttack()
-    //{
-    //    return baseParam.PAttack + paramCorrect.PAttack;
-    //}
-    //public int getMAttack()
-    //{
-    //    return baseParam.MAttack + paramCorrect.MAttack;
-    //}
-    //public int getExf()
-    //{
-    //    return baseParam.Exf + paramCorrect.Exf;
-    //}
-    //public int getDefense()
-    //{
-    //    return baseParam.Defense + paramCorrect.Defense;
-    //}
-    //public int getResist()
-    //{
-    //    return baseParam.Resist + paramCorrect.Resist;
-    //}
-    //public int getExa()
-    //{
-    //    return baseParam.Exa + paramCorrect.Exa;
-    //}
-    //public int getHits()
-    //{
-    //    return baseParam.Hits + paramCorrect.Hits;
-    //}
-    //public int getAvoid()
-    //{
-    //    return baseParam.Avoid + paramCorrect.Avoid;
-    //}
-    //public int getCritical()
-    //{
-    //    return baseParam.Critical + paramCorrect.Critical;
-    //}
-    //public int getRaction()
-    //{
-    //    return baseParam.Reaction + paramCorrect.Reaction;
-    //}
-    //public int getMobility()
-    //{
-    //    return baseParam.Mobility + paramCorrect.Mobility;
-    //}
+    public int getPAttack()
+    {
+        int value = 0;
+        foreach (BadStatus bs in BsList)
+        {
+            value += bs.Param.PAttack;
+        }
 
-    //public int getFumble()
-    //{
-    //    return baseParam.Fumble + paramCorrect.Fumble;
-    //}
+        return value;
+    }
+    public int getMAttack()
+    {
+        int value = 0;
+        foreach (BadStatus bs in BsList)
+        {
+            value += bs.Param.MAttack;
+        }
+
+        return value;
+    }
+    public int getExf()
+    {
+        int value = 0;
+        foreach (BadStatus bs in BsList)
+        {
+            value += bs.Param.Exf;
+        }
+
+        return value;
+    }
+    public int getDefense()
+    {
+        int value = 0;
+        foreach (BadStatus bs in BsList)
+        {
+            value += bs.Param.Defense;
+        }
+
+        return value;
+    }
+    public int getResist()
+    {
+        int value = 0;
+        foreach (BadStatus bs in BsList)
+        {
+            value += bs.Param.Resist;
+        }
+
+        return value;
+    }
+    public int getExa()
+    {
+        int value = 0;
+        foreach (BadStatus bs in BsList)
+        {
+            value += bs.Param.Exa;
+        }
+
+        return value;
+    }
+    public int getHits()
+    {
+        int value = 0;
+        foreach (BadStatus bs in BsList)
+        {
+            value += bs.Param.Hits;
+        }
+
+        return value;
+    }
+    public int getAvoid()
+    {
+        int value = 0;
+        foreach (BadStatus bs in BsList)
+        {
+            value += bs.Param.Avoid;
+        }
+
+        return value;
+    }
+    public int getCritical()
+    {
+        int value = 0;
+        foreach (BadStatus bs in BsList)
+        {
+            value += bs.Param.Critical;
+        }
+
+        return value;
+    }
+    public int getReaction()
+    {
+        int value = 0;
+        foreach (BadStatus bs in BsList)
+        {
+            value += bs.Param.Reaction;
+        }
+
+        return value;
+    }
+    public int getMobility()
+    {
+        int value = 0;
+        foreach (BadStatus bs in BsList)
+        {
+            value += bs.Param.Mobility;
+        }
+
+        return value;
+    }
+
+    public int getFumble()
+    {
+        int value = 0;
+        foreach (BadStatus bs in BsList)
+        {
+            value += bs.Param.Fumble;
+        }
+
+        return value;
+    }
 }
