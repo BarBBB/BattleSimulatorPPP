@@ -17,7 +17,9 @@ public class BattleEngine : MonoBehaviour
 
     public GameObject winnerPanel;
 
-    public GameObject skillPanel;
+    public GameObject majorSkillPanel;
+
+    public GameObject minorSkillPanel;
 
     public PlayerCharacter pcWin1;
 
@@ -64,7 +66,8 @@ public class BattleEngine : MonoBehaviour
         minorActionPanel.SetActive(false);
         waitPanel.SetActive(false);
         winnerPanel.SetActive(false);
-        skillPanel.SetActive(false);
+        majorSkillPanel.SetActive(false);
+        minorSkillPanel.SetActive(false);
 
         flg = true;
         StartCoroutine(battleSequence());
@@ -99,7 +102,8 @@ public class BattleEngine : MonoBehaviour
         minorActionPanel.SetActive(false);
         majorActionPanel.SetActive(false);
         waitPanel.SetActive(false);
-        skillPanel.SetActive(false);
+        majorSkillPanel.SetActive(false);
+        minorSkillPanel.SetActive(false);
         flg = true;
         majorSkil = skill;
     }
@@ -341,6 +345,9 @@ public class BattleEngine : MonoBehaviour
                 break;
             case ActionManage.BASE_ACTION:
                 break;
+            case ActionManage.SKILL_ATTACK:
+                doEnchantSkill(pc);
+                break;
         }
     }
 
@@ -382,18 +389,7 @@ public class BattleEngine : MonoBehaviour
                 }
                 else if (majorSkil.Tyep.Equals(Skill.TYPE_ENCHANT))
                 {
-                    EnchantSkill eSkill =(EnchantSkill)majorSkil;
-                    EnchantSkill currentES = attacker.Enchantt.EnchantList.Find(x => x.getName().Equals(eSkill.getName()));
-                    if (currentES != null)
-                    {
-                        eSkill.init();
-                        ManageScroll.Log(attacker.PcName.Name + "の" + eSkill.getName() + "の持続ターン数がリセットされた。");
-                    }
-                    else
-                    {
-                        attacker.Enchantt.EnchantList.Add(eSkill);
-                        ManageScroll.Log(attacker.PcName.Name + "は" + eSkill.getName() + "を付与した。");
-                    }
+                    doEnchantSkill(attacker);
                 }
                 else
                 {
@@ -412,6 +408,22 @@ public class BattleEngine : MonoBehaviour
             case ActionManage.COVER_UP:
                 coverUp(attacker);
                 break;
+        }
+    }
+
+    private void doEnchantSkill(PlayerCharacter attacker)
+    {
+        EnchantSkill eSkill = (EnchantSkill)majorSkil;
+        EnchantSkill currentES = attacker.Enchantt.EnchantList.Find(x => x.getName().Equals(eSkill.getName()));
+        if (currentES != null)
+        {
+            eSkill.init();
+            ManageScroll.Log(attacker.PcName.Name + "の" + eSkill.getName() + "の持続ターン数がリセットされた。");
+        }
+        else
+        {
+            attacker.Enchantt.EnchantList.Add(eSkill);
+            ManageScroll.Log(attacker.PcName.Name + "は" + eSkill.getName() + "を付与した。");
         }
     }
 

@@ -12,7 +12,7 @@ public class SkillButton : ActionButton
 
     private Skill thisSkil;
 
-    public void ReadyButton(Skill skill, int ap)
+    public void ReadyButton(Skill skill, int ap, bool isMinor)
     {
         Debug.Log(this);
         thisSkil = skill;
@@ -23,7 +23,15 @@ public class SkillButton : ActionButton
 
         if (skill.UseAp <= ap)
         {
-            bt.interactable = true;
+            if (isMinor) {
+                if (skill.IsMiner) {
+                    bt.interactable = true;
+                }
+            }
+            else
+            {
+                bt.interactable = true;
+            }
         }
         else
         {

@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-public class SkillAttackButton : MonoBehaviour {
+public class MinorSkillButton : MonoBehaviour {
 
-    public MajerActionPanel MajorActionPanel;
+    public MinorActionPanel MajorActionPanel;
 
     public GameObject SkillPanel;
 
@@ -26,10 +26,10 @@ public class SkillAttackButton : MonoBehaviour {
         {
             SkillPanel.SetActive(true);
             Debug.Log(this);
-            PlayerCharacter pc = MajorActionPanel.MajerActionPc;
+            PlayerCharacter pc = MajorActionPanel.MinorActionPc;
 
             SkillPanel sp = SkillPanel.GetComponent<SkillPanel>();
-            sp.ReadyWiindow(pc, false);
+            sp.ReadyWiindow(pc, true);
         }
     }
 }

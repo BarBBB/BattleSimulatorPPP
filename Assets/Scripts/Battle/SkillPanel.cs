@@ -22,20 +22,20 @@ public class SkillPanel : MonoBehaviour {
 		
 	}
 
-    public void ReadyWiindow(PlayerCharacter pc)
+    public void ReadyWiindow(PlayerCharacter pc, bool isMinor)
     {
         Debug.Log(this);
         Debug.Log(pc.Skill1);
         if (pc.Skill1 != null)
         {
-            SkillButton1.ReadyButton(pc.Skill1, pc.Ap.CurrentAp);
+            SkillButton1.ReadyButton(pc.Skill1, pc.Ap.CurrentAp, isMinor);
         } else
         {
             SkillButton1.ResetButton();
         }
         if (pc.Skill2 != null)
         {
-            SkillButton2.ReadyButton(pc.Skill2, pc.Ap.CurrentAp);
+            SkillButton2.ReadyButton(pc.Skill2, pc.Ap.CurrentAp, isMinor);
         }
         else
         {
@@ -43,7 +43,7 @@ public class SkillPanel : MonoBehaviour {
         }
         if (pc.Skill3 != null)
         {
-            SkillButton3.ReadyButton(pc.Skill3, pc.Ap.CurrentAp);
+            SkillButton3.ReadyButton(pc.Skill3, pc.Ap.CurrentAp, isMinor);
         }
         else
         {
@@ -51,7 +51,7 @@ public class SkillPanel : MonoBehaviour {
         }
         if (pc.Skill4 != null)
         {
-            SkillButton4.ReadyButton(pc.Skill4, pc.Ap.CurrentAp);
+            SkillButton4.ReadyButton(pc.Skill4, pc.Ap.CurrentAp, isMinor);
         }
         else
         {

@@ -188,6 +188,7 @@ public class StartButton : MonoBehaviour {
 
         if (asp.getEtc().Contains("自付与")) {
             EnchantSkill eSkill = new EnchantSkill(false);
+            eSkill.IsMiner = true;
 
             string[] effectAr = setSkillBasicInfo(eSkill, asp).Split('、');
 
@@ -385,11 +386,6 @@ public class StartButton : MonoBehaviour {
 
         skill.Basic = etcAr[0];
         skill.UseAp = Int32.Parse(etcAr[1].Replace("AP", ""));
-
-        if (asp.getEtc().Contains("【副】"))
-        {
-            skill.IsMiner = true;
-        }
 
         return etcAr[2];
     }
