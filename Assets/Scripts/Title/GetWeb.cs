@@ -52,7 +52,7 @@ public static class GetWeb {
         if (m.Success)
         {
             pcParam.Skill1 = new Skill();
-            pcParam.Skill1.Name = m.Groups[1].Value;
+            pcParam.Skill1.setName(m.Groups[1].Value);
             pcParam.Skill1.Etc = m.Groups[2].Value;
         }
         else
@@ -64,7 +64,7 @@ public static class GetWeb {
         if (m.Success)
         {
             pcParam.Skill2 = new Skill();
-            pcParam.Skill2.Name = m.Groups[1].Value;
+            pcParam.Skill2.setName(m.Groups[1].Value);
             pcParam.Skill2.Etc = m.Groups[2].Value;
         }
         else
@@ -76,7 +76,7 @@ public static class GetWeb {
         if (m.Success)
         {
             pcParam.Skill3 = new Skill();
-            pcParam.Skill3.Name = m.Groups[1].Value;
+            pcParam.Skill3.setName(m.Groups[1].Value);
             pcParam.Skill3.Etc = m.Groups[2].Value;
         }
         else
@@ -88,7 +88,7 @@ public static class GetWeb {
         if (m.Success)
         {
             pcParam.Skill4 = new Skill();
-            pcParam.Skill4.Name = m.Groups[1].Value;
+            pcParam.Skill4.setName(m.Groups[1].Value);
             pcParam.Skill4.Etc = m.Groups[2].Value;
         }
         else

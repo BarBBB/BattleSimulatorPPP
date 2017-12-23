@@ -17,7 +17,7 @@ public class SkillButton : ActionButton
         Debug.Log(this);
         thisSkil = skill;
 
-        text.text = HEADER + skill.UseAp + SPLIT + skill.Name;
+        text.text = HEADER + skill.UseAp + SPLIT + skill.getName();
         Debug.Log(text.text);
         Button bt = this.GetComponent<Button>();
 

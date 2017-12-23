@@ -150,7 +150,7 @@ public class PlayerCharacter : Token
 
         Skill1 = pc.Skill1;
         if (Skill1 != null) {
-            Debug.Log("Skill1.Name:" + Skill1.Name);
+            Debug.Log("Skill1.Name:" + Skill1.getName());
         }
         Skill2 = pc.Skill2;
         Skill3 = pc.Skill3;
@@ -160,51 +160,51 @@ public class PlayerCharacter : Token
 
     public int getPAttack()
     {
-        return baseParam.PAttack + Action.getPAttack() + Bs.getPAttack();
+        return baseParam.PAttack + Action.getPAttack() + Bs.getPAttack() + Enchantt.getPAttack();
     }
     public int getMAttack()
     {
-        return baseParam.MAttack + Action.getMAttack() + Bs.getMAttack();
+        return baseParam.MAttack + Action.getMAttack() + Bs.getMAttack() + Enchantt.getMAttack();
     }
     public int getExf()
     {
-        return baseParam.Exf + Action.getExf() + Bs.getExf();
+        return baseParam.Exf + Action.getExf() + Bs.getExf() + Enchantt.getExf();
     }
     public int getDefense()
     {
-        return baseParam.Defense + Action.getDefense() + Bs.getDefense();
+        return baseParam.Defense + Action.getDefense() + Bs.getDefense() + Enchantt.getDefense();
     }
     public int getResist()
     {
-        return baseParam.Resist + Action.getResist() + Bs.getResist();
+        return baseParam.Resist + Action.getResist() + Bs.getResist() + Enchantt.getResist();
     }
     public int getExa()
     {
-        return baseParam.Exa + Action.getExa() + Bs.getExa();
+        return baseParam.Exa + Action.getExa() + Bs.getExa() + Enchantt.getExa();
     }
     public int getHits()
     {
-        return baseParam.Hits + Action.getHits() + Bs.getHits();
+        return baseParam.Hits + Action.getHits() + Bs.getHits() + Enchantt.getHits();
     }
     public int getAvoid()
     {
-        return baseParam.Avoid + Action.getAvoid() + Bs.getAvoid();
+        return baseParam.Avoid + Action.getAvoid() + Bs.getAvoid() + Enchantt.getAvoid();
     }
     public int getCritical()
     {
-        return baseParam.Critical + Action.getCritical() + Bs.getCritical();
+        return baseParam.Critical + Action.getCritical() + Bs.getCritical() + Enchantt.getCritical();
     }
     public int getReaction()
     {
-        return baseParam.Reaction + Action.getReaction() + Bs.getReaction();
+        return baseParam.Reaction + Action.getReaction() + Bs.getReaction() + Enchantt.getReaction();
     }
     public int getMobility()
     {
-        return baseParam.Mobility + Action.getMobility() + Bs.getMobility();
+        return baseParam.Mobility + Action.getMobility() + Bs.getMobility() + Enchantt.getMobility();
     }
 
     public int getFumble()
     {
-        return baseParam.Fumble + Action.getFumble() + Bs.getFumble();
+        return baseParam.Fumble + Action.getFumble() + Bs.getFumble() + Enchantt.getFumble();
     }
 }

@@ -111,22 +111,22 @@ public class PcInputWindow : MonoBehaviour {
 
         if (pcParam.Skill1 != null)
         {
-            activeSkillPanel1.setSkillName(pcParam.Skill1.Name);
+            activeSkillPanel1.setSkillName(pcParam.Skill1.getName());
             activeSkillPanel1.setEtc(pcParam.Skill1.Etc);
         }
         if (pcParam.Skill2 != null)
         {
-            activeSkillPanel2.setSkillName(pcParam.Skill2.Name);
+            activeSkillPanel2.setSkillName(pcParam.Skill2.getName());
             activeSkillPanel2.setEtc(pcParam.Skill2.Etc);
         }
         if (pcParam.Skill3 != null)
         {
-            activeSkillPanel3.setSkillName(pcParam.Skill3.Name);
+            activeSkillPanel3.setSkillName(pcParam.Skill3.getName());
             activeSkillPanel3.setEtc(pcParam.Skill3.Etc);
         }
         if (pcParam.Skill4 != null)
         {
-            activeSkillPanel4.setSkillName(pcParam.Skill4.Name);
+            activeSkillPanel4.setSkillName(pcParam.Skill4.getName());
             activeSkillPanel4.setEtc(pcParam.Skill4.Etc);
         }
     }

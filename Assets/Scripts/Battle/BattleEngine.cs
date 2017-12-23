@@ -363,7 +363,7 @@ public class BattleEngine : MonoBehaviour
                 if (majorSkil.Tyep.Equals(Skill.TYPE_HEAL))
                 {
                     HealSkill hSkill = (HealSkill)majorSkil;
-                    ManageScroll.Log(attacker.PcName.Name + "は" + hSkill.Name + "を使用した。");
+                    ManageScroll.Log(attacker.PcName.Name + "は" + hSkill.getName() + "を使用した。");
 
                     if (hSkill.Hp > 0)
                     {
@@ -382,6 +382,18 @@ public class BattleEngine : MonoBehaviour
                 }
                 else if (majorSkil.Tyep.Equals(Skill.TYPE_ENCHANT))
                 {
+                    EnchantSkill eSkill =(EnchantSkill)majorSkil;
+                    EnchantSkill currentES = attacker.Enchantt.EnchantList.Find(x => x.getName().Equals(eSkill.getName()));
+                    if (currentES != null)
+                    {
+                        eSkill.init();
+                        ManageScroll.Log(attacker.PcName.Name + "の" + eSkill.getName() + "の持続ターン数がリセットされた。");
+                    }
+                    else
+                    {
+                        attacker.Enchantt.EnchantList.Add(eSkill);
+                        ManageScroll.Log(attacker.PcName.Name + "は" + eSkill.getName() + "を付与した。");
+                    }
                 }
                 else
                 {
@@ -481,7 +493,7 @@ public class BattleEngine : MonoBehaviour
             {
                 AttackSkill aSkill = (AttackSkill)majorSkil;
 
-                attackName = majorSkil.Name;
+                attackName = majorSkil.getName();
                 atHit = attacker.getHits() + aSkill.Hits;
                 atCT = attacker.getCritical() + aSkill.Ct;
                 atFB = attacker.getFumble() + aSkill.Fb;
@@ -678,6 +690,26 @@ public class BattleEngine : MonoBehaviour
             ActionManage.DelTurnAction(pc);
             //被攻撃回数初期化
             pc.AttackedCount = 0;
+            //付与カウント
+            judgeEnchantRecover(pc);
+        }
+    }
+
+    //付与カウント定
+    private void judgeEnchantRecover(PlayerCharacter pc)
+    {
+        List<EnchantSkill> removeES = new List<EnchantSkill>();
+        foreach (EnchantSkill es in pc.Enchantt.EnchantList)
+        {
+            if (es.fade() == 0)
+            {
+                removeES.Add(es);
+            }
+        }
+        foreach (EnchantSkill es in removeES)
+        {
+            pc.Enchantt.EnchantList.Remove(es);
+            ManageScroll.Log(pc.PcName.Name + "の" + es.getName() + "の付与状態が終了した。");
         }
     }
 }

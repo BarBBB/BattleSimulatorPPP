@@ -186,12 +186,30 @@ public class StartButton : MonoBehaviour {
     {
         Skill skill = null;
 
-        if (asp.getEtc().Contains("【付与】")) {
-            EnchantSkill eSkill = new EnchantSkill();
+        if (asp.getEtc().Contains("自付与")) {
+            EnchantSkill eSkill = new EnchantSkill(false);
+
+            string[] effectAr = setSkillBasicInfo(eSkill, asp).Split('、');
+
+            PcParameter pcParam = getParam(effectAr);
+
+            eSkill.Param = pcParam;
 
             skill = eSkill;
         }
-        if (asp.getEtc().Contains("回復"))
+        else if (asp.getEtc().Contains("【他者付与】"))
+        {
+            EnchantSkill eSkill = new EnchantSkill(true);
+
+            string[] effectAr = setSkillBasicInfo(eSkill, asp).Split('、');
+
+            PcParameter pcParam = getParam(effectAr);
+
+            eSkill.Param = pcParam;
+
+            skill = eSkill;
+        }
+        else if (asp.getEtc().Contains("回復"))
         {
             HealSkill hSkill = new HealSkill();
 
@@ -359,7 +377,7 @@ public class StartButton : MonoBehaviour {
 
     private string setSkillBasicInfo(Skill skill, ActiveSkillPanel asp)
     {
-        skill.Name = asp.getSkillName();
+        skill.setName(asp.getSkillName());
         skill.Etc = asp.getEtc();
         Debug.Log("skill.Etc:" + skill.Etc);
 
@@ -368,6 +386,77 @@ public class StartButton : MonoBehaviour {
         skill.Basic = etcAr[0];
         skill.UseAp = Int32.Parse(etcAr[1].Replace("AP", ""));
 
+        if (asp.getEtc().Contains("【副】"))
+        {
+            skill.IsMiner = true;
+        }
+
         return etcAr[2];
+    }
+
+    private PcParameter getParam(string[] effectAr)
+    {
+        PcParameter param = new PcParameter();
+
+
+        for (int i = 0; i < effectAr.Length; i++)
+        {
+            string tempStr = effectAr[i].Replace("レンジ2以内の味方の", "");
+
+            if (tempStr.Contains("命中"))
+            {
+                param.Hits = Int32.Parse(tempStr.Replace("命中", ""));
+                Debug.Log(param.Hits);
+            }else if (tempStr.Contains("物攻"))
+            {
+                param.PAttack = Int32.Parse(tempStr.Replace("物攻", ""));
+                Debug.Log(param.PAttack);
+            }else if (tempStr.Contains("神攻"))
+            {
+                param.MAttack = Int32.Parse(tempStr.Replace("神攻", ""));
+                Debug.Log(param.MAttack);
+            }else if (tempStr.Contains("CT"))
+            {
+                param.Critical = Int32.Parse(tempStr.Replace("CT", ""));
+                Debug.Log(param.Critical);
+            }else if (tempStr.Contains("FB"))
+            {
+                param.Fumble = Int32.Parse(tempStr.Replace("FB", ""));
+                Debug.Log(param.Fumble);
+            }
+            else if (tempStr.Contains("防技"))
+            {
+                param.Defense = Int32.Parse(tempStr.Replace("防技", ""));
+                Debug.Log(param.Defense);
+            }
+            else if (tempStr.Contains("抵抗"))
+            {
+                param.Resist = Int32.Parse(tempStr.Replace("抵抗", ""));
+                Debug.Log(param.Resist);
+            }
+            else if (tempStr.Contains("EXF"))
+            {
+                param.Exf = Int32.Parse(tempStr.Replace("EXF", ""));
+                Debug.Log(param.Exf);
+            }
+            else if (tempStr.Contains("EXA"))
+            {
+                param.Exa = Int32.Parse(tempStr.Replace("EXA", ""));
+                Debug.Log(param.Exa);
+            }
+            else if (tempStr.Contains("反応"))
+            {
+                param.Reaction = Int32.Parse(tempStr.Replace("反応", ""));
+                Debug.Log(param.Reaction);
+            }
+            else if (tempStr.Contains("機動力"))
+            {
+                param.Mobility = Int32.Parse(tempStr.Replace("機動力", ""));
+                Debug.Log(param.Mobility);
+            }
+
+        }
+
+        return param;
     }
 }

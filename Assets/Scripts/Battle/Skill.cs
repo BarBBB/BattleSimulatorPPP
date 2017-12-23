@@ -14,23 +14,21 @@ public class Skill {
 
     private string tyep;
 
+    private bool isMiner = false;
+
     public const string TYPE_ATTACK = "攻撃";
 
     public const string TYPE_HEAL = "回復";
 
     public const string TYPE_ENCHANT = "付与";
 
-    public string Name
+    public string getName()
     {
-        get
-        {
-            return name;
-        }
-
-        set
-        {
-            name = value;
-        }
+        return name;
+    }
+    public void setName(string value)
+    {
+        name = value;
     }
 
     public string Etc
@@ -82,6 +80,19 @@ public class Skill {
         set
         {
             tyep = value;
+        }
+    }
+
+    public bool IsMiner
+    {
+        get
+        {
+            return isMiner;
+        }
+
+        set
+        {
+            isMiner = value;
         }
     }
 }
