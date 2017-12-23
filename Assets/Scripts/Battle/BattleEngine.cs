@@ -384,7 +384,16 @@ public class BattleEngine : MonoBehaviour
                     }
                     if (hSkill.Bs > 0)
                     {
-
+                        ManageScroll.Log(name + ">【BS回復スキル判定】：" + hSkill.Bs);
+                        if (Judge.ctJudge(100 - hSkill.Bs, attacker.getCritical(), attacker.getFumble()))
+                        {
+                            attacker.Bs.BsList = new List<BadStatus>();
+                            ManageScroll.Log(attacker.PcName.Name + "のBSが回復した。");
+                        }
+                        else
+                        {
+                            ManageScroll.Log(attacker.PcName.Name + "のBSは回復し無かった。");
+                        }
                     }
                 }
                 else if (majorSkil.Tyep.Equals(Skill.TYPE_ENCHANT))

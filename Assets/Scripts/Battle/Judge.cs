@@ -26,7 +26,7 @@ public static class Judge
         return dice;
     }
 
-    private static bool ctJudge(int target, int ct, int fb)
+    public static bool ctJudge(int target, int ct, int fb)
     {
         int dice = roll();
 

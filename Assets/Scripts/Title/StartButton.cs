@@ -218,6 +218,7 @@ public class StartButton : MonoBehaviour {
 
             for (int i = 0; i < effectAr.Length; i++)
             {
+                Debug.Log(effectAr[i]);
                 if (effectAr[i].Contains("HP回復"))
                 {
                     hSkill.Hp = Int32.Parse(effectAr[i].Replace("HP回復", ""));

@@ -50,7 +50,7 @@ public class HealSkill : Skill{
 
         set
         {
-            hp = bs;
+            bs = value;
         }
     }
 }
