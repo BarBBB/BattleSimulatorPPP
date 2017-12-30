@@ -50,7 +50,7 @@ public static class Judge
         }
     }
 
-    private static bool nonCtJudge(int target)
+    public static bool nonCtJudge(int target)
     {
 
         if (roll() >= target)

@@ -180,7 +180,7 @@ public class BattleEngine : MonoBehaviour
         initiativeList.Sort((a, b) => b.Initiative - a.Initiative);
 
         //先頭のPCを取得
-        PlayerCharacter turnPC = initiativeList[0];
+        PlayerCharacter turnPC = getTurnPC(initiativeList);
 
         //取得したPCのHPが0以下の場合、イニシアチブリストから削除
         if (turnPC.Hp.CurrentHp <= 0)
@@ -228,6 +228,35 @@ public class BattleEngine : MonoBehaviour
         }
     }
 
+    private PlayerCharacter getTurnPC(List<PlayerCharacter> initiativeList)
+    {
+        PlayerCharacter result = null;
+
+        foreach (PlayerCharacter pc in initiativeList)
+        {
+            if (result == null)
+            {
+                result = pc;
+            }
+            else
+            {
+                if (result.Initiative < pc.Initiative)
+                {
+                    result = pc;
+                }
+                else if (result.Initiative == pc.Initiative)
+                {
+                    if (result.getReaction() < pc.getReaction())
+                    {
+                        result = pc;
+                    }
+                }
+            }
+        }
+
+        return result;
+    }
+
     //待機判定
     private IEnumerator waitAction(PlayerCharacter pc)
     {
@@ -253,42 +282,48 @@ public class BattleEngine : MonoBehaviour
     private IEnumerator mainProcess(PlayerCharacter pc)
     {
         //BS効果判定
-        judgeBsEffect(pc);
+        string bsEffect = judgeBsEffect(pc);
         ManageScroll.Log(pc.PcName.Name + ">【BS効果判定】");
         //BS自然回復判定
         judgeBsRecover(pc);
         ManageScroll.Log(pc.PcName.Name + ">【BS自然回復判定】");
 
-        //EXA判定
-        ManageScroll.Log(pc.PcName.Name + ">【EXA判定】");
-        int mainActionCount = 1;
-        while (Judge.exaJudge(pc.PcName.Name, pc.getExa()))
+        //行動不能ではない場合
+        if (!bsEffect.Equals("行動不能"))
         {
-            mainActionCount++;
-        }
-        ManageScroll.Log(pc.PcName.Name + ">【主行動回数】：" + mainActionCount + "回");
-        yield return new WaitForSeconds(0.5f);
-        while (!Input.anyKeyDown) { yield return 0; }　//キー入力待ち
+            //EXA判定
+            ManageScroll.Log(pc.PcName.Name + ">【EXA判定】");
+            int mainActionCount = 1;
+            while (Judge.exaJudge(pc.PcName.Name, pc.getExa()))
+            {
+                mainActionCount++;
+            }
+            ManageScroll.Log(pc.PcName.Name + ">【主行動回数】：" + mainActionCount + "回");
+            yield return new WaitForSeconds(0.5f);
+            while (!Input.anyKeyDown) { yield return 0; } //キー入力待ち
 
-        //能動行動選択
-        ManageScroll.Log(pc.PcName.Name + ">【副行動】");
-        yield return minorAction(pc);
-        yield return new WaitForSeconds(0.5f);
-        for (int i = 0; i < mainActionCount; i++)
-        {
-            // 生存PCリストが2人以上
-            if (livePcList.Count >= 2) {
-                ManageScroll.Log(pc.PcName.Name + ">【主行動】：" + (i + 1) + "回目");
-                yield return majorAction(pc);
-                yield return new WaitForSeconds(0.5f);
-                while (!Input.anyKeyDown) { yield return 0; }　//キー入力待ち
+            //能動行動選択
+            ManageScroll.Log(pc.PcName.Name + ">【副行動】");
+            yield return minorAction(pc);
+            yield return new WaitForSeconds(0.5f);
+            for (int i = 0; i < mainActionCount; i++)
+            {
+                // 生存PCリストが2人以上
+                if (livePcList.Count >= 2)
+                {
+                    ManageScroll.Log(pc.PcName.Name + ">【主行動】：" + (i + 1) + "回目");
+                    yield return majorAction(pc);
+                    yield return new WaitForSeconds(0.5f);
+                    while (!Input.anyKeyDown) { yield return 0; } //キー入力待ち
+                }
             }
         }
     }
 
     //BS効果判定
-    private void judgeBsEffect(PlayerCharacter pc)
+    private string judgeBsEffect(PlayerCharacter pc)
     {
+        string bsEffect = "";
         foreach (BadStatus bs in pc.Bs.BsList)
         {
             if (bs.bsHpDamage(pc) > 0)
@@ -296,30 +331,86 @@ public class BattleEngine : MonoBehaviour
                 ManageScroll.Log(pc.PcName.Name + "は" + bs.getName() + "で"　+ bs.bsHpDamage(pc)　+ "点のダメージを受けた。");
                 damegeProcess(pc, bs.bsHpDamage(pc));
             }
-
-            if (bs.bsApDamage(pc) > 0)
+            else if (bs.bsApDamage(pc) > 0)
             {
                 ManageScroll.Log(pc.PcName.Name + "は" + bs.getName() + "で" + bs.bsApDamage(pc) + "点のAPが減少した。");
                 damegeProcess(pc, bs.bsHpDamage(pc));
             }
+            else if (bs.getName().Equals("混乱"))
+            {
+                if (Judge.nonCtJudge(100 - 20))
+                {
+                    ManageScroll.Log(pc.PcName.Name + "は" + bs.getName() + "している。");
+                    bsEffect = "混乱";
+                }
+            }
+            else if (bs.getName().Equals("狂気"))
+            {
+                if (Judge.nonCtJudge(100 - 30))
+                {
+                    ManageScroll.Log(pc.PcName.Name + "は" + bs.getName() + "に陥っている。");
+                    bsEffect = "狂気";
+                }
+            }
+            else if (bs.getName().Equals("魅了"))
+            {
+                if (Judge.nonCtJudge(100 - 40))
+                {
+                    ManageScroll.Log(pc.PcName.Name + "は" + bs.getName() + "されている。");
+                    bsEffect = "魅了";
+                }
+            }
+            else if (bs.getName().Equals("麻痺"))
+            {
+                if (Judge.nonCtJudge(100 -20))
+                {
+                    ManageScroll.Log(pc.PcName.Name + "は" + bs.getName() + "で能動行動が行えない。");
+                    bsEffect = "行動不能";
+                }
+            }
+            else if (bs.getName().Equals("呪縛"))
+            {
+                if (Judge.nonCtJudge(100 - 30))
+                {
+                    ManageScroll.Log(pc.PcName.Name + "は" + bs.getName() + "で能動行動が行えない。");
+                    bsEffect = "行動不能";
+                }
+            }
+            else if (bs.getName().Equals("石化"))
+            {
+                if (Judge.nonCtJudge(100 - 40))
+                {
+                    ManageScroll.Log(pc.PcName.Name + "は" + bs.getName() + "で能動行動が行えない。");
+                    bsEffect = "行動不能";
+                }
+            }
         }
+
+        return bsEffect;
     }
 
     //BS自然回復判定
     private void judgeBsRecover(PlayerCharacter pc)
     {
-        List<BadStatus> removeBs = new List<BadStatus>();
-        foreach (BadStatus bs in pc.Bs.BsList)
+        if (pc.Bs.BsList.Find(x => x.getName().Equals("呪い")) != null)
         {
-            if (bs.fade() == 0)
-            {
-                removeBs.Add(bs);
-            }
+            ManageScroll.Log(pc.PcName.Name + "は呪いのためBSが回復しない。");
         }
-        foreach (BadStatus bs in removeBs)
+        else
         {
-            pc.Bs.BsList.Remove(bs);
-            ManageScroll.Log(pc.PcName.Name + "の" + bs.getName() + "状態が回復した。");
+            List<BadStatus> removeBs = new List<BadStatus>();
+            foreach (BadStatus bs in pc.Bs.BsList)
+            {
+                if (bs.fade() == 0)
+                {
+                    removeBs.Add(bs);
+                }
+            }
+            foreach (BadStatus bs in removeBs)
+            {
+                pc.Bs.BsList.Remove(bs);
+                ManageScroll.Log(pc.PcName.Name + "の" + bs.getName() + "状態が回復した。");
+            }
         }
     }
 
@@ -374,8 +465,14 @@ public class BattleEngine : MonoBehaviour
 
                     if (hSkill.Hp > 0)
                     {
-                        attacker.Hp.CurrentHp += hSkill.Hp;
-                        ManageScroll.Log(attacker.PcName.Name + "は" + hSkill.Hp + "点のHPが回復した。");
+                        if (attacker.Bs.BsList.Find(x => x.getName().Equals("致命")) != null)
+                        {
+                            ManageScroll.Log(attacker.PcName.Name + "は致命のためBSが回復しない。");
+                        } else
+                        {
+                            attacker.Hp.CurrentHp += hSkill.Hp;
+                            ManageScroll.Log(attacker.PcName.Name + "は" + hSkill.Hp + "点のHPが回復した。");
+                        }
                     }
                     if (hSkill.Ap > 0)
                     {

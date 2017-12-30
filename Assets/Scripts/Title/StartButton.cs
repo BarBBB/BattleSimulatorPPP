@@ -375,6 +375,68 @@ public class StartButton : MonoBehaviour {
         {
             aSkill.BsList.Add(new Stasis3());
         }
+
+
+        else if (text.Contains("不吉"))
+        {
+            aSkill.BsList.Add(new Unluck1());
+        }
+        else if (text.Contains("不運"))
+        {
+            aSkill.BsList.Add(new Unluck2());
+        }
+        else if (text.Contains("魔凶"))
+        {
+            aSkill.BsList.Add(new Unluck3());
+        }
+        else if (text.Contains("麻痺"))
+        {
+            aSkill.BsList.Add(new Stop1());
+        }
+        else if (text.Contains("呪縛"))
+        {
+            aSkill.BsList.Add(new Stop2());
+        }
+        else if (text.Contains("石化"))
+        {
+            aSkill.BsList.Add(new Stop3());
+        }
+        else if (text.Contains("混乱"))
+        {
+            aSkill.BsList.Add(new Mind1());
+        }
+        else if (text.Contains("狂気"))
+        {
+            aSkill.BsList.Add(new Mind2());
+        }
+        else if (text.Contains("魅了"))
+        {
+            aSkill.BsList.Add(new Mind3());
+        }
+        else if (text.Contains("呪い"))
+        {
+            aSkill.BsList.Add(new Curse());
+        }
+        else if (text.Contains("致命"))
+        {
+            aSkill.BsList.Add(new Fatal());
+        }
+        else if (text.Contains("封印"))
+        {
+            aSkill.BsList.Add(new Seale());
+        }
+        else if (text.Contains("暗闇"))
+        {
+            aSkill.BsList.Add(new Dark());
+        }
+        else if (text.Contains("恍惚"))
+        {
+            aSkill.BsList.Add(new Trance());
+        }
+        else if (text.Contains("怒り"))
+        {
+            aSkill.BsList.Add(new Hate());
+        }
     }
 
     private string setSkillBasicInfo(Skill skill, ActiveSkillPanel asp)

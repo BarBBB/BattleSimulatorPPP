@@ -205,6 +205,18 @@ public class PlayerCharacter : Token
 
     public int getFumble()
     {
-        return baseParam.Fumble + Action.getFumble() + Bs.getFumble() + Enchantt.getFumble();
+        int fb = baseParam.Fumble + Action.getFumble() + Bs.getFumble() + Enchantt.getFumble();
+
+        if (Bs.BsList.Find(x => x.getName().Equals("不運")) != null)
+        {
+            fb = fb * 2;
+        }
+        
+        if (Bs.BsList.Find(x => x.getName().Equals("魔凶")) != null)
+        {
+            fb = fb * 3;
+        }
+
+        return fb;
     }
 }
