@@ -12,7 +12,7 @@ public class AttackSkill : Skill{
 
     private int fb = 0;
 
-    private List<Effect> effectList = new List<Effect>();
+    private List<string> effectList = new List<string>();
 
     private List<BadStatus> bsList = new List<BadStatus>();
 
@@ -73,7 +73,7 @@ public class AttackSkill : Skill{
         }
     }
 
-    public List<Effect> EffectList
+    public List<string> EffectList
     {
         get
         {

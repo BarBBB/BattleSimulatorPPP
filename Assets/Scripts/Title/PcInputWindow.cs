@@ -146,6 +146,16 @@ public class PcInputWindow : MonoBehaviour {
         return PcName.getInputField();
     }
 
+    public string getEsprit()
+    {
+        return Esprit.getInputField();
+    }
+
+    public string getPcClass()
+    {
+        return PcClass.getInputField();
+    }
+
     public string getMaxHP()
     {
         return MaxHP.getInputField();

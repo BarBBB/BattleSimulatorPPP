@@ -334,7 +334,7 @@ public class BattleEngine : MonoBehaviour
             else if (bs.bsApDamage(pc) > 0)
             {
                 ManageScroll.Log(pc.PcName.Name + "は" + bs.getName() + "で" + bs.bsApDamage(pc) + "点のAPが減少した。");
-                damegeProcess(pc, bs.bsHpDamage(pc));
+                pc.Ap.CurrentAp -= bs.bsApDamage(pc);
             }
             else if (bs.getName().Equals("混乱"))
             {
@@ -519,6 +519,7 @@ public class BattleEngine : MonoBehaviour
 
     private void doEnchantSkill(PlayerCharacter attacker)
     {
+        attacker.Ap.CurrentAp -= majorSkil.UseAp;
         EnchantSkill eSkill = (EnchantSkill)majorSkil;
         EnchantSkill currentES = attacker.Enchantt.EnchantList.Find(x => x.getName().Equals(eSkill.getName()));
         if (currentES != null)
@@ -582,11 +583,11 @@ public class BattleEngine : MonoBehaviour
     {
         //判定値スキル反映用変数
         string attackName = "";
-        int atHit　= 0;
+        int atHit = 0;
         int atCT = 0;
         int atFB = 0;
         int attack = 0;
-        List<Effect> effectList = new List<Effect>();
+        List<string> effectList = new List<string>();
         List<BadStatus> bsList = new List<BadStatus>();
 
         //通常攻撃
@@ -620,7 +621,15 @@ public class BattleEngine : MonoBehaviour
 
                 if (majorSkil.Basic.Contains("物"))
                 {
-                    attack = attacker.getPAttack() + aSkill.Power;
+                    //【防技】の場合
+                    if (effectList.Find(x => x.Equals("【防技】")) != null)
+                    {
+                        attack = attacker.getPAttack() + (attacker.getDefense() * aSkill.Power);
+                    }
+                    else
+                    {
+                        attack = attacker.getPAttack() + aSkill.Power;
+                    }
                 }
                 else
                 {
@@ -629,113 +638,179 @@ public class BattleEngine : MonoBehaviour
             }
         }
 
+        attackRollBody(attacker, defender, attackName, atHit, atCT, atFB, attack, effectList, bsList);
+    }
+
+    //攻防判定
+    private void attackRollBody(PlayerCharacter attacker, PlayerCharacter defender, string attackName, int atHit, int atCT, int atFB, int attack, List<string> effectList, List<BadStatus> bsList)
+    {
         //攻防判定
         ManageScroll.Log(attacker.PcName.Name + "が" + defender.PcName.Name + "に[" + attackName + "]で攻撃した。");
 
         //命中判定
         int hit = Judge.hitsRoll(attacker.PcName.Name, atHit, atCT, atFB);
         //FBの場合、攻撃終了
+        bool hitFlg = false;
+        int avoid = 0;
         if (hit < -Judge.CF_BOUND)
         {
             ManageScroll.Log(attacker.PcName.Name + "の攻撃はファンブルで失敗しました。");
-            return;
-        }
-
-        //被攻撃回数カウント
-        int attackedCountPenalty = 0;
-        defender.AttackedCount += 1;
-        if (defender.AttackedCount > 2)
-        {
-            attackedCountPenalty = -5 * (defender.AttackedCount - 2);
-            if (attackedCountPenalty < -50)
-            {
-                attackedCountPenalty = -50;
-            }
-        }
-
-        //回避判定
-        int avoid = Judge.avoidRoll(defender.PcName.Name, defender.getAvoid() + attackedCountPenalty, defender.getCritical(), defender.getFumble());
-        //CTの場合、攻撃終了
-        if (avoid > Judge.CF_BOUND)
-        {
-            ManageScroll.Log(defender.PcName.Name + "はクリティカルで攻撃を回避しました。");
-            return;
-        }
-        else if (hit > Judge.CF_BOUND)
-        {
-            ManageScroll.Log(attacker.PcName.Name + "の攻撃がクリティカルで命中しました。");
         }
         else
         {
-
-            //命中 <= 回避の場合、攻撃終了
-            if (hit <= avoid)
+            //被攻撃回数カウント
+            int attackedCountPenalty = 0;
+            defender.AttackedCount += 1;
+            if (defender.AttackedCount > 2)
             {
-                ManageScroll.Log(attacker.PcName.Name + "の攻撃は回避されました。");
-                return;
+                attackedCountPenalty = -5 * (defender.AttackedCount - 2);
+                if (attackedCountPenalty < -50)
+                {
+                    attackedCountPenalty = -50;
+                }
             }
-            ManageScroll.Log(attacker.PcName.Name + "の攻撃が命中しました。");
+
+            //回避判定
+            avoid = Judge.avoidRoll(defender.PcName.Name, defender.getAvoid() + attackedCountPenalty, defender.getCritical(), defender.getFumble());
+            //CTの場合、攻撃終了
+            if (avoid > Judge.CF_BOUND)
+            {
+                ManageScroll.Log(defender.PcName.Name + "はクリティカルで攻撃を回避しました。");
+            }
+            else if (hit > Judge.CF_BOUND)
+            {
+                hitFlg = true;
+                ManageScroll.Log(attacker.PcName.Name + "の攻撃がクリティカルで命中しました。");
+            }
+            else
+            {
+
+                //命中 <= 回避の場合、攻撃終了
+                if (hit <= avoid)
+                {
+                    ManageScroll.Log(attacker.PcName.Name + "の攻撃は回避されました。");
+                }
+                else
+                {
+                    hitFlg = true;
+                    ManageScroll.Log(attacker.PcName.Name + "の攻撃が命中しました。");
+                }
+            }
         }
 
         //命中CTの場合、CT値分命中値を下げる
-        bool avoidFBflg = false;
+        bool hitCTflg = false;
         if (hit > Judge.CF_BOUND)
         {
             hit -= Judge.CT_VALUE;
-            avoidFBflg = true;
+            hitCTflg = true;
         }
 
         //回避FBの場合、CT値分回避値を上げ回避ファンブルフラグを立てる
+        bool avoidFBflg = false;
         if (avoid < -Judge.CF_BOUND)
         {
             avoid += Judge.CT_VALUE;
             avoidFBflg = true;
         }
 
-        //命中度補正値
-        int hitCorrect = hit - avoid;
-        //ヒットレート算出
-        int hitRate = Judge.hitRateRoll(hitCorrect);
-
-        //ダメージ算出
-        int damege = attack * hitRate / 100;
-        //ManageScroll.Log("hoge:" + damege);
-
-        //命中CT回避FBではない場合、防御技術判定
-        if (!avoidFBflg)
+        if (hitFlg)
         {
-            ManageScroll.Log(defender.PcName.Name + "は防御を試みた。");
-            //防御技術判定で防御レート算出
-            int defeseRate = Judge.defenseRateRoll(defender.PcName.Name, defender.getDefense(), defender.getCritical(), defender.getFumble());
-            //防御レートだけダメージを軽減
-            //ManageScroll.Log("foo:" + damege);
-            damege -=  damege * defeseRate / 100;
-            //ManageScroll.Log("bar:" + damege);
+            //命中度補正値
+            int hitCorrect = hit - avoid;
+            //ヒットレート算出
+            int hitRate = Judge.hitRateRoll(hitCorrect);
 
-            if (defeseRate > 0)
+            //【無】の場合はダメージ無し
+            if (effectList.Find(x => x.Equals("無")) == null)
             {
-                ManageScroll.Log(defender.PcName.Name + "は" + defeseRate + "%のダメージを軽減した。");
+                //ダメージ算出
+                int damege = attack * hitRate / 100;
+                //ManageScroll.Log("hoge:" + damege);
+
+                //命中CT回避FBではない場合、防御技術判定
+                if (!hitCTflg && !avoidFBflg)
+                {
+                    //【防無】の場合は防御技術判定が行えない
+                    if (effectList.Find(x => x.Equals("防無")) != null)
+                    {
+                        ManageScroll.Log(attackName + "の【防無】により防御が行えない。");
+                    }
+                    else
+                    {
+                        ManageScroll.Log(defender.PcName.Name + "は防御を試みた。");
+                        //防御技術判定で防御レート算出
+                        int defeseRate = Judge.defenseRateRoll(defender.PcName.Name, defender.getDefense(), defender.getCritical(), defender.getFumble());
+
+                        //【弱点】の場合は防御レート半減
+                        if (effectList.Find(x => x.Equals("【弱点】")) != null)
+                        {
+                            defeseRate = defeseRate / 2;
+                            ManageScroll.Log(attackName + "の【弱点】により防御値半減。");
+                        }
+
+                        //防御レートだけダメージを軽減
+                        //ManageScroll.Log("foo:" + damege);
+                        damege -= damege * defeseRate / 100;
+                        //ManageScroll.Log("bar:" + damege);
+
+                        if (defeseRate > 0)
+                        {
+                            ManageScroll.Log(defender.PcName.Name + "は" + defeseRate + "%のダメージを軽減した。");
+                        }
+                    }
+                }
+
+                //【呪殺】の場合はBS*100だけダメージ＋
+                if (effectList.Find(x => x.Equals("【呪殺】")) != null)
+                {
+                    if (defender.Bs.BsList.Count > 0)
+                    {
+                        int curse = defender.Bs.BsList.Count * 100;
+                        damege += curse;
+                        ManageScroll.Log(attackName + "の【呪殺】によりダメージ追加" + curse);
+                    }
+                }
+
+                //ダメージ処理
+                ManageScroll.Log(defender.PcName.Name + "に" + damege + "のダメージ。");
+                damegeProcess(defender, damege, attackName, effectList);
+            }
+            //クリーンヒット以上の場合、BS付与判定
+            foreach (BadStatus bs in bsList)
+            {
+                if (!Judge.bsResistJudge(defender.PcName.Name, defender.getResist(), defender.getCritical(), defender.getFumble()))
+                {
+                    BadStatus currentBs = defender.Bs.BsList.Find(x => x.getName().Equals(bs.getName()));
+                    if (currentBs != null)
+                    {
+                        currentBs.init();
+                        ManageScroll.Log(defender.PcName.Name + "の" + bs.getName() + "状態の回復判定数がリセットされた。");
+                    }
+                    else
+                    {
+                        defender.Bs.BsList.Add(bs);
+                        ManageScroll.Log(defender.PcName.Name + "は" + bs.getName() + "状態になった。");
+                    }
+                }
             }
         }
 
-        //ダメージ処理
-        ManageScroll.Log(defender.PcName.Name + "に" + damege + "のダメージ。");
-        damegeProcess(defender, damege);
-
-        //クリーンヒット以上の場合、BS付与判定
-        foreach (BadStatus bs in bsList)
+        //【反動】の場合は自分がXダメージを受ける
+        string reStr = effectList.Find(x => x.Contains("反動"));
+        if (reStr != null)
         {
-            if (!Judge.bsResistJudge(defender.PcName.Name, defender.getResist(), defender.getCritical(), defender.getFumble()))
+            int reDamege = Int32.Parse(reStr.Replace("反動", ""));
+            ManageScroll.Log(attacker.PcName.Name + "に" + reDamege + "の反動。");
+            damegeProcess(attacker, reDamege);
+        }
+
+        //【連】の場合かつ命中CTの場合、再攻撃
+        if (effectList.Find(x => x.Equals("【連】")) != null)
+        {
+            if (hitCTflg)
             {
-                BadStatus currentBs = defender.Bs.BsList.Find( x => x.getName().Equals(bs.getName()));
-                if (currentBs != null) {
-                    currentBs.init();
-                    ManageScroll.Log(defender.PcName.Name + "の" + bs.getName() + "状態の回復判定数がリセットされた。");
-                }
-                else {
-                    defender.Bs.BsList.Add(bs);
-                    ManageScroll.Log(defender.PcName.Name + "は" + bs.getName() + "状態になった。");
-                }
+                attackRollBody(attacker, defender, attackName, atHit, atCT, atFB, attack, effectList, bsList);
             }
         }
     }
@@ -743,24 +818,37 @@ public class BattleEngine : MonoBehaviour
     //ダメージ処理
     private void damegeProcess(PlayerCharacter pc, int damege)
     {
+        damegeProcess(pc, damege, "", new List < string >());
+    }
+
+        //ダメージ処理
+        private void damegeProcess(PlayerCharacter pc, int damege, string attackName, List<string> effectList)
+    {
         //ダメージ適用
         pc.Hp.CurrentHp -= damege;
 
         //HPが0以下の場合
         if (pc.Hp.CurrentHp <= 0)
         {
-            //EXF判定に成功するとHPが1に
-            if (Judge.exfJudge(pc.PcName.Name, pc.getExf()))
+            //【必殺】の場合はEXF判定が行えない
+            if (effectList.Find(x => x.Equals("【必殺】")) != null)
             {
-                pc.Hp.CurrentHp = 1;
-                ManageScroll.Log(pc.PcName.Name + "は歯を食いしばって立ち上がった。");
+                ManageScroll.Log(attackName + "の【必殺】によりEXF判定が行えない。");
             }
-            //戦闘不能になった場合、
             else
             {
-                //生存PCリストから削除
-                livePcList.Remove(pc);
-                ManageScroll.Log(pc.PcName.Name + "は戦闘不能になった。");
+                //EXF判定に成功するとHPが1に
+                if (Judge.exfJudge(pc.PcName.Name, pc.getExf()))
+                {
+                    pc.Hp.CurrentHp = 1;
+                    ManageScroll.Log(pc.PcName.Name + "は歯を食いしばって立ち上がった。");
+                }
+                else
+                {
+                    //戦闘不能になった場合、生存PCリストから削除
+                    livePcList.Remove(pc);
+                    ManageScroll.Log(pc.PcName.Name + "は戦闘不能になった。");
+                }
             }
         }
     }

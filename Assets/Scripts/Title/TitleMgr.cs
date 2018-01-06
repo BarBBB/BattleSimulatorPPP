@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -10,6 +11,8 @@ public class TitleMgr : MonoBehaviour {
 
     private PcInputWindow pcWin1;
     private PcInputWindow pcWin2;
+
+    public Texture DefaulrIcon;
 
     // Use this for initialization
     void Start () {
@@ -34,17 +37,21 @@ public class TitleMgr : MonoBehaviour {
             pcWin1.setPcParameter(PcParamList.Instance.pcs[0]);
             pcWin1.setPcIcon(PcParamList.Instance.pcs[0].Icon.texture);
             pcWin2.setPcParameter(PcParamList.Instance.pcs[1]);
-            pcWin2.setPcIcon(PcParamList.Instance.pcs[0].Icon.texture);
+            pcWin2.setPcIcon(PcParamList.Instance.pcs[1].Icon.texture);
+            PcParamList.Instance.pcs = new List<PcParameter>();
         }
         else if (PcParamList.Instance.pcs.Count == 1)
         {
             pcWin1.setPcParameter(PcParamList.Instance.pcs[0]);
             pcWin1.setPcIcon(PcParamList.Instance.pcs[0].Icon.texture);
-            StartCoroutine(GetWeb.GetText(pcWin2,MASTER_DECOY));
+            StartCoroutine(GetWeb.GetText(pcWin2,MASTER_DECOY, true));
+            pcWin2.setPcIcon(DefaulrIcon);
+            PcParamList.Instance.pcs = new List<PcParameter>();
         }
         else
         {
-            StartCoroutine(GetWeb.GetText(pcWin2, MASTER_DECOY));
+            StartCoroutine(GetWeb.GetText(pcWin2, MASTER_DECOY, true));
+            pcWin2.setPcIcon(DefaulrIcon);
         }
     }
 }

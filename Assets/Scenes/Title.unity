@@ -515,7 +515,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Ver0.2.5
+  m_Text: Ver0.3.0
 --- !u!222 &674046257
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -753,6 +753,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55156964ab8670e4b9a742cb6edb5461, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DefaulrIcon: {fileID: 2800000, guid: ad8bfee365e60ec4c98f67547b938e21, type: 3}
 --- !u!4 &1077875702
 Transform:
   m_ObjectHideFlags: 0

@@ -97,7 +97,7 @@ public static class GetWeb {
         }
     }
 
-    public static IEnumerator GetText(PcInputWindow window, string pcId)
+    public static IEnumerator GetText(PcInputWindow window, string pcId, bool decoy)
     {
         string url = BASE_URL + pcId;
         Debug.Log(url);
@@ -118,7 +118,7 @@ public static class GetWeb {
                 // UTF8文字列として取得する
                 string text = request.downloadHandler.text;
                 Debug.Log(text);
-                setPcParameter(text, window, pcId);
+                setPcParameter(text, window, pcId, decoy);
             }
         }
     }
@@ -144,7 +144,7 @@ public static class GetWeb {
         }
     }
 
-    private static void setPcParameter(string text, PcInputWindow window, string pcId)
+    private static void setPcParameter(string text, PcInputWindow window, string pcId, bool decoy)
     {
         text = text.Replace("\n", "");
         Debug.Log(text);
@@ -175,11 +175,12 @@ public static class GetWeb {
         getSkill(pcParam, text);
 
         window.setPcParameter(pcParam);
-
-        string url = getIconUrl(text, pcId);
-        Debug.Log("url：" + url);
-        window.setIconURL(url);
-
+        if (!decoy)
+        {
+            string url = getIconUrl(text, pcId);
+            Debug.Log("url：" + url);
+            window.setIconURL(url);
+        }
     }
 
     private static string getTargetParameter(string text, string targetStr)
