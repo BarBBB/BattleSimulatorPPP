@@ -26,7 +26,31 @@ public static class Judge
         return dice;
     }
 
-    private static bool nonCtJudge(int target)
+    public static bool ctJudge(int target, int ct, int fb)
+    {
+        int dice = roll();
+
+        if (fb >= dice)
+        {
+            ManageScroll.Log("ファンブル");
+            return false;
+        }
+        else if (100 - ct <= dice)
+        {
+            ManageScroll.Log("クリティカル");
+            return true;
+        }
+        else if (dice >= target)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public static bool nonCtJudge(int target)
     {
 
         if (roll() >= target)
@@ -38,6 +62,7 @@ public static class Judge
             return false;
         }
     }
+
     private static int ctRoll(int target, int ct, int fb)
     {
         int dice = roll();
@@ -67,10 +92,10 @@ public static class Judge
         return value;
     }
 
-    public static bool bsResistJudge(string name, int resist)
+    public static bool bsResistJudge(string name, int resist, int ct, int fb)
     {
         ManageScroll.Log(name + ">【特殊抵抗判定】：" + resist);
-        bool result = nonCtJudge(100 - resist);
+        bool result = ctJudge(100 - resist,ct ,fb);
         if (result)
         {
             ManageScroll.Log("成功");
@@ -166,7 +191,7 @@ public static class Judge
         }
         else if (SH_BOUND > hitCorrect & hitCorrect >= HL_BOUND)
         {
-            ManageScroll.Log("ヘビーヒット");
+            ManageScroll.Log("ハードヒット");
             return HEAVY_HIT_RATE;
         }
         else if (hitCorrect > SH_BOUND)
@@ -180,15 +205,14 @@ public static class Judge
         }
     }
 
-    public static int defenseRateRoll(string name, int defense)
+    public static int defenseRateRoll(string name, int defense, int ct, int fb)
     {
         ManageScroll.Log(name + ">【防御技術判定】：" + defense);
         int defenseRate = 0;
-        int dice = roll();
+        bool result = ctJudge(100 - defense, ct, fb);
 
-        if (dice >= 100 - defense)
+        if (result)
         {
-
             double hoge = defense / 10;
             defenseRate = (int)Math.Floor(hoge) * 10;
 

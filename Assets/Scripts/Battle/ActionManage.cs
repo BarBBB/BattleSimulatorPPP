@@ -1,4 +1,7 @@
-﻿public static class ActionManage {
+﻿using System;
+using System.Collections.Generic;
+
+public static class ActionManage {
 
     public const string NOMAL_ATTACK = "通常攻撃";
 
@@ -31,92 +34,44 @@
     public const string WAIT = "待機する";
 
 
-    public static void AddFullAttack(PlayerCharacter pc)
+    public static void AddAttackConcent(PlayerCharacter pc)
     {
-        //if (!pc.Action.ActionList.Contains(FULL_ATTACK)) {
-            pc.Action.ActionList.Add(FULL_ATTACK);
-            pc.paramCorrect.Hits += 5;
-            pc.paramCorrect.Critical += 5;
-            pc.paramCorrect.Avoid += -10;
-            pc.paramCorrect.Fumble += 10;
-        //}
-    }
-
-    public static void DelFullAttack(PlayerCharacter pc)
-    {
-        if (pc.Action.ActionList.Contains(FULL_ATTACK)){
-            pc.Action.ActionList.Remove(FULL_ATTACK);
-            pc.paramCorrect.Hits -= 5;
-            pc.paramCorrect.Critical -= 5;
-            pc.paramCorrect.Avoid -= -10;
-            pc.paramCorrect.Fumble -= 10;
-        }
-    }
-
-    public static void AddFulDefense(PlayerCharacter pc)
-    {
-        //if (!pc.Action.ActionList.Contains(FULL_DEFENSE)){
-            pc.Action.ActionList.Add(FULL_DEFENSE);
-            pc.paramCorrect.Defense += 20;
-            pc.paramCorrect.Avoid += 10;
-        //}
-    }
-
-    public static void DelFullDefense(PlayerCharacter pc)
-    {
-        if (pc.Action.ActionList.Contains(FULL_DEFENSE))
-        {
-            pc.Action.ActionList.Remove(FULL_DEFENSE);
-            pc.paramCorrect.Defense -= 20;
-            pc.paramCorrect.Avoid -= 10;
-        }
-    }
-
-    public static void AddlAttackConcent(PlayerCharacter pc)
-    {
-        if (!pc.Action.ActionList.Contains(ATTACK_CONCENT))
-        {
-            pc.Action.ActionList.Add(ATTACK_CONCENT);
-            pc.paramCorrect.Hits += 5;
-            pc.paramCorrect.Critical += 1;
-        }
-    }
-
-    public static void DelAttackConcent(PlayerCharacter pc)
-    {
-        if (pc.Action.ActionList.Contains(ATTACK_CONCENT))
-        {
-            pc.Action.ActionList.Remove(ATTACK_CONCENT);
-            pc.paramCorrect.Hits -= 5;
-            pc.paramCorrect.Critical -= 1;
-        }
+        pc.Action.ActionList.Add(new AttackConcent());
     }
 
     public static void AddDefenseConcent(PlayerCharacter pc)
     {
-        if (!pc.Action.ActionList.Contains(DEFENSE_CONCENT))
-        {
-            pc.Action.ActionList.Add(DEFENSE_CONCENT);
-            pc.paramCorrect.Defense += 6;
-            pc.paramCorrect.Avoid += 3;
-            pc.paramCorrect.Resist += 6;
-        }
+        pc.Action.ActionList.Add(new DefenseConcent());
     }
 
-    public static void DelDefenseConcent(PlayerCharacter pc)
+    public static void AddFullAttack(PlayerCharacter pc)
     {
-        if (pc.Action.ActionList.Contains(DEFENSE_CONCENT))
-        {
-            pc.Action.ActionList.Remove(DEFENSE_CONCENT);
-            pc.paramCorrect.Defense -= 6;
-            pc.paramCorrect.Avoid -= 3;
-            pc.paramCorrect.Resist -= 6;
-        }
+        pc.Action.ActionList.Add(new FullAttack());
+    }
+
+    public static void AddFulDefense(PlayerCharacter pc)
+    {
+        pc.Action.ActionList.Add(new FulDefense());
     }
 
     public static void DelAllAction(PlayerCharacter pc)
     {
-        pc.Action.ActionList = new System.Collections.Generic.List<string>();
-        pc.paramCorrect = new PcParameter();
+        pc.Action.ActionList = new List<PcAction>();
+    }
+
+    public static void DelTurnAction(PlayerCharacter pc)
+    {
+        List<PcAction> next = new List<PcAction>();
+
+        foreach (PcAction action in pc.Action.ActionList)
+        {
+            if (!action.EndTunEnd)
+            {
+                next.Add(action);
+            }
+        }
+
+        pc.Action.ActionList = next;
+
     }
 }

@@ -12,18 +12,26 @@ public class SkillButton : ActionButton
 
     private Skill thisSkil;
 
-    public void ReadyButton(Skill skill, int ap)
+    public void ReadyButton(Skill skill, int ap, bool isMinor)
     {
         Debug.Log(this);
         thisSkil = skill;
 
-        text.text = HEADER + skill.UseAp + SPLIT + skill.Name;
+        text.text = HEADER + skill.UseAp + SPLIT + skill.getName();
         Debug.Log(text.text);
         Button bt = this.GetComponent<Button>();
 
         if (skill.UseAp <= ap)
         {
-            bt.interactable = true;
+            if (isMinor) {
+                if (skill.IsMiner) {
+                    bt.interactable = true;
+                }
+            }
+            else
+            {
+                bt.interactable = true;
+            }
         }
         else
         {

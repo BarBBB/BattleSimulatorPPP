@@ -29,7 +29,7 @@ public class SkillAttackButton : MonoBehaviour {
             PlayerCharacter pc = MajorActionPanel.MajerActionPc;
 
             SkillPanel sp = SkillPanel.GetComponent<SkillPanel>();
-            sp.ReadyWiindow(pc);
+            sp.ReadyWiindow(pc, false);
         }
     }
 }

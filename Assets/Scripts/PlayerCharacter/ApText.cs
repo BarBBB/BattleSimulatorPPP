@@ -5,8 +5,35 @@ using UnityEngine.UI;
 
 public class ApText : MonoBehaviour {
 
-    public int CurrentAp;
-    public int MaxAp;
+    private int currentAp;
+    private int maxAp;
+
+    public int CurrentAp {
+        get {
+            return currentAp;
+        }
+        set {
+            currentAp = value;
+            if (currentAp > maxAp)
+            {
+                currentAp = maxAp;
+            }
+            else if (currentAp < 0)
+            {
+                currentAp = 0;
+            }
+        }
+    }
+    public int MaxAp {
+        get
+        {
+            return maxAp;
+        }
+        set
+        {
+            maxAp = value;
+        }
+    }
 
     // Use this for initialization
     void Start () {
@@ -15,6 +42,6 @@ public class ApText : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        this.GetComponent<Text>().text = "HP：" + CurrentAp + "/" + MaxAp;
+        this.GetComponent<Text>().text = "AP：" + CurrentAp + "/" + MaxAp;
     }
 }

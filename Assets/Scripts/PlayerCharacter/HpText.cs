@@ -5,8 +5,31 @@ using UnityEngine.UI;
 
 public class HpText : MonoBehaviour {
 
-    public int CurrentHp;
-    public int MaxHp;
+    private int currentHp;
+    private int maxHp;
+
+    public int CurrentHp
+    {
+        get {
+            return currentHp;
+        }
+        set {
+            currentHp = value;
+            if (currentHp > maxHp)
+            {
+                currentHp = maxHp;
+            }
+        }
+    }
+    public int MaxHp
+    {
+        get {
+            return maxHp;
+        }
+        set {
+            maxHp = value;
+        }
+    }
 
     // Use this for initialization
     void Start () {

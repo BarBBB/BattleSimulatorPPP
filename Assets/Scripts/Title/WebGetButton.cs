@@ -29,6 +29,6 @@ public class WebGetButton : MonoBehaviour
     public void OnClick()
     {
         Debug.Log(this);
-        StartCoroutine(GetWeb.GetText(window, PcId.getInputField()));
+        StartCoroutine(GetWeb.GetText(window, PcId.getInputField(), false));
     }
 }

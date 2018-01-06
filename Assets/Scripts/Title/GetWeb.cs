@@ -13,9 +13,11 @@ public static class GetWeb {
 
     const string TITLE_REGEX = "<span class=\"title\">『(.*?)』</span><br>";
 
-    const string HEAD_TITLE = "<span class=\"title\">『";
+    const string HEAD_NAME = "<span class=\"title\">『";
 
-    const string TAIL_TITLE = "』</span><br>\\s*?(.*?)<br>";
+    const string TAIL_NAME = "』</span><br>\\s*?(.*?)<br>";
+
+    const string NAME_REGEX = "<span class=\"title\">.*?</span>.*?<br>(.*?)<br>";
 
     const string DEFAULT_ICON = "https://rev1.reversion.jp/assets/images/default/icon.png";
 
@@ -27,8 +29,75 @@ public static class GetWeb {
 
     const string HTTPS_HEADER = "https://";
 
+    const string CLASS_REGEX = "<a href= #class_flavor class=\"fancybox\">(.*?)</a>";
 
-    public static IEnumerator GetText(PcInputWindow window, string pcId)
+    const string ESPRIT_REGEX = "<a href= #esprit_flavor class=\"fancybox\">(.*?)</a>";
+
+    const string SKILL_NAME_REGEX = "<a href= #skill_flavor\\d+ class=\"fancybox\">(.*?)</a>";
+
+    const string SKILL_ETC_REGEX = "<td nowrap=\"nowrap\">.*?</td>.*?<td>(.*?)</td>";
+
+    const string SKILL_REGEX = "<tr class=\"eq_kind01\">.*?<div class=\"con_hide\" id= skill_flavor[12]\\d*>.*?</div>.*?<td>.*?"
+            + "<abbr class=\"tooltip_fa\" title=\"\" rel=\"tooltip\">.*?<a href= #skill_flavor\\d+ class=\"fancybox\">(.*?)</a>.*?"
+            + "<td nowrap=\"nowrap\">.*?</td>.*?<td>(.*?)</td>";
+
+
+    private static void getSkill(PcParameter pcParam, string text)
+    {
+        string regStr = SKILL_REGEX;
+        Debug.Log("regStr：" + regStr);
+        var reg = new Regex(regStr);
+
+        Match m = reg.Match(text);
+        if (m.Success)
+        {
+            pcParam.Skill1 = new Skill();
+            pcParam.Skill1.setName(m.Groups[1].Value);
+            pcParam.Skill1.Etc = m.Groups[2].Value;
+        }
+        else
+        {
+            return;
+        }
+
+        m = m.NextMatch();
+        if (m.Success)
+        {
+            pcParam.Skill2 = new Skill();
+            pcParam.Skill2.setName(m.Groups[1].Value);
+            pcParam.Skill2.Etc = m.Groups[2].Value;
+        }
+        else
+        {
+            return;
+        }
+
+        m = m.NextMatch();
+        if (m.Success)
+        {
+            pcParam.Skill3 = new Skill();
+            pcParam.Skill3.setName(m.Groups[1].Value);
+            pcParam.Skill3.Etc = m.Groups[2].Value;
+        }
+        else
+        {
+            return;
+        }
+
+        m = m.NextMatch();
+        if (m.Success)
+        {
+            pcParam.Skill4 = new Skill();
+            pcParam.Skill4.setName(m.Groups[1].Value);
+            pcParam.Skill4.Etc = m.Groups[2].Value;
+        }
+        else
+        {
+            return;
+        }
+    }
+
+    public static IEnumerator GetText(PcInputWindow window, string pcId, bool decoy)
     {
         string url = BASE_URL + pcId;
         Debug.Log(url);
@@ -49,7 +118,7 @@ public static class GetWeb {
                 // UTF8文字列として取得する
                 string text = request.downloadHandler.text;
                 Debug.Log(text);
-                setPcParameter(text, window, pcId);
+                setPcParameter(text, window, pcId, decoy);
             }
         }
     }
@@ -75,7 +144,7 @@ public static class GetWeb {
         }
     }
 
-    private static void setPcParameter(string text, PcInputWindow window, string pcId)
+    private static void setPcParameter(string text, PcInputWindow window, string pcId, bool decoy)
     {
         text = text.Replace("\n", "");
         Debug.Log(text);
@@ -83,9 +152,10 @@ public static class GetWeb {
         PcParameter pcParam = new PcParameter();
 
         pcParam.Title = getTitle(text);
-        Debug.Log(getTitle(text));
         pcParam.PcName = getPcName(text, pcParam.Title);
-        Debug.Log(getPcName(text, pcParam.Title));
+
+        pcParam.PcClass = getPcClass(text);
+        pcParam.Esprit = getEsprit(text);
 
         pcParam.MaxHP = Int32.Parse(getTargetParameter(text, "HP"));
         pcParam.MaxAP = Int32.Parse(getTargetParameter(text, "AP"));
@@ -102,12 +172,15 @@ public static class GetWeb {
         pcParam.Mobility = Int32.Parse(getTargetParameter(text, "機動力"));
         pcParam.Fumble = Int32.Parse(getTargetParameter(text, "ファンブル"));
 
+        getSkill(pcParam, text);
+
         window.setPcParameter(pcParam);
-
-        string url = getIconUrl(text, pcId);
-        Debug.Log("url：" + url);
-        window.setIconURL(url);
-
+        if (!decoy)
+        {
+            string url = getIconUrl(text, pcId);
+            Debug.Log("url：" + url);
+            window.setIconURL(url);
+        }
     }
 
     private static string getTargetParameter(string text, string targetStr)
@@ -142,9 +215,39 @@ public static class GetWeb {
         }
     }
 
+    private static string getPcClass(string text)
+    {
+        var reg = new Regex(CLASS_REGEX);
+        Match m = reg.Match(text);
+
+        if (m.Success)
+        {
+            return m.Groups[1].Value;
+        }
+        else
+        {
+            return "";
+        }
+    }
+
+    private static string getEsprit(string text)
+    {
+        var reg = new Regex(ESPRIT_REGEX);
+        Match m = reg.Match(text);
+
+        if (m.Success)
+        {
+            return m.Groups[1].Value;
+        }
+        else
+        {
+            return "";
+        }
+    }
+
     private static string getPcName(string text, string title)
     {
-        string regStr = HEAD_TITLE + title + TAIL_TITLE;
+        string regStr = HEAD_NAME + title + TAIL_NAME;
         //Debug.Log("regStr：" + regStr);
         var reg = new Regex(regStr);
         Match m = reg.Match(text);
@@ -175,4 +278,5 @@ public static class GetWeb {
             return DEFAULT_ICON;
         }
     }
+
 }

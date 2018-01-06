@@ -5,8 +5,6 @@ public class PlayerCharacter : Token
 {
     public PcParameter baseParam = new PcParameter();
 
-    public PcParameter paramCorrect = new PcParameter();
-
     public RawImage icon;
 
     public TitleText Title;
@@ -21,10 +19,7 @@ public class PlayerCharacter : Token
 
     public BsText Bs;
 
-    public EnchantText enchantText;
-
-
-    //private List<Declaration> DeclaratList;
+    public EnchantText Enchantt;
 
     private Skill skill1;
 
@@ -35,6 +30,8 @@ public class PlayerCharacter : Token
     private Skill skill4;
 
     private int initiative;
+
+    private int attackedCount = 0;
 
     public int Initiative
     {
@@ -101,6 +98,18 @@ public class PlayerCharacter : Token
         }
     }
 
+    public int AttackedCount
+    {
+        get
+        {
+            return attackedCount;
+        }
+
+        set
+        {
+            attackedCount = value;
+        }
+    }
 
     // Use this for initialization
     void Start()
@@ -134,14 +143,14 @@ public class PlayerCharacter : Token
         Title.Title = pc.Title;
         PcName.Name = pc.PcName;
 
-        Hp.CurrentHp = baseParam.MaxHP;
         Hp.MaxHp = baseParam.MaxHP;
-        Ap.CurrentAp = baseParam.MaxAP;
+        Hp.CurrentHp = baseParam.MaxHP;
         Ap.MaxAp = baseParam.MaxAP;
+        Ap.CurrentAp = baseParam.MaxAP;
 
         Skill1 = pc.Skill1;
         if (Skill1 != null) {
-            Debug.Log("Skill1.Name:" + Skill1.Name);
+            Debug.Log("Skill1.Name:" + Skill1.getName());
         }
         Skill2 = pc.Skill2;
         Skill3 = pc.Skill3;
@@ -151,51 +160,63 @@ public class PlayerCharacter : Token
 
     public int getPAttack()
     {
-        return baseParam.PAttack + paramCorrect.PAttack;
+        return baseParam.PAttack + Action.getPAttack() + Bs.getPAttack() + Enchantt.getPAttack();
     }
     public int getMAttack()
     {
-        return baseParam.MAttack + paramCorrect.MAttack;
+        return baseParam.MAttack + Action.getMAttack() + Bs.getMAttack() + Enchantt.getMAttack();
     }
     public int getExf()
     {
-        return baseParam.Exf + paramCorrect.Exf;
+        return baseParam.Exf + Action.getExf() + Bs.getExf() + Enchantt.getExf();
     }
     public int getDefense()
     {
-        return baseParam.Defense + paramCorrect.Defense;
+        return baseParam.Defense + Action.getDefense() + Bs.getDefense() + Enchantt.getDefense();
     }
     public int getResist()
     {
-        return baseParam.Resist + paramCorrect.Resist;
+        return baseParam.Resist + Action.getResist() + Bs.getResist() + Enchantt.getResist();
     }
     public int getExa()
     {
-        return baseParam.Exa + paramCorrect.Exa;
+        return baseParam.Exa + Action.getExa() + Bs.getExa() + Enchantt.getExa();
     }
     public int getHits()
     {
-        return baseParam.Hits + paramCorrect.Hits;
+        return baseParam.Hits + Action.getHits() + Bs.getHits() + Enchantt.getHits();
     }
     public int getAvoid()
     {
-        return baseParam.Avoid + paramCorrect.Avoid;
+        return baseParam.Avoid + Action.getAvoid() + Bs.getAvoid() + Enchantt.getAvoid();
     }
     public int getCritical()
     {
-        return baseParam.Critical + paramCorrect.Critical;
+        return baseParam.Critical + Action.getCritical() + Bs.getCritical() + Enchantt.getCritical();
     }
-    public int getRaction()
+    public int getReaction()
     {
-        return baseParam.Reaction + paramCorrect.Reaction;
+        return baseParam.Reaction + Action.getReaction() + Bs.getReaction() + Enchantt.getReaction();
     }
     public int getMobility()
     {
-        return baseParam.Mobility + paramCorrect.Mobility;
+        return baseParam.Mobility + Action.getMobility() + Bs.getMobility() + Enchantt.getMobility();
     }
 
     public int getFumble()
     {
-        return baseParam.Fumble + paramCorrect.Fumble;
+        int fb = baseParam.Fumble + Action.getFumble() + Bs.getFumble() + Enchantt.getFumble();
+
+        if (Bs.BsList.Find(x => x.getName().Equals("不運")) != null)
+        {
+            fb = fb * 2;
+        }
+        
+        if (Bs.BsList.Find(x => x.getName().Equals("魔凶")) != null)
+        {
+            fb = fb * 3;
+        }
+
+        return fb;
     }
 }
