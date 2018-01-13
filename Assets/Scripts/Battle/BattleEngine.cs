@@ -392,7 +392,7 @@ public class BattleEngine : MonoBehaviour
     //BS自然回復判定
     private void judgeBsRecover(PlayerCharacter pc)
     {
-        if (pc.Bs.BsList.Find(x => x.getName().Equals("呪い")) != null)
+        if (pc.Bs.BsList.Find(x => x.getName().Contains("呪い")) != null)
         {
             ManageScroll.Log(pc.PcName.Name + "は呪いのためBSが回復しない。");
         }
@@ -465,7 +465,7 @@ public class BattleEngine : MonoBehaviour
 
                     if (hSkill.Hp > 0)
                     {
-                        if (attacker.Bs.BsList.Find(x => x.getName().Equals("致命")) != null)
+                        if (attacker.Bs.BsList.Find(x => x.getName().Contains("致命")) != null)
                         {
                             ManageScroll.Log(attacker.PcName.Name + "は致命のためBSが回復しない。");
                         } else
@@ -622,7 +622,7 @@ public class BattleEngine : MonoBehaviour
                 if (majorSkil.Basic.Contains("物"))
                 {
                     //【防技】の場合
-                    if (effectList.Find(x => x.Equals("【防技】")) != null)
+                    if (effectList.Find(x => x.Contains("【防技】")) != null)
                     {
                         attack = attacker.getPAttack() + (attacker.getDefense() * aSkill.Power);
                     }
@@ -723,7 +723,7 @@ public class BattleEngine : MonoBehaviour
 
             //【無】の場合はダメージ無し
             int damege = 0;
-            if (effectList.Find(x => x.Equals("無")) == null)
+            if (effectList.Find(x => x.Contains("【無】")) == null)
             {
                 //ダメージ算出
                 damege = attack * hitRate / 100;
@@ -733,7 +733,7 @@ public class BattleEngine : MonoBehaviour
                 if (!hitCTflg && !avoidFBflg)
                 {
                     //【防無】の場合は防御技術判定が行えない
-                    if (effectList.Find(x => x.Equals("防無")) != null)
+                    if (effectList.Find(x => x.Contains("【防無】")) != null)
                     {
                         ManageScroll.Log(attackName + "の【防無】により防御が行えない。");
                     }
@@ -744,7 +744,7 @@ public class BattleEngine : MonoBehaviour
                         int defeseRate = Judge.defenseRateRoll(defender.PcName.Name, defender.getDefense(), defender.getCritical(), defender.getFumble());
 
                         //【弱点】の場合は防御レート半減
-                        if (effectList.Find(x => x.Equals("【弱点】")) != null)
+                        if (effectList.Find(x => x.Contains("【弱点】")) != null)
                         {
                             defeseRate = defeseRate / 2;
                             ManageScroll.Log(attackName + "の【弱点】により防御値半減。");
@@ -764,7 +764,7 @@ public class BattleEngine : MonoBehaviour
             }
 
             //【呪殺】の場合はBS*100だけダメージ＋
-            if (effectList.Find(x => x.Equals("【呪殺】")) != null)
+            if (effectList.Find(x => x.Contains("【呪殺】")) != null)
             {
                 if (defender.Bs.BsList.Count > 0)
                 {
@@ -813,7 +813,7 @@ public class BattleEngine : MonoBehaviour
         }
 
         //【連】の場合かつ命中CTの場合、再攻撃
-        if (effectList.Find(x => x.Equals("【連】")) != null)
+        if (effectList.Find(x => x.Contains("【連】")) != null)
         {
             if (hitCTflg)
             {
@@ -838,7 +838,7 @@ public class BattleEngine : MonoBehaviour
         if (pc.Hp.CurrentHp <= 0)
         {
             //【必殺】の場合はEXF判定が行えない
-            if (effectList.Find(x => x.Equals("【必殺】")) != null)
+            if (effectList.Find(x => x.Contains("【必殺】")) != null)
             {
                 ManageScroll.Log(attackName + "の【必殺】によりEXF判定が行えない。");
             }

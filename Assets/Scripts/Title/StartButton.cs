@@ -308,194 +308,194 @@ public class StartButton : MonoBehaviour {
             aSkill.BsList.Add(new Poison1());
             result = true;
         }
-        else if (text.Contains("【猛毒】"))
+        if (text.Contains("【猛毒】"))
         {
             aSkill.BsList.Add(new Poison2());
             result = true;
         }
-        else if (text.Contains("【死毒】"))
+        if (text.Contains("【死毒】"))
         {
             aSkill.BsList.Add(new Poison3());
             result = true;
         }
-        else if (text.Contains("【火炎】"))
+        if (text.Contains("【火炎】"))
         {
             aSkill.BsList.Add(new Fire1());
             result = true;
         }
-        else if (text.Contains("【業炎】"))
+        if (text.Contains("【業炎】"))
         {
             aSkill.BsList.Add(new Fire2());
             result = true;
         }
-        else if (text.Contains("【炎獄】"))
+        if (text.Contains("【炎獄】"))
         {
             aSkill.BsList.Add(new Fire3());
             result = true;
         }
-        else if (text.Contains("【凍結】"))
+        if (text.Contains("【凍結】"))
         {
             aSkill.BsList.Add(new Ice1());
             result = true;
         }
-        else if (text.Contains("【氷結】"))
+        if (text.Contains("【氷結】"))
         {
             aSkill.BsList.Add(new Ice2());
             result = true;
         }
-        else if (text.Contains("【氷漬】"))
+        if (text.Contains("【氷漬】"))
         {
             aSkill.BsList.Add(new Ice3());
             result = true;
         }
-        else if (text.Contains("【痺れ】"))
+        if (text.Contains("【痺れ】"))
         {
             aSkill.BsList.Add(new Shock1());
             result = true;
         }
-        else if (text.Contains("【ショック】"))
+        if (text.Contains("【ショック】"))
         {
             aSkill.BsList.Add(new Shock2());
             result = true;
         }
-        else if (text.Contains("【感電】"))
+        if (text.Contains("【感電】"))
         {
             aSkill.BsList.Add(new Shock3());
             result = true;
         }
-        else if (text.Contains("【乱れ】"))
+        if (text.Contains("【乱れ】"))
         {
             aSkill.BsList.Add(new Disturbe1());
             result = true;
         }
-        else if (text.Contains("【崩れ】"))
+        if (text.Contains("【崩れ】"))
         {
             aSkill.BsList.Add(new Disturbe2());
             result = true;
         }
-        else if (text.Contains("【体勢不利】"))
+        if (text.Contains("【体勢不利】"))
         {
             aSkill.BsList.Add(new Disturbe3());
             result = true;
         }
-        else if (text.Contains("【出血】"))
+        if (text.Contains("【出血】"))
         {
             aSkill.BsList.Add(new Bloody1());
             result = true;
         }
-        else if (text.Contains("【流血】"))
+        if (text.Contains("【流血】"))
         {
             aSkill.BsList.Add(new Bloody2());
             result = true;
         }
-        else if (text.Contains("【失血】"))
+        if (text.Contains("【失血】"))
         {
             aSkill.BsList.Add(new Bloody3());
             result = true;
         }
-        else if (text.Contains("【窒息】"))
+        if (text.Contains("【窒息】"))
         {
             aSkill.BsList.Add(new Agony1());
             result = true;
         }
-        else if (text.Contains("【苦鳴】"))
+        if (text.Contains("【苦鳴】"))
         {
             aSkill.BsList.Add(new Agony2());
             result = true;
         }
-        else if (text.Contains("【懊悩】"))
+        if (text.Contains("【懊悩】"))
         {
             aSkill.BsList.Add(new Agony3());
             result = true;
         }
-        else if (text.Contains("【足止】"))
+        if (text.Contains("【足止】"))
         {
             aSkill.BsList.Add(new Stasis1());
             result = true;
         }
-        else if (text.Contains("【泥沼】"))
+        if (text.Contains("【泥沼】"))
         {
             aSkill.BsList.Add(new Stasis2());
             result = true;
         }
-        else if (text.Contains("【停滞】"))
+        if (text.Contains("【停滞】"))
         {
             aSkill.BsList.Add(new Stasis3());
             result = true;
         }
 
 
-        else if (text.Contains("【不吉】"))
+        if (text.Contains("【不吉】"))
         {
             aSkill.BsList.Add(new Unluck1());
             result = true;
         }
-        else if (text.Contains("【不運】"))
+        if (text.Contains("【不運】"))
         {
             aSkill.BsList.Add(new Unluck2());
             result = true;
         }
-        else if (text.Contains("【魔凶】"))
+        if (text.Contains("【魔凶】"))
         {
             aSkill.BsList.Add(new Unluck3());
             result = true;
         }
-        else if (text.Contains("【麻痺】"))
+        if (text.Contains("【麻痺】"))
         {
             aSkill.BsList.Add(new Stop1());
             result = true;
         }
-        else if (text.Contains("【呪縛】"))
+        if (text.Contains("【呪縛】"))
         {
             aSkill.BsList.Add(new Stop2());
             result = true;
         }
-        else if (text.Contains("【石化】"))
+        if (text.Contains("【石化】"))
         {
             aSkill.BsList.Add(new Stop3());
             result = true;
         }
-        else if (text.Contains("【混乱】"))
+        if (text.Contains("【混乱】"))
         {
             aSkill.BsList.Add(new Mind1());
             result = true;
         }
-        else if (text.Contains("【狂気】"))
+        if (text.Contains("【狂気】"))
         {
             aSkill.BsList.Add(new Mind2());
             result = true;
         }
-        else if (text.Contains("【魅了】"))
+        if (text.Contains("【魅了】"))
         {
             aSkill.BsList.Add(new Mind3());
             result = true;
         }
-        else if (text.Contains("【呪い】"))
+        if (text.Contains("【呪い】"))
         {
             aSkill.BsList.Add(new Curse());
             result = true;
         }
-        else if (text.Contains("【致命】"))
+        if (text.Contains("【致命】"))
         {
             aSkill.BsList.Add(new Fatal());
             result = true;
         }
-        else if (text.Contains("【封印】"))
+        if (text.Contains("【封印】"))
         {
             aSkill.BsList.Add(new Seale());
             result = true;
         }
-        else if (text.Contains("【暗闇】"))
+        if (text.Contains("【暗闇】"))
         {
             aSkill.BsList.Add(new Dark());
             result = true;
         }
-        else if (text.Contains("【恍惚】"))
+        if (text.Contains("【恍惚】"))
         {
             aSkill.BsList.Add(new Trance());
             result = true;
         }
-        else if (text.Contains("【怒り】"))
+        if (text.Contains("【怒り】"))
         {
             aSkill.BsList.Add(new Hate());
             result = true;
