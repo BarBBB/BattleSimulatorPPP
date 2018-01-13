@@ -29,16 +29,16 @@ public static class GetWeb {
 
     const string HTTPS_HEADER = "https://";
 
-    const string CLASS_REGEX = "<a href= #class_flavor class=\"fancybox\">(.*?)</a>";
+    const string CLASS_REGEX = " <a href=\"#class_flavor\" class=\"fancybox\">(.*?)</a>";
 
-    const string ESPRIT_REGEX = "<a href= #esprit_flavor class=\"fancybox\">(.*?)</a>";
+    const string ESPRIT_REGEX = "<a href=\"#esprit_flavor\" class=\"fancybox\">(.*?)</a>";
 
-    const string SKILL_NAME_REGEX = "<a href= #skill_flavor\\d+ class=\"fancybox\">(.*?)</a>";
+    const string SKILL_NAME_REGEX = "<a href=\"#skill_flavor\\d+\" class=\"fancybox\">(.*?)</a>";
 
     const string SKILL_ETC_REGEX = "<td nowrap=\"nowrap\">.*?</td>.*?<td>(.*?)</td>";
 
-    const string SKILL_REGEX = "<tr class=\"eq_kind01\">.*?<div class=\"con_hide\" id= skill_flavor[12]\\d*>.*?</div>.*?<td>.*?"
-            + "<abbr class=\"tooltip_fa\" title=\"\" rel=\"tooltip\">.*?<a href= #skill_flavor\\d+ class=\"fancybox\">(.*?)</a>.*?"
+    const string SKILL_REGEX = "<tr class=\"eq_kind01\">.*?<div class=\"con_hide\" id=\"skill_flavor[12]\\d*\">.*?</div>.*?<td>.*?"
+            + "<abbr class=\"tooltip_fa\" title=\"\" rel=\"tooltip\">.*?<a href=\"#skill_flavor\\d+\" class=\"fancybox\">(.*?)</a>.*?"
             + "<td nowrap=\"nowrap\">.*?</td>.*?<td>(.*?)</td>";
 
 

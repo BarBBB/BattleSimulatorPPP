@@ -722,10 +722,11 @@ public class BattleEngine : MonoBehaviour
             int hitRate = Judge.hitRateRoll(hitCorrect);
 
             //【無】の場合はダメージ無し
+            int damege = 0;
             if (effectList.Find(x => x.Equals("無")) == null)
             {
                 //ダメージ算出
-                int damege = attack * hitRate / 100;
+                damege = attack * hitRate / 100;
                 //ManageScroll.Log("hoge:" + damege);
 
                 //命中CT回避FBではない場合、防御技術判定
@@ -760,37 +761,43 @@ public class BattleEngine : MonoBehaviour
                         }
                     }
                 }
+            }
 
-                //【呪殺】の場合はBS*100だけダメージ＋
-                if (effectList.Find(x => x.Equals("【呪殺】")) != null)
+            //【呪殺】の場合はBS*100だけダメージ＋
+            if (effectList.Find(x => x.Equals("【呪殺】")) != null)
+            {
+                if (defender.Bs.BsList.Count > 0)
                 {
-                    if (defender.Bs.BsList.Count > 0)
-                    {
-                        int curse = defender.Bs.BsList.Count * 100;
-                        damege += curse;
-                        ManageScroll.Log(attackName + "の【呪殺】によりダメージ追加" + curse);
-                    }
+                    int curse = defender.Bs.BsList.Count * 100;
+                    damege += curse;
+                    ManageScroll.Log(attackName + "の【呪殺】によりダメージ追加" + curse);
                 }
+            }
 
-                //ダメージ処理
+            //ダメージ処理
+            if (damege > 0) {
                 ManageScroll.Log(defender.PcName.Name + "に" + damege + "のダメージ。");
                 damegeProcess(defender, damege, attackName, effectList);
             }
+
             //クリーンヒット以上の場合、BS付与判定
-            foreach (BadStatus bs in bsList)
+            if (hitRate >= 100)
             {
-                if (!Judge.bsResistJudge(defender.PcName.Name, defender.getResist(), defender.getCritical(), defender.getFumble()))
+                foreach (BadStatus bs in bsList)
                 {
-                    BadStatus currentBs = defender.Bs.BsList.Find(x => x.getName().Equals(bs.getName()));
-                    if (currentBs != null)
+                    if (!Judge.bsResistJudge(defender.PcName.Name, defender.getResist(), defender.getCritical(), defender.getFumble()))
                     {
-                        currentBs.init();
-                        ManageScroll.Log(defender.PcName.Name + "の" + bs.getName() + "状態の回復判定数がリセットされた。");
-                    }
-                    else
-                    {
-                        defender.Bs.BsList.Add(bs);
-                        ManageScroll.Log(defender.PcName.Name + "は" + bs.getName() + "状態になった。");
+                        BadStatus currentBs = defender.Bs.BsList.Find(x => x.getName().Equals(bs.getName()));
+                        if (currentBs != null)
+                        {
+                            currentBs.init();
+                            ManageScroll.Log(defender.PcName.Name + "の" + bs.getName() + "状態の回復判定数がリセットされた。");
+                        }
+                        else
+                        {
+                            defender.Bs.BsList.Add(bs);
+                            ManageScroll.Log(defender.PcName.Name + "は" + bs.getName() + "状態になった。");
+                        }
                     }
                 }
             }
