@@ -63,6 +63,19 @@ public static class Judge
         }
     }
 
+    public static bool checkFunble(int fb)
+    {
+
+        if (roll() <= fb)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     private static int ctRoll(int target, int ct, int fb)
     {
         int dice = roll();

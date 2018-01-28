@@ -463,39 +463,54 @@ public class BattleEngine : MonoBehaviour
                     HealSkill hSkill = (HealSkill)majorSkil;
                     ManageScroll.Log(attacker.PcName.Name + "は" + hSkill.getName() + "を使用した。");
 
-                    if (hSkill.Hp > 0)
+                    if (Judge.checkFunble(attacker.getFumble()))
                     {
-                        if (attacker.Bs.BsList.Find(x => x.getName().Contains("致命")) != null)
-                        {
-                            ManageScroll.Log(attacker.PcName.Name + "は致命のためBSが回復しない。");
-                        } else
-                        {
-                            attacker.Hp.CurrentHp += hSkill.Hp;
-                            ManageScroll.Log(attacker.PcName.Name + "は" + hSkill.Hp + "点のHPが回復した。");
-                        }
+                        ManageScroll.Log(attacker.PcName.Name + "はファンブルにより" + hSkill.getName() + "に失敗した。");
                     }
-                    if (hSkill.Ap > 0)
+                    else
                     {
-                        attacker.Ap.CurrentAp += hSkill.Ap;
-                        ManageScroll.Log(attacker.PcName.Name + "は" + hSkill.Ap + "点のAPが回復した。");
-                    }
-                    if (hSkill.Bs > 0)
-                    {
-                        ManageScroll.Log(name + ">【BS回復スキル判定】：" + hSkill.Bs);
-                        if (Judge.ctJudge(100 - hSkill.Bs, attacker.getCritical(), attacker.getFumble()))
+                        if (hSkill.Hp > 0)
                         {
-                            attacker.Bs.BsList = new List<BadStatus>();
-                            ManageScroll.Log(attacker.PcName.Name + "のBSが回復した。");
+                            if (attacker.Bs.BsList.Find(x => x.getName().Contains("致命")) != null)
+                            {
+                                ManageScroll.Log(attacker.PcName.Name + "は致命のためBSが回復しない。");
+                            }
+                            else
+                            {
+                                attacker.Hp.CurrentHp += hSkill.Hp;
+                                ManageScroll.Log(attacker.PcName.Name + "は" + hSkill.Hp + "点のHPが回復した。");
+                            }
                         }
-                        else
+                        if (hSkill.Ap > 0)
                         {
-                            ManageScroll.Log(attacker.PcName.Name + "のBSは回復し無かった。");
+                            attacker.Ap.CurrentAp += hSkill.Ap;
+                            ManageScroll.Log(attacker.PcName.Name + "は" + hSkill.Ap + "点のAPが回復した。");
+                        }
+                        if (hSkill.Bs > 0)
+                        {
+                            ManageScroll.Log(name + ">【BS回復スキル判定】：" + hSkill.Bs);
+                            if (Judge.ctJudge(100 - hSkill.Bs, attacker.getCritical(), attacker.getFumble()))
+                            {
+                                attacker.Bs.BsList = new List<BadStatus>();
+                                ManageScroll.Log(attacker.PcName.Name + "のBSが回復した。");
+                            }
+                            else
+                            {
+                                ManageScroll.Log(attacker.PcName.Name + "のBSは回復し無かった。");
+                            }
                         }
                     }
                 }
                 else if (majorSkil.Tyep.Equals(Skill.TYPE_ENCHANT))
                 {
-                    doEnchantSkill(attacker);
+                    if (Judge.checkFunble(attacker.getFumble()))
+                    {
+                        ManageScroll.Log(attacker.PcName.Name + "はファンブルにより" + majorSkil.getName() + "に失敗した。");
+                    }
+                    else
+                    {
+                        doEnchantSkill(attacker);
+                    }
                 }
                 else
                 {
